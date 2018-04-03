@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <h1>Запитване</h1>
+            </div><!-- /.col-md-4 -->
+        </div><!-- /.row -->
+        <div class="row mt10">
+            <div class="col-md-8 col-sm-12">
+                <form class="form-horizontal request-form" method="post" id="request_form" action="#request_form">
+                    <input type="hidden" name="zing_verify_code" value="09cg3f5nv2amsw26r32jh1lp15226754"/>
+                    <div class="col-md-12"><h2 class="title-request">Общи данни</h2></div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input class="form-control form-double-border " type="text"
+                                                     name="item_company" value="" placeholder="Фирма *"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input class="form-control form-double-border " type="text"
+                                                     name="item_contact_person" value=""
+                                                     placeholder="Лице за контакт *"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input class="form-control form-double-border " type="text"
+                                                     name="item_phone" value="" placeholder="Телефон *"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input class="form-control form-double-border " type="email"
+                                                     name="item_email" value="" placeholder="Е-мейл *"></div>
+                    </div>
+                    <div class="col-md-12"><h2 class="title-request">Допълнителни данни</h2></div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='legal_status' class="form-control form-double-border "
+                                                     type="text" name="item_legal_status" value=""></div>
+                        <div class="col-md-6"><p>Правен статут (ЕТ; ЕООД; ООД; АД; ЕАД)</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='main_field' class="form-control form-double-border "
+                                                     type="text" name="item_main_field" value=""></div>
+                        <div class="col-md-6"><p>Основна дейност</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='number_insured_person' class="form-control form-double-border "
+                                                     type="number" name="item_number_insured_person" value=""></div>
+                        <div class="col-md-6"><p>Брой осигурени лица</p></div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="zdds_registration_yes"
+                                                     name="item_zdds_registration" value="1">
+                            <label for="zdds_registration_yes">Да</label>
+
+                            <input type="radio" id="zdds_registration_no"
+                                   name="item_zdds_registration" value="0" checked>
+                            <label for="zdds_registration_no">Не</label></div>
+                        <div class="col-md-6"><p>Регистрация по ЗДДС</p></div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="excise_duty_registration_yes"
+                                                     name="item_excise_duty_registration" value="1">
+                            <label for="excise_duty_registration_yes">Да</label>
+
+                            <input type="radio" id="excise_duty_registration_no"
+                                   name="item_excise_duty_registration" value="0" checked>
+                            <label for="excise_duty_registration_no">Не</label></div>
+                        <div class="col-md-6"><p>Регистрация по Законът за акцизите</p></div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="deals_countries_eo_yes"
+                                                     name="item_deals_countries_eo" value="1">
+                            <label for="deals_countries_eo_yes">Да</label>
+
+                            <input type="radio" id="deals_countries_eo_no"
+                                   name="item_deals_countries_eo" value="0" checked>
+                            <label for="deals_countries_eo_no">Не</label></div>
+                        <div class="col-md-6"><p>Сделки със страни от ЕО</p></div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="deals_countries_not_eo_yes"
+                                                     name="item_deals_countries_not_eo" value="1">
+                            <label for="deals_countries_not_eo_yes">Да</label>
+
+                            <input type="radio" id="deals_countries_not_eo_no"
+                                   name="item_deals_countries_not_eo" value="0" checked>
+                            <label for="deals_countries_not_eo_no">Не</label></div>
+                        <div class="col-md-6"><p>Сделки със страни, извън ЕО</p></div>
+                    </div>
+                    <div class="col-md-12"><h2 class="title-request">Месечни показатели</h2></div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='sales_invoice_num' class="form-control form-double-border "
+                                                     type="number" name="item_sales_invoice_num" value=""></div>
+                        <div class="col-md-6"><p>Брой приходни фактури</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='expense_invoice_num' class="form-control form-double-border "
+                                                     type="number" name="item_expense_invoice_num" value=""></div>
+                        <div class="col-md-6"><p>Брой разходни фактури</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='current_account_num' class="form-control form-double-border "
+                                                     type="number" name="item_current_account_num" value=""></div>
+                        <div class="col-md-6"><p>Брой разплащателни сметки</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='cash_registers_num' class="form-control form-double-border "
+                                                     type="number" name="item_cash_registers_num" value=""></div>
+                        <div class="col-md-6"><p>Брой касови апарати</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6"><input id='sites_num' class="form-control form-double-border "
+                                                     type="number" name="item_sites_num" value=""></div>
+                        <div class="col-md-6"><p>Обекти</p></div>
+                    </div>
+                    <div class="col-md-12"><h2 class="title-request">Допълнителни данни</h2></div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="online_banking_yes"
+                                                     name="item_online_banking" value="1">
+                            <label for="online_banking_yes">Да</label>
+
+                            <input type="radio" id="online_banking_no"
+                                   name="item_online_banking" value="0" checked>
+                            <label for="online_banking_no">Не</label></div>
+                        <p>On-line банкиране</p>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="invoices_issue_yes"
+                                                     name="item_invoices_issue" value="1">
+                            <label for="invoices_issue_yes">Да</label>
+
+                            <input type="radio" id="invoices_issue_no"
+                                   name="item_invoices_issue" value="0" checked>
+                            <label for="invoices_issue_no">Не</label></div>
+                        <p>Издаване на фактури</p>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-6"><input type="radio" id="monthly_reports_issue_yes"
+                                                     name="item_monthly_reports_issue" value="1">
+                            <label for="monthly_reports_issue_yes">Да</label>
+
+                            <input type="radio" id="monthly_reports_issue_no"
+                                   name="item_monthly_reports_issue" value="0" checked>
+                            <label for="monthly_reports_issue_no">Не</label></div>
+                        <p>Изготвяне на месечни отчети</p>
+                    </div>
+                    <div class="col-md-12"><h5 style="margin: 10px 0">Други специфични Ваши изисквания, за които
+                        смятате, че е нужно да ни информирате:</h5></div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <textarea class="form-control form-double-border " name="item_message"
+                                      placeholder="Съобщение" rows="7"></textarea>
+                        </div>
+                        <div class="form-group mt20">
+                            <div class="text-right">
+                                <button class="btn btn-primary btn-block pull-left submitBnt btn-yellowor" id="submit"
+                                        style="width: 100px;float: right">Изпрати<i class="fa fa-angle-right"
+                                                                                    style="margin-left: 10px;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <h6>Заявката не ви обвързва с договор или заплащане</h6>
+                </form>
+            </div><!-- /.col-md-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/footer}"></th:block>
+</div>
+</body>
+</html>
