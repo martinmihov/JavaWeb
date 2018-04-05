@@ -1,6 +1,5 @@
 package org.softuni.accounting.areas.users.domain.models.binding;
 
-
 import org.softuni.accounting.validations.annotations.email.Email;
 
 import javax.validation.constraints.NotEmpty;
@@ -31,8 +30,7 @@ public class UserEditBindingModel {
         this.id = id;
     }
 
-    @NotEmpty(message = "Email cannot be empty")
-//    @Email
+    @Email
     public String getEmail() {
         return this.email;
     }

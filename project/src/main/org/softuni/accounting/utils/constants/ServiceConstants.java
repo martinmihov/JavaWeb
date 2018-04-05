@@ -7,5 +7,5 @@ public final class ServiceConstants {
 
     public static final String VAT_SERVICE = "VAT";
     public static final String ACCOUNTING_SERVICE = "Accounting";
-    public static final String CONSULT_SERVICE = "Consulting";
+    public static final String PAYROLL_SERVICE = "Payroll";
 }

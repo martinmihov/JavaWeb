@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController extends BaseController {
 
-//    @GetMapping("/")
-//    public ModelAndView homeView(){
-//        return
-//    }
+    @GetMapping("/")
+    public ModelAndView homeView(){
+        return this.view("home/index");
+    }
 }

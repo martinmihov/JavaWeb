@@ -1,11 +1,11 @@
-<div th:fragments="footer">
-    <footer class="d-lg-flex row mbr-white footer-dark bg-primary">
+<footer th:fragments="footer" class="footer">
+    <div class="d-md-flex row mbr-white footer-dark bg-primary">
         <div class="col-md-1 offset-md-3 col-sm-4 mt-5 mb-5 ">
-            <div class="mb-3 card-img-top">
-                <a href="http://localhost:8000">
-                    <img src="images/acclogo.png" width="110" height="80" alt="logo">
-                </a>
-            </div>
+            <!--<div class="mb-3 card-img-top">-->
+                <!--<a th:href="http://localhost:8000">-->
+                    <!--<img th:src="@{images/acclogo.png}" width="110" height="80" alt="logo">-->
+                <!--</a>-->
+            <!--</div>-->
             <p class="mb-3 mbr-fonts-style foot-title display-7">
                 SUPPORT
             </p>
@@ -90,23 +90,30 @@
                 </div>
             </div>
         </div>
-    </footer>
-    <div class="footer-lower">
-        <div class="container-row">
-            <div class="col-sm-12">
-                <hr>
-            </div>
-        </div>
-        <div class="container-row mbr-white text-center">
-            <div class="col-sm-12 copyright">
-                <p class="mbr-text mbr-fonts-style display-7">
-                    Всички права запазени
-                </p>
-            </div>
-                <p class="mbr-text mbr-fonts-style display-7">
-                    © 2018 T&M Studio
-                </p>
-            </div>
-        </div>
     </div>
-</div>
+    <div class="container text-center mt-1">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-google-plus"></i></a>
+        <a href="#"><i class="fa fa-skype"></i></a>
+    </div>
+    <!--<div class="footer-lower">-->
+        <!--<div class="container-row">-->
+            <!--<div class="col-sm-12">-->
+                <!--<hr>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="container-row mbr-white text-center">-->
+            <!--<div class="col-sm-12 copyright">-->
+                <!--<p class="mbr-text mbr-fonts-style display-7">-->
+                    <!--Всички права запазени-->
+                <!--</p>-->
+            <!--</div>-->
+                <!--<p class="mbr-text mbr-fonts-style display-7">-->
+                    <!--© 2018 T&M Studio-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</footer>

@@ -2,7 +2,7 @@ package org.softuni.accounting.areas.products.domain.entities.enums;
 
 public enum ServiceType {
 
-    CONSULTING,
+    PAYROLL,
     VAT,
     ACCOUNTING;
 

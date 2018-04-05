@@ -14,4 +14,8 @@ public interface ServiceProdService {
     List<ServiceProdViewModel> getAllServicesByType(ServiceType type);
 
     void addService(@Valid ServiceProdAddBindingModel addServiceModel);
+
+    ServiceProdViewModel getServiceToDelete(Long id);
+
+    void deleteService(Long id);
 }

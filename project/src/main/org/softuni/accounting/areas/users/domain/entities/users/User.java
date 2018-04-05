@@ -1,8 +1,8 @@
 package org.softuni.accounting.areas.users.domain.entities.users;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.softuni.accounting.areas.requests.domain.entities.Request;
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
-import org.softuni.accounting.validations.annotations.email.Email;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +23,8 @@ public class User implements Serializable {
 
     private Set<Role> roles;
 
+    private Set<Request> requests;
+
 
     public User(String email, String fullName, String password) {
         this.email = email;
@@ -30,10 +32,13 @@ public class User implements Serializable {
         this.password = password;
 
         this.roles = new HashSet<>();
+        this.requests = new HashSet<>();
+
     }
 
     public User() {
         this.roles = new HashSet<>();
+        this.requests = new HashSet<>();
     }
 
     @Id
@@ -51,7 +56,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @Email
     @Column(name = "email", unique = true, nullable = false)
     public String getEmail() {
         return this.email;
@@ -91,5 +95,18 @@ public class User implements Serializable {
 
     public void addRole(Role role) {
         this.roles.add(role);
+    }
+
+    @OneToMany(mappedBy = "senderUser")
+    public Set<Request> getRequests() {
+        return this.requests;
+    }
+
+    public void setRequests(Set<Request> requests) {
+        this.requests = requests;
+    }
+
+    public void addRequest(Request request) {
+        this.requests.add(request);
     }
 }

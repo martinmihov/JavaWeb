@@ -25,35 +25,36 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/css/**", "/js/**" , "/images/**");
+                .antMatchers("/css/**", "/js/**", "/images/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .authorizeRequests()
-                    .antMatchers("/", "/users/login", "/users/register").permitAll()
-                    .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers("/", "/users/login", "/users/register").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
-                    .formLogin()
-                    .loginPage("/users/login").permitAll()
-                    .loginProcessingUrl("/users/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .defaultSuccessUrl("/")
+                .formLogin()
+                .loginPage("/users/login").permitAll()
+                .loginProcessingUrl("/users/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
 //                    .failureUrl("/error")
                 .and()
-                    .logout().logoutUrl("/logout")
-                    .logoutSuccessUrl("/users/login")
-                    .permitAll()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/users/login")
+                .permitAll()
                 .and()
 //                .rememberMe()
 //                .rememberMeParameter("remember")
 //                .rememberMeCookieName("rememberMeCookie")
 //                .key("48433e39-e610-4a2c-926c-f86d46f5360a")
 //                .tokenValiditySeconds(100)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
+                .csrf().disable();
 
     }
 }

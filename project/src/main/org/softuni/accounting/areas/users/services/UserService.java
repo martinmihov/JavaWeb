@@ -11,11 +11,15 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    User registerUser(@Valid UserRegisterBindingModel model);
+    void registerUser(@Valid UserRegisterBindingModel model);
 
     List<UserViewModel> getAll();
 
     UserEditBindingModel findById(String id);
 
-    void editUser(@Valid UserEditBindingModel model);
+    void editUser(String id, UserEditBindingModel model); //void editUser(@Valid UserEditBindingModel model);
+    // TODO : Make User A UserServiceModel
+    List<User> findAll();
+
+    void save(User user);
 }

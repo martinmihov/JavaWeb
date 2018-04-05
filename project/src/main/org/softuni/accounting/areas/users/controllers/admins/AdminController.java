@@ -37,54 +37,41 @@ public class AdminController extends BaseController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ModelAndView viewAllUsers(ModelAndView modelAndView) {
-        List<UserViewModel> users = this.userService.getAll();
-        return this.view("admins/all-users", "users", users);
+        return this.view("admins/all-users", "users", this.userService.getAll());
     }
 
     @GetMapping("/edit/user/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ModelAndView editUser(@PathVariable String id, ModelAndView modelAndView) {
-
-        UserEditBindingModel userEditBindingModel = this.userService.findById(id);
-        modelAndView.setViewName("admins/edit-user");
-
-        List<RoleServiceModel> roles = this.roleService.findAllRoles();
-
-        modelAndView.addObject("roles", roles);
-
-        modelAndView.addObject("user", userEditBindingModel);
-
-        return modelAndView;
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ModelAndView editUser(@PathVariable String id, @ModelAttribute UserEditBindingModel userEditBindingModel) {
+        userEditBindingModel = this.userService.findById(id);
+        Object[] models = {userEditBindingModel, this.roleService.findAllRoles(), id};
+        return this.view("admins/edit-user", models, "user", "roles", "userId");
     }
 
+
     @PostMapping("/edit/user/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView editUser(@PathVariable String id, @Valid @ModelAttribute(name = "user") UserEditBindingModel editUserBindingModel,
-                                      BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ModelAndView editUser(@PathVariable String id, @Valid @ModelAttribute UserEditBindingModel editUserBindingModel,
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
-            redirectAttributes.addFlashAttribute("user", editUserBindingModel);
-            modelAndView.setViewName("redirect:/admins/all-users");
-        } else {
-            this.userService.editUser(editUserBindingModel);
-
-            modelAndView.setViewName("admins/all-users");
+            Object[] models = {editUserBindingModel, this.roleService.findAllRoles(), id};
+            return this.view("admins/edit-user", models, "user", "roles", "userId");
         }
+        this.userService.editUser(id, editUserBindingModel);
 
-        return modelAndView;
+        return this.redirect("/admins/users");
     }
 
     @GetMapping("/services")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ModelAndView viewAllServices() {
-        List<ServiceProdViewModel> services = this.serviceProdService.getAllServices();
-        return this.view("admins/all-services", "services", services);
+        return this.view("admins/all-services", "services", this.serviceProdService.getAllServices());
     }
 
     @GetMapping("/services/add")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ModelAndView addVirus(ModelAndView modelAndView) {
         ServiceProdAddBindingModel model = new ServiceProdAddBindingModel();
         modelAndView.addObject("service", model);
@@ -93,33 +80,80 @@ public class AdminController extends BaseController {
     }
 
     @PostMapping("/services/add")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public String addVirusConfirm(@Valid @ModelAttribute("service") ServiceProdAddBindingModel serviceProdModel, BindingResult bindingResult, Model model) {
-
-
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("service", serviceProdModel);
             return "admins/add-service";
         }
-
-
         this.serviceProdService.addService(serviceProdModel);
-
         return "redirect:/admins/services";
+    }
 
+    @GetMapping("/services/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
+    public ModelAndView deleteVirus(@PathVariable Long id) {
+        return this.view("admins/delete-service", "service", this.serviceProdService.getServiceToDelete(id));
+    }
+
+    @PostMapping("/services/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
+    public ModelAndView deleteVirusConfirm(@PathVariable Long id) {
+        this.serviceProdService.deleteService(id);
+        return this.redirect("/admins/services");
     }
 }
 
 
+//    @GetMapping("/edit/user/{id}")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    public ModelAndView editUser(@PathVariable String id, ModelAndView modelAndView) {
+//
+//        UserEditBindingModel userEditBindingModel = this.userService.findById(id);
+//        modelAndView.setViewName("admins/edit-user");
+//
+//        List<RoleServiceModel> roles = this.roleService.findAllRoles();
+//
+//        modelAndView.addObject("roles", roles);
+//
+//        modelAndView.addObject("user", userEditBindingModel);
+//
+//        return modelAndView;
+//    }
 
 
+//
+//    @PostMapping("/edit/user/{id}")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public ModelAndView editUser(@PathVariable String id, @Valid @ModelAttribute(name = "user") UserEditBindingModel editUserBindingModel,
+//                                 BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+//            redirectAttributes.addFlashAttribute("user", editUserBindingModel);
+//            modelAndView.setViewName("redirect:/admins/all-users");
+//        } else {
+//            this.userService.editUser(editUserBindingModel);
+//
+//            modelAndView.setViewName("admins/all-users");
+//        }
+//
+//        return modelAndView;
+//    }
 
 
-
-
-
-
-
+//    @PostMapping("/edit/user/{id}")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    public String editUser(@Valid @ModelAttribute(name = "user") UserEditBindingModel editUserBindingModel,
+//                           BindingResult bindingResult, Model model ,@PathVariable String id) {
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("user", bindingResult);
+//            model.addAttribute("roles",this.roleService.findAllRoles());
+//            return "admins/edit-user";
+//        }
+//        this.userService.editUser(editUserBindingModel);
+//
+//        return "redirect:/admins/users";
+//    }
 
 
 //    @PostMapping("/edit/user/{id}")

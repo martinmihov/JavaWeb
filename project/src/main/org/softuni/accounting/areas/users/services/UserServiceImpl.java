@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(@Valid UserRegisterBindingModel model) {
+    public void registerUser(@Valid UserRegisterBindingModel model) {
         User user = this.modelParser.convert(model, User.class);
         user.setPassword(this.passwordEncoder.encode(model.getPassword()));
 
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         user.getRoles().add(role);
 
         this.roleRepository.save(role);
-        return this.userRepository.save(user);
+        this.userRepository.save(user);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> user = this.userRepository.findById(id);
         if (user.isPresent()) {
-            Set<Long> roleIds = new HashSet<>();
             UserEditBindingModel userEditBindingModel = this.modelParser.convert(user.get(), UserEditBindingModel.class);
+            Set<Long> roleIds = new HashSet<>();
             for (Role role : user.get().getRoles()) {
                 roleIds.add(role.getId());
             }
@@ -104,25 +104,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editUser(@Valid UserEditBindingModel model) {
-        Optional<User> optionalUser = this.userRepository.findById(model.getId());
+    public void editUser(String id, UserEditBindingModel model) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            user.setEmail(model.getEmail());
             user.setUsername(model.getUsername());
+
             if (model.getPassword() != null && !model.getPassword().isEmpty()) {
                 user.setPassword(this.passwordEncoder.encode(model.getPassword()));
             }
-            user.setEmail(model.getEmail());
 
             Set<Long> rolesIds = user.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
-            for (Long id : rolesIds) {
-                if (!model.getRolesIds().contains(id)) {
-                    user.getRoles().remove(this.roleRepository.getOne(id));
+            for (Long roleId : rolesIds) {
+                if (!model.getRolesIds().contains(roleId)) {
+                    user.getRoles().remove(this.roleRepository.getOne(roleId));
                 }
             }
-            for (Long id : model.getRolesIds()) {
-                if (!rolesIds.contains(id)) {
-                    Role role = this.roleRepository.getOne(id);
+            for (Long roleId : model.getRolesIds()) {
+                if (!rolesIds.contains(roleId)) {
+                    Role role = this.roleRepository.getOne(roleId);
                     user.getRoles().add(role);
                     role.getUsers().add(user);
                     this.roleRepository.save(role);
@@ -132,4 +133,44 @@ public class UserServiceImpl implements UserService {
             this.userRepository.save(user);
         }
     }
+    //TODO - Map User to UserServiceModel
+    @Override
+    public List<User> findAll() {
+        return this.userRepository.findAll();
+    }
+
+    @Override
+    public void save(User user) {
+        this.userRepository.save(user);
+    }
 }
+
+//    @Override
+//    public void editUser(@Valid UserEditBindingModel model) {
+//        Optional<User> optionalUser = this.userRepository.findById(model.getId());
+//        if (optionalUser.isPresent()) {
+//            User user = optionalUser.get();
+//            user.setUsername(model.getUsername());
+//            if (model.getPassword() != null && !model.getPassword().isEmpty()) {
+//                user.setPassword(this.passwordEncoder.encode(model.getPassword()));
+//            }
+//            user.setEmail(model.getEmail());
+//
+//            Set<Long> rolesIds = user.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
+//            for (Long roleId : rolesIds) {
+//                if (!model.getRolesIds().contains(roleId)) {
+//                    user.getRoles().remove(this.roleRepository.getOne(roleId));
+//                }
+//            }
+//            for (Long roleId : model.getRolesIds()) {
+//                if (!rolesIds.contains(roleId)) {
+//                    Role role = this.roleRepository.getOne(roleId);
+//                    user.getRoles().add(role);
+//                    role.getUsers().add(user);
+//                    this.roleRepository.save(role);
+//                }
+//            }
+//
+//            this.userRepository.save(user);
+//        }
+//    }

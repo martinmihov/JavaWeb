@@ -10,35 +10,35 @@
 
 <div class="container">
     <h1 class="mt-2">Edit user</h1>
-
-    <form class="mt-2 mb-5" th:action="@{/admins/user/edit/{id}(id=${user.id})}" th:method="POST" th:object="${user}">
+    <!--th:action="@{/admins/user/edit/{id}(id=${user.id})}"-->
+    <form class="mt-2 mb-5" th:action="@{/admins/user/edit/{id}(id=${userId})}" th:method="POST" th:object="${user}">
 
         <div class="form-group" >
-            <label for="name">Username</label>
-            <input type="text" class="form-control" id="name" th:field="*{username}" th:classappend="${#fields.hasErrors('username')}? 'is-invalid'"/>
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" th:field="*{username}" th:classappend="${#fields.hasErrors('username')}? 'is-invalid'"/>
             <small class="invalid-feedback" style="display: block" id="nameError" th:each="error : ${#fields.errors('username')}" th:text="${error}"></small>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}">
+            <input type="password" class="form-control" id="password" name="password" th:field="*{password}">
         </div>
         <div class="form-group">
-            <label for="confirm-password">Confirm password</label>
-            <input type="password" class="form-control" id="confirm-password" th:field="*{confirmPassword}">
+            <label for="confirmPassword">Confirm password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}">
             <small class="invalid-feedback" style="display: block" id="confirm-password-mismatch" th:each="error : ${#fields.errors('global')}" th:text="${error}"></small>
         </div>
 
         <div class=" form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"/>
+            <input type="email" class="form-control" id="email" name="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"/>
             <small class="invalid-feedback" style="display: block" id="descriptionError" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>
         </div>
 
 
         <div class="form-group">
-            <label for="roles">Roles</label>
-            <select multiple class="form-control" id="roles" th:field="*{rolesIds}">
+            <label for="rolesIds">Roles</label>
+            <select multiple class="form-control" id="rolesIds" name="rolesIds" th:field="*{rolesIds}">
                 <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
                         th:selected="${#lists.contains(user.rolesIds, role.id)}"></option>
             </select>

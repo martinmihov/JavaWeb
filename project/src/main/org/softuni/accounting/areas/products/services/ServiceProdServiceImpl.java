@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -43,6 +44,7 @@ public class ServiceProdServiceImpl implements ServiceProdService {
     public List<ServiceProdViewModel> getAllServicesByType(ServiceType type) {
         List<ServiceProd> sps = this.serviceProdRepository.findAllByServiceTypeEquals(type);
         List<ServiceProdViewModel> servicesByType = new ArrayList<>();
+
         for (ServiceProd sp : sps) {
             ServiceProdViewModel model = this.modelParser.convert(sp, ServiceProdViewModel.class);
             servicesByType.add(model);
@@ -52,7 +54,17 @@ public class ServiceProdServiceImpl implements ServiceProdService {
 
     @Override
     public void addService(@Valid ServiceProdAddBindingModel addServiceModel) {
-        this.serviceProdRepository
-                .save(this.modelParser.convert(addServiceModel, ServiceProd.class));
+        this.serviceProdRepository.save(this.modelParser.convert(addServiceModel, ServiceProd.class));
+    }
+
+    @Override
+    public ServiceProdViewModel getServiceToDelete(Long id) {
+        Optional<ServiceProd> serv = this.serviceProdRepository.findById(id);
+        return serv.map(serviceProd -> this.modelParser.convert(serviceProd, ServiceProdViewModel.class)).orElse(null);
+    }
+
+    @Override
+    public void deleteService(Long id) {
+        this.serviceProdRepository.deleteById(id);
     }
 }
