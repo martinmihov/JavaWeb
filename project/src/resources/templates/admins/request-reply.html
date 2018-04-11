@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <!--/*@thymesVar id="virusDto" type="org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel"*/-->
+    <div class="container contact-form" th:object="${replyToRequest}">
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="pb-3 align-left mbr-fonts-style display-6"
+                    th:text="|Request by *{senderEmail}|"></h6>
+                <form class="block mbr-form" readonly="readonly">
+                    <div class="row">
+                        <div class="col-md-6 multi-horizontal" data-for="senderSubject">
+                            <input type="text" class="form-control input text-white" name="senderSubject"
+                                   data-form-field="SenderSubject" placeholder="Subject" required=""
+                                   id="senderSubject" readonly="readonly" th:field="*{senderSubject}"
+                                   th:classappend="${#fields.hasErrors('senderSubject')}? 'is-invalid'"/>
+                        </div>
+                        <div class="col-md-6 multi-horizontal" data-for="senderEmail">
+                            <input type="text" class="form-control input text-white " name="senderEmail"
+                                   data-form-field="SenderEmail" placeholder="Email"
+                                   th:value="*{senderEmail}" required=""
+                                   id="senderEmail" readonly="readonly"/>
+                        </div>
+                        <div class="col-md-12" data-for="senderMessage">
+                            <textarea class="form-control input text-white" name="senderMessage" rows="3"
+                                      data-form-field="SenderMessage" placeholder="Message"
+                                      id="senderMessage" readonly="readonly" th:field="*{senderMessage}"
+                                      th:classappend="${#fields.hasErrors('senderMessage')}? 'is-invalid'"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-group" th:action="@{/admins/reply-to-requests/response}" th:method="POST">
+                    <label class="form-control-label mbr-fonts-style display-7" for="replyMessage">Reply</label>
+                    <input id="id" name="id" type="hidden" th:field="*{id}"/>
+                    <textarea type="text" class="form-control" name="replyMessage" rows="7"
+                              data-form-field="replyMessage" id="replyMessage"></textarea>
+                    <label class="form-control-label mbr-fonts-style display-7 mt-4" for="price">Approximate price</label>
+                    <input type="text" class="form-control input" id="price" name="price"/>
+                    <div class="card card-outline-secondary my-4">
+                        <button class="btn btn-outline-success text-primary">Reply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+<!--<script>-->
+<!--var myVar;-->
+
+<!--function myFunction() {-->
+<!--myVar = when.loadeve(showPage, 1000);-->
+<!--}-->
+
+<!--function showPage() {-->
+<!--document.getElementById("loader").style.display = "none";-->
+<!--document.getElementById("myDiv").style.display = "block";-->
+<!--}-->
+<!--</script>-->
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml"-->
+<!--xmlns:th="http://www.thymeleaf.org"-->
+<!--xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--<th:block th:replace="~{fragments/head}"></th:block>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--<h2>Centered Modal Example</h2>-->
+<!--<p>Center the modal vertically and horizontally within the page, with the .modal-dialog-centered class.</p>-->
+<!--&lt;!&ndash; Button to Open the Modal &ndash;&gt;-->
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--Open modal-->
+<!--</button>-->
+
+<!--&lt;!&ndash; The Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal">-->
+<!--<div class="modal-dialog modal-dialog-centered">-->
+<!--<div class="modal-content">-->
+
+<!--&lt;!&ndash; Modal Header &ndash;&gt;-->
+<!--<div class="modal-header">-->
+<!--<h4 class="modal-title">Modal Heading</h4>-->
+<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal body &ndash;&gt;-->
+<!--<div class="modal-body">-->
+<!--Modal body..-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal footer &ndash;&gt;-->
+<!--<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<th:block th:replace="~{fragments/footer}"></th:block>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<div class="container">-->
+<!--&lt;!&ndash;SignUp Form&ndash;&gt;-->
+<!--<div class="modal fade" id="modal" role="dialog">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--<h4 class="text-primary">Contact Form</h4>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+<!--<div class="row"><div class="col-md-12">-->
+<!--<form  method="post" action="" role="form" class="form-horizontal">-->
+<!--<div class="form-group">-->
+<!--<label class="col-md-3 control-label" for="name">Name</label>-->
+<!--<div class="col-md-9">-->
+<!--<input id="name" name="name" type="text" placeholder="Your name" class="form-control">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label class="col-md-3 control-label" for="email">Your E-mail</label>-->
+<!--<div class="col-md-9">-->
+<!--<input id="email" name="email" type="text" placeholder="Your email" class="form-control">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label class="col-md-3 control-label" for="message">Your message</label>-->
+<!--<div class="col-md-9">-->
+<!--<textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<div class="col-md-12 text-right">-->
+<!--<button type="submit" class="btn btn-primary btn-lg">Submit</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div></div>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

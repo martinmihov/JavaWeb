@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="container">
+
+        <h1 class="my-4 text-md-center mt-5 offset-2">Requests</h1>
+        <h3 class="text-md-left offset-1">Subjects</h3>
+        <div class="row">
+            <th:block th:each="r,iter : ${requests}" th:object="${r}">
+                <div class="col-lg-3">
+                <div class="list-group mt-4">
+                    <div class="list-group-item active text-md-center" th:text="${r.senderSubject}"></div>
+                </div>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9">
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header" th:text="|Sent by: ${r.senderEmail}|"></div>
+                    <div class="card-body" th:text="${r.senderMessage}"></div>
+                    <a th:href="@{/admins/reply-to-requests/response/{id}(id=${r.id})}" class="btn btn-outline-success text-primary">Reply</a>
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col-lg-9 -->
+            </th:block>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

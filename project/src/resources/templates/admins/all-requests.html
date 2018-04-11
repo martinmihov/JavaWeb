@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="~{fragments/head}"></th:block>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="container mt-5">
+        <h1 class="mt-5">All Requests</h1>
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sent on</th>
+                <th scope="col">Sent by</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Description</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="r,iter : ${requests}" th:object="${r}">
+                <tr>
+                    <th scope="row" th:text="${iter.index + 1}"></th>
+                    <td th:text="*{{requestSentOn}}"></td>
+                    <td th:text="*{senderEmail}"></td>
+                    <td th:text="*{senderSubject}"></td>
+                    <td th:text="*{senderMessage}"></td>
+                    <!--<td><a class="btn btn-danger" th:href="@{/admins/requests/respond/{id}(id=${r.id})}">Respond</a></td>-->
+                    <td>
+                        <form th:method="POST" th:action="@{/admins/requests/delete/{id}(id=${r.id})}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

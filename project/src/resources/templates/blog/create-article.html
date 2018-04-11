@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="title col-12 col-lg-8">
+                <h3 class="text-center text-white pb-4 display-3">Write a post article</h3>
+                <h5 class="text-center pb-5 text-primary display-5">
+                    Share your thoughts with our clients
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-lg-end">
+            <div class="media-container-column col-lg-8">
+                <div data-form-alert="" hidden="">
+                    Thanks for filling out the form!
+                </div>
+                <form class="form-horizontal" th:action="@{/blog/articles/create}" enctype="multipart/form-data"
+                      th:method="POST" th:object="${article}">
+                    <fieldset>
+                        <legend class="offset-2">New Post</legend>
+
+                        <div class="form-group offset-1">
+                            <label class="col-sm-4 control-label text-center" for="article_title">Article Title</label>
+                            <div class="col-sm-4 ">
+                                <input type="text" class="form-control" id="article_title" name="title"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label text-center offset-1" for="article_content">Content</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" rows="6" id="article_content" name="content"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label btn btn-secondary offset-1"  for="file_upload">Upload image</label>
+                            <div class="col-sm-6">
+                                <input type="file" class="form-control" id="file_upload" name="image"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group offset-1">
+                            <div class="col-sm-4">
+                                <input type="submit" class="btn btn-primary" value="Submit Post"/>
+                                <a class="btn btn-default" th:href="@{/}">Cancel</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>
