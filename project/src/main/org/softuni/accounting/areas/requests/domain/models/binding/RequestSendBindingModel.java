@@ -1,11 +1,13 @@
 package org.softuni.accounting.areas.requests.domain.models.binding;
 
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class RequestSendBindingModel {
 
@@ -17,9 +19,10 @@ public class RequestSendBindingModel {
 
     private User senderUser;
 
-    private LocalDateTime requestSentOn;
+    private Date requestSentOn;
 
     public RequestSendBindingModel() {
+        this.requestSentOn = new Date();
     }
 
     @NotEmpty(message = "Subject cannot be empty")
@@ -59,11 +62,11 @@ public class RequestSendBindingModel {
         this.senderUser = senderUser;
     }
 
-    public LocalDateTime getRequestSentOn() {
+    public Date getRequestSentOn() {
         return this.requestSentOn;
     }
 
-    public void setRequestSentOn() {
-        this.requestSentOn = LocalDateTime.now();
+    public void setRequestSentOn(Date requestSentOn) {
+        this.requestSentOn = requestSentOn;
     }
 }

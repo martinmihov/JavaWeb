@@ -20,9 +20,9 @@ import java.util.Set;
 @Component
 public class FirstToRegisterHasAllRolesInterceptor extends HandlerInterceptorAdapter {
 
-    private UserService userService;
-    private RoleService roleService;
-    private ModelParser modelParser;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final ModelParser modelParser;
 
     @Autowired
     public FirstToRegisterHasAllRolesInterceptor(UserService userService, RoleService roleService, ModelParser modelParser) {
@@ -46,5 +46,4 @@ public class FirstToRegisterHasAllRolesInterceptor extends HandlerInterceptorAda
             this.userService.save(user);
         }
     }
-
 }

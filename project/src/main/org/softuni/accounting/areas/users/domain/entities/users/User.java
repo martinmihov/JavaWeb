@@ -1,6 +1,7 @@
 package org.softuni.accounting.areas.users.domain.entities.users;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.softuni.accounting.areas.blog.domain.entities.Article;
 import org.softuni.accounting.areas.requests.domain.entities.Request;
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
 
@@ -25,21 +26,16 @@ public class User implements Serializable {
 
     private Set<Request> requests;
 
+    private Set<Article> articles;
 
-    public User(String email, String fullName, String password) {
-        this.email = email;
-        this.username = fullName;
-        this.password = password;
-
-        this.roles = new HashSet<>();
-        this.requests = new HashSet<>();
-
-    }
 
     public User() {
-        this.roles = new HashSet<>();
-        this.requests = new HashSet<>();
+        this.setRoles(new HashSet<>());
+        this.setRequests(new HashSet<>());
+        this.setArticles(new HashSet<>());
     }
+
+
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -109,4 +105,15 @@ public class User implements Serializable {
     public void addRequest(Request request) {
         this.requests.add(request);
     }
+
+    @OneToMany(mappedBy = "author")
+    public Set<Article> getArticles() {
+        return this.articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
+    }
 }
+
+//TODO CASCADE DELETION FROM THE DB

@@ -23,7 +23,7 @@
                     <th scope="row" th:text="${iter.index + 1}"></th>
                     <td th:text="*{description}"></td>
                     <td th:text="*{serviceType}"></td>
-                    <td><a class="btn btn-danger" th:href="@{/admins/services/delete/{id}(id=${s.id})}">Delete</a></td>
+                    <td><a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/admins/services/delete/{id}(id=${s.id})}">Delete</a></td>
                 </tr>
             </th:block>
             </tbody>

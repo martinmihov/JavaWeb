@@ -3,11 +3,12 @@ package org.softuni.accounting.areas.products.domain.entities;
 import org.softuni.accounting.areas.products.domain.entities.enums.ServiceType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "services")
-public class ServiceProd {
+public class ServiceProd implements Serializable {
 
     private Long id;
     private BigDecimal price;

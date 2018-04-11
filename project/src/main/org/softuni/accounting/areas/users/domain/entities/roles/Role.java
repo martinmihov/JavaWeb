@@ -19,7 +19,7 @@ public class Role implements Serializable{
     private Set<User> users;
 
     public Role() {
-        this.users = new HashSet<>();
+        this.setUsers(new HashSet<>());
     }
 
     @Id
@@ -49,11 +49,5 @@ public class Role implements Serializable{
 
     public void setUsers(Set<User> users) {
         this.users = users;
-    }
-
-    @Transient
-    public String getSimpleName() {
-        return StringUtils.capitalize(
-                this.getName().substring(5).toLowerCase());
     }
 }

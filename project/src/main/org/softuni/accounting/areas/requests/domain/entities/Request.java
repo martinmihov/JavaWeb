@@ -1,13 +1,16 @@
 package org.softuni.accounting.areas.requests.domain.entities;
 
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "requests")
-public class Request {
+public class Request implements Serializable {
 
     private Long id;
 
@@ -19,9 +22,17 @@ public class Request {
 
     private User senderUser;
 
-    private LocalDateTime requestSentOn;
+    private BigDecimal price;
+
+    private Date requestSentOn;
+
+    private boolean isReplied;
+
+    private List<Reply> replies;
 
     public Request() {
+        this.setRequestSentOn(new Date());
+        this.setReplies(new LinkedList<>());
     }
 
     @Id
@@ -61,7 +72,7 @@ public class Request {
         this.senderEmail = senderEmail;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL) // TODO Cascade.all or not
     @JoinColumn(name = "user_requests")
     public User getSenderUser() {
         return this.senderUser;
@@ -71,21 +82,50 @@ public class Request {
         this.senderUser = senderUser;
     }
 
-    @Column(name = "date_time",nullable = false)
-    public LocalDateTime getRequestSentOn() {
+    @Column(name = "price")
+    public BigDecimal getRequestPrice() {
+        return this.price;
+    }
+
+    public void setRequestPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+
+    @Column(name = "sent_on",nullable = false)
+    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
+    public Date getRequestSentOn() {
         return this.requestSentOn;
     }
 
-    public void setRequestSentOn(LocalDateTime requestSentOn) {
-        this.requestSentOn = LocalDateTime.now();
+    public void setRequestSentOn(Date requestSentOn) {
+        this.requestSentOn = requestSentOn;
     }
 
-    //    public LocalDateTime getRequestSentOn() {
-//        return this.requestSentOn;
-//    }
-//
-//    public void setRequestSentOn() {
-//        Date date = new Date();
-//        this.requestSentOn = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-//    }
+
+    @Column(name = "is_replied")
+    public boolean getIsReplied() {
+        return this.isReplied;
+    }
+
+    public void setIsReplied(boolean isReplied) {
+        this.isReplied = isReplied;
+    }
+
+    @OneToMany(mappedBy = "request")
+    public List<Reply> getReplies() {
+        return this.replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
+
+
+    public void addReply(Reply reply){
+        this.replies.add(reply);
+    }
 }
+
+//@OneToMany(cascade = CascadeType.ALL,
+//        fetch = FetchType.LAZY,mappedBy = "request")

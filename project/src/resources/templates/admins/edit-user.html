@@ -3,15 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="~{fragments/head}"></div>
-
 <body>
-
 <div th:replace="~{fragments/navbar}"></div>
-
 <div class="container">
     <h1 class="mt-2">Edit user</h1>
     <!--th:action="@{/admins/user/edit/{id}(id=${user.id})}"-->
-    <form class="mt-2 mb-5" th:action="@{/admins/user/edit/{id}(id=${userId})}" th:method="POST" th:object="${user}">
+    <form class="mt-2 mb-5" th:action="@{/admins/edit/user/{id}(id=${userId})}" th:method="POST" th:object="${user}">
 
         <div class="form-group" >
             <label for="username">Username</label>

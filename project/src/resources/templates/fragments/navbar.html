@@ -14,9 +14,10 @@
                 <li class="nav-item active">
                     <div class="dropdown">
                         <a class="nav-link" id="dropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" href="/">Services</a>
+                           aria-haspopup="true" aria-expanded="false" th:href="@{/services/all}">Services</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/services/all}">All</a>
                             <a class="dropdown-item" th:href="@{/services/accounting-services}">Accounting</a>
                             <a class="dropdown-item" th:href="@{/services/vat-services}">VAT</a>
                             <a class="dropdown-item" th:href="@{/services/payroll-services}">Payroll</a>
@@ -32,10 +33,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
                 </li>
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <a class="nav-link" id="dropdownMenuLinkBlog" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" th:href="@{/blog/}">Blog</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/blog/}">Home</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/blog/articles/create}">Create article</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" class="nav-item active">
+                    <a class="nav-link" th:href="@{/admins/reply-to-requests}">Reply to Requests</a>
+                </li>
+
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item active">
+                    <a class="nav-link" th:href="@{/admins/requests}">Requests</a>
+                </li>
+
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" class="nav-item active">
                     <a class="nav-link" th:href="@{/admins/services}">Services</a>
                 </li>
 
@@ -44,9 +64,14 @@
                 </li>
 
                 <li class="nav-item disabled" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/users/profile/} + ${#authentication.getPrincipal().getUsername()}">
+                        Profile
+                    </a>
+                </li>
+
+                <li class="nav-item disabled" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/logout}">
                         Logout ( <span th:text="${#authentication.getPrincipal().getUsername()}"></span> )
-
                     </a>
                 </li>
 

@@ -45,14 +45,14 @@
                             Thanks for filling out the form!
                         </div>
                         <!--/*@thymesVar id="virusDto" type="org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel"*/-->
-                        <form class="block mbr-form" th:action="@{/contact-us}" method="POST" data-form-title="Request Form" th:object="${requestForm}">
+                        <form class="block mbr-form" th:action="@{/contact-us}" method="POST" data-form-articleTitle="Request Form" th:object="${requestForm}">
                             <input type="hidden" data-form-email="true" value="44AuoOeYtJwJhCQAt1bwP6le5Z4RfRd5BZf43WsjSuwHcT0Qs78ZrHvX5++bPVZSjP2KWAwu7FMdyPJSg+JHFd9WHR94bYwVjv67MUE8EdCzbC0NmF20TCEyJMj7IT0z"/>
                             <div class="row">
                                 <div class="col-md-6 multi-horizontal" data-for="senderSubject">
                                     <input type="text" class="form-control input" name="senderSubject" data-form-field="SenderSubject" placeholder="Subject" required="" id="senderSubject" />
                                 </div>
                                 <div class="col-md-6 multi-horizontal" data-for="senderEmail">
-                                    <input type="text" class="form-control input" name="senderEmail" data-form-field="SenderEmail" placeholder="Email" th:value="${#authentication.getPrincipal().getUsername()}" required="" id="senderEmail" readonly="readonly"/>
+                                    <input type="text" class="form-control input color bg-white" name="senderEmail" data-form-field="SenderEmail" placeholder="Email" th:value="${#authentication.getPrincipal().getUsername()}" required="" id="senderEmail" readonly="readonly"/>
                                 </div>
                                 <div class="col-md-12" data-for="senderMessage">
                                     <textarea class="form-control input" name="senderMessage" rows="3" data-form-field="SenderMessage" placeholder="Message" id="senderMessage"></textarea>
@@ -107,7 +107,7 @@
 
                 <!--&lt;!&ndash; Modal Header &ndash;&gt;-->
                 <!--<div class="modal-header">-->
-                    <!--<h4 class="modal-title">Modal Heading</h4>-->
+                    <!--<h4 class="modal-articleTitle">Modal Heading</h4>-->
                     <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                 <!--</div>-->
 

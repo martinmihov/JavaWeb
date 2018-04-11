@@ -4,6 +4,7 @@ import org.softuni.accounting.areas.users.domain.entities.roles.Role;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
 import org.softuni.accounting.areas.users.domain.models.binding.UserEditBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserRegisterBindingModel;
+import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
 import org.softuni.accounting.areas.users.domain.models.view.UserViewModel;
 import org.softuni.accounting.areas.users.repositories.RoleRepository;
 import org.softuni.accounting.areas.users.repositories.UserRepository;
@@ -143,6 +144,26 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         this.userRepository.save(user);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
+//    @Override
+//    public UserViewModel findUserByEmail(String email) {
+//        return this.userRepository.findUserByEmail(email);
+//    }
+
+    @Override
+    public ProfileViewModel findProfile(String email) {
+        User user = this.userRepository.findByEmail(email);
+        return this.modelParser.convert(user,ProfileViewModel.class);
+    }
+
+
+
+
 }
 
 //    @Override

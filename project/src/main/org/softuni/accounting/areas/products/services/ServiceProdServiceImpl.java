@@ -60,7 +60,10 @@ public class ServiceProdServiceImpl implements ServiceProdService {
     @Override
     public ServiceProdViewModel getServiceToDelete(Long id) {
         Optional<ServiceProd> serv = this.serviceProdRepository.findById(id);
-        return serv.map(serviceProd -> this.modelParser.convert(serviceProd, ServiceProdViewModel.class)).orElse(null);
+        if(serv.isPresent()){
+            return serv.map(serviceProd -> this.modelParser.convert(serviceProd, ServiceProdViewModel.class)).orElse(null);
+        }
+        return null;
     }
 
     @Override

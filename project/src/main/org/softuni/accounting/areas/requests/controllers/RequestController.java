@@ -36,7 +36,7 @@ public class RequestController extends BaseController {
         if(bindingResult.hasErrors()){
             this.view("request/request","requestForm",requestModel);
         }
-        this.requestService.saveMessage(requestModel);
+        this.requestService.saveRequest(requestModel);
         return this.redirect("/");
     }
 }

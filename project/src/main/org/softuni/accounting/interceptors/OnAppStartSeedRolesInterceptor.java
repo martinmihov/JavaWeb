@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class OnAppStartSeedRolesInterceptor extends HandlerInterceptorAdapter {
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Autowired
     public OnAppStartSeedRolesInterceptor(RoleService roleService, UserService userService) {

@@ -7,8 +7,9 @@
 <div class="container-fluid">
     <th:block th:replace="~{fragments/navbar}"></th:block>
     <div class="container mt-md-5">
-        <h1><!--/*@thymesVar id="serviceType" type="org.softuni.accounting.areas.products.controllers.ServiceController"*/-->
-        <span th:text="${serviceType}"></span> Services</h1>
+        <h1>
+            <!--/*@thymesVar id="serviceType" type="org.softuni.accounting.areas.products.controllers.ServiceController"*/-->
+            <span th:text="${serviceType}"></span> Services</h1>
         <ul class="mt-5">
             <div th:each="s,iterStat : ${services}" th:object="${s}">
                 <li>
@@ -17,8 +18,7 @@
             </div>
         </ul>
     </div>
-    <div class="container-fluid">
-        <th:block th:replace="~{fragments/footer}"></th:block>
-    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
 </body>
 </html>
