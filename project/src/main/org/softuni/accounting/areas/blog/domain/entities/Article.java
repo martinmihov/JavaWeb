@@ -105,6 +105,7 @@ public class Article implements Serializable {
         this.date = date;
     }
 
+    @Column(name = "image_path")
     public String getImagePath() {
         return this.imagePath;
     }

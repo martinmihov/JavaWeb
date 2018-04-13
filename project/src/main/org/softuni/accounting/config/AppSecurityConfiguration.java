@@ -25,14 +25,14 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/css/**", "/js/**", "/images/**");
+                .antMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/users/login", "/users/register","/blog/").permitAll()
+                .antMatchers("/", "/users/login", "/users/register", "/blog/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

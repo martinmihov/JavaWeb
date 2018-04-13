@@ -1,7 +1,6 @@
 package org.softuni.accounting.areas.users.domain.models.view;
 
-import org.softuni.accounting.areas.requests.domain.entities.Request;
-import org.softuni.accounting.areas.requests.domain.models.view.ReplyViewModel;
+import org.softuni.accounting.areas.blog.domain.models.view.ArticleViewModel;
 import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 
 import java.util.Set;
@@ -12,8 +11,11 @@ public class ProfileViewModel {
 
     private String email;
 
-//    private Set<Request> requests;
+    private String imagePath;
+
     private Set<RequestViewModel> requests;
+
+    private Set<ArticleViewModel> articleViewModels;
 
     public ProfileViewModel() {
     }
@@ -34,6 +36,14 @@ public class ProfileViewModel {
         this.email = email;
     }
 
+    public String getImagePath() {
+        return this.imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     public Set<RequestViewModel> getRequests() {
         return this.requests;
     }
@@ -42,12 +52,11 @@ public class ProfileViewModel {
         this.requests = requests;
     }
 
-    //    public Set<Request> getRequests() {
-//        return this.requests;
-//    }
-//
-//    public void setRequests(Set<Request> requests) {
-//        this.requests = requests;
-//    }
+    public Set<ArticleViewModel> getArticleViewModels() {
+        return this.articleViewModels;
+    }
 
+    public void setArticleViewModels(Set<ArticleViewModel> articleViewModels) {
+        this.articleViewModels = articleViewModels;
+    }
 }

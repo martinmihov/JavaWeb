@@ -17,13 +17,15 @@
                 <div class="col-lg-3">
                 <div class="list-group mt-4">
                     <div class="list-group-item active text-md-center" th:text="${r.senderSubject}"></div>
+                    <div class="list-group-item text-success text-md-center" th:if="*{isReplied}">replied</div>
+                    <div class="list-group-item text-warning text-md-center" th:unless="*{isReplied}">not replied</div>
                 </div>
             </div>
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
                 <div class="card card-outline-secondary my-4">
-                    <div class="card-header" th:text="|Sent by: ${r.senderEmail}|"></div>
+                    <div class="card-header" th:text="|Sent by: ${r.senderEmail} on *{requestSentOn}|"></div>
                     <div class="card-body" th:text="${r.senderMessage}"></div>
                     <a th:href="@{/admins/reply-to-requests/response/{id}(id=${r.id})}" class="btn btn-outline-success text-primary">Reply</a>
                 </div>

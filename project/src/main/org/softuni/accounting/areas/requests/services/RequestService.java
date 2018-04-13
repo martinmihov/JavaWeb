@@ -18,4 +18,6 @@ public interface RequestService {
     void deleteRequest(Long id);
 
     Request findById(Long id);
+
+//    List<RequestViewModel> getRequestsBySenderEmailOrderByIsRepliedDesc(String authorEmail);
 }

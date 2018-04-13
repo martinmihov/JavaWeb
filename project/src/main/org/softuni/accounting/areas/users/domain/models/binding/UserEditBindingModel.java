@@ -1,5 +1,7 @@
 package org.softuni.accounting.areas.users.domain.models.binding;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Set;
 
 public class UserEditBindingModel {
@@ -11,6 +13,8 @@ public class UserEditBindingModel {
     private String confirmPassword;
 
     private String email;
+
+    private MultipartFile image;
 
     private Set<Long> rolesIds;
 
@@ -49,6 +53,14 @@ public class UserEditBindingModel {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public MultipartFile getImage() {
+        return this.image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     public Set<Long> getRolesIds() {

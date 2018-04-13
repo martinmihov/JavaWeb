@@ -4,7 +4,6 @@ import org.softuni.accounting.areas.requests.domain.entities.Request;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class ReplyBindingModel {
@@ -37,6 +36,7 @@ public class ReplyBindingModel {
         this.price = price;
     }
 
+    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
     public Date getReplySentOn() {
         return this.replySentOn;
     }

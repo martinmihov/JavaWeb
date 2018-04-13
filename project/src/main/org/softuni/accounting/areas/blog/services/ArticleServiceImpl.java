@@ -3,9 +3,11 @@ package org.softuni.accounting.areas.blog.services;
 import org.softuni.accounting.areas.blog.domain.entities.Article;
 import org.softuni.accounting.areas.blog.domain.models.binding.ArticleBindingModel;
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleDeleteEditViewModel;
+import org.softuni.accounting.areas.blog.domain.models.view.ArticleHomeViewModel;
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleViewModel;
 import org.softuni.accounting.areas.blog.repositories.ArticleRepository;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
 import org.softuni.accounting.areas.users.services.UserService;
 import org.softuni.accounting.utils.parser.interfaces.ModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,6 +160,29 @@ public class ArticleServiceImpl implements ArticleService {
             allArticles.add(model);
         }
         return allArticles;
+    }
+
+    @Override
+    public List<ArticleHomeViewModel> getArticlesByOrderByDateDesc() {
+        List<Article> articles = this.articleRepository.findTop3ArticlesByOrderByDateDesc();
+        List<ArticleHomeViewModel> homeArticles = new ArrayList<>();
+        for (Article article : articles) {
+            ArticleHomeViewModel homeArticle = this.modelParser.convert(article,ArticleHomeViewModel.class);
+            homeArticles.add(homeArticle);
+        }
+        return homeArticles;
+    }
+
+    @Override
+    public List<ArticleHomeViewModel> getArticlesByAuthor(ProfileViewModel author) {
+        User user = this.userService.findByEmail(author.getEmail());
+        List<Article> articlesByAuthor = this.articleRepository.findArticlesByAuthor(user);
+        List<ArticleHomeViewModel> articlesByAuthorView = new ArrayList<>();
+        for (Article article : articlesByAuthor) {
+            ArticleHomeViewModel articleHomeViewModel = this.modelParser.convert(article,ArticleHomeViewModel.class);
+            articlesByAuthorView.add(articleHomeViewModel);
+        }
+        return articlesByAuthorView;
     }
 
     public boolean isUserAuthorOrAdmin(Article article) {

@@ -31,7 +31,7 @@ public class ArticleBindingModel {
     }
 
     public MultipartFile getImage() {
-        return image;
+        return this.image;
     }
 
     public void setImage(MultipartFile image) {
@@ -39,7 +39,7 @@ public class ArticleBindingModel {
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -47,7 +47,7 @@ public class ArticleBindingModel {
     }
 
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(String content) {

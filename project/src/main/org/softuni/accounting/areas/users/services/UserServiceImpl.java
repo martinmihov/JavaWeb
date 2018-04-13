@@ -2,6 +2,7 @@ package org.softuni.accounting.areas.users.services;
 
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.softuni.accounting.areas.users.domain.models.binding.ProfileUploadAvatarBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserEditBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserRegisterBindingModel;
 import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
@@ -12,13 +13,17 @@ import org.softuni.accounting.utils.parser.interfaces.ModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -150,7 +155,37 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByEmail(email);
     }
 
-//    @Override
+    @Override
+    public void uploadProfileAvatar(ProfileUploadAvatarBindingModel model, MultipartFile image) {
+        User userEntity = this.findByEmail(model.getEmail());
+        String imagePath = null;
+        String[] allowedContentTypes = {
+                "image/png",
+                "image/jpg",
+                "image/jpeg",
+                "image/gif"
+        };
+        boolean isContentTypeAllowed = Arrays.asList(allowedContentTypes)
+                .contains(model.getImage().getContentType());
+        if (isContentTypeAllowed) {
+            String imagesPath = "\\src\\resources\\static\\images\\";
+            String imagePathRoot = System.getProperty("user.dir");
+            String imageSaveDirectory = imagePathRoot + imagesPath;
+            String filename = model.getImage().getOriginalFilename();
+            String savePath = imageSaveDirectory + filename;
+            File imageFile = new File(savePath);
+            try {
+                model.getImage().transferTo(imageFile);
+                imagePath = "/images/" + filename;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        userEntity.setImagePath(imagePath);
+        this.userRepository.saveAndFlush(userEntity);
+    }
+    //    @Override
 //    public UserViewModel findUserByEmail(String email) {
 //        return this.userRepository.findUserByEmail(email);
 //    }

@@ -12,4 +12,7 @@ import java.util.LinkedList;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     LinkedList<Reply> getRepliesByRequest(Request request);
+
+
+
 }

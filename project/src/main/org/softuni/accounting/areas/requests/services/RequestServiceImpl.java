@@ -73,5 +73,16 @@ public class RequestServiceImpl implements RequestService {
 
     }
 
+//    @Override
+//    public List<RequestViewModel> getRequestsBySenderEmailOrderByIsRepliedDesc(String authorEmail) {
+//        List<Request> authorRequestsEntity = this.requestRepository.findRequestsBySenderEmailOrderByIsRepliedDesc(authorEmail);
+//        List<RequestViewModel> authorRequests = new ArrayList<>();
+//        for (Request request : authorRequestsEntity) {
+//            RequestViewModel authorRequest = this.modelParser.convert(request,RequestViewModel.class);
+//            authorRequests.add(authorRequest);
+//        }
+//        return authorRequests;
+//    }
+
 
 }

@@ -3,11 +3,13 @@ package org.softuni.accounting.areas.users.services;
 import org.softuni.accounting.areas.requests.domain.models.view.ReplyViewModel;
 import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.softuni.accounting.areas.users.domain.models.binding.ProfileUploadAvatarBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserEditBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserRegisterBindingModel;
 import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
 import org.softuni.accounting.areas.users.domain.models.view.UserViewModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -32,4 +34,6 @@ public interface UserService extends UserDetailsService {
     void save(User user);
 
     User findByEmail(String email);
+
+    void uploadProfileAvatar(ProfileUploadAvatarBindingModel model, MultipartFile image);
 }

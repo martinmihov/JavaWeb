@@ -22,6 +22,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String imagePath;
+
     private Set<Role> roles;
 
     private Set<Request> requests;
@@ -77,6 +79,15 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Column(name = "image_path")
+    public String getImagePath() {
+        return this.imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,11 +1,10 @@
 package org.softuni.accounting.areas.blog.domain.models.view;
 
-import org.softuni.accounting.areas.users.domain.entities.users.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class ArticleViewModel {
+public class ArticleHomeViewModel {
 
     private Long id;
 
@@ -13,15 +12,11 @@ public class ArticleViewModel {
 
     private String content;
 
-    private User author;
+    private Date date;
 
     private String imagePath;
 
-    private Date date;
-
-    private Long pageView;
-
-    public ArticleViewModel() {
+    public ArticleHomeViewModel() {
     }
 
     public Long getId() {
@@ -48,12 +43,13 @@ public class ArticleViewModel {
         this.content = content;
     }
 
-    public User getAuthor() {
-        return this.author;
+    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
+    public Date getDate() {
+        return this.date;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getImagePath() {
@@ -64,24 +60,7 @@ public class ArticleViewModel {
         this.imagePath = imagePath;
     }
 
-    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
-    public Date getDate() {
-        return this.date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Long getPageView() {
-        return this.pageView;
-    }
-
-    public void setPageView(Long pageView) {
-        this.pageView = pageView;
-    }
-
     public String getSummary() {
-        return this.getContent().substring(0, this.getContent().length() / 2) + "...";
+        return this.getContent().substring(0, this.getContent().length() / 5) + "...";
     }
 }

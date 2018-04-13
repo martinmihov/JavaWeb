@@ -93,7 +93,6 @@ public class Request implements Serializable {
 
 
     @Column(name = "sent_on",nullable = false)
-    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
     public Date getRequestSentOn() {
         return this.requestSentOn;
     }

@@ -14,20 +14,20 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <h1 class="my-4 text-primary">Blog
-                    <small class="text-secondary">T&M Consult</small>
+                    <small class="text-secondary">T&amp;M Consult</small>
                 </h1>
 
                 <!-- Blog Post -->
                 <th:block th:each="article : ${articles}" th:object="${article}">
-                <div class="card my-md-5">
-                    <img class="card-img-top" th:src="@{*{imagePath}}" alt="Blog Image">
-                    <div class="card-body">
-                        <h2 class="card-title" th:text="*{title}">Post Title</h2>
-                        <p class="card-text" th:text="${article.getSummary()}"></p>
-                        <a th:href="@{/blog/articles/{id}(id=*{id})}" class="btn btn-primary">Read More &rarr;</a>
+                    <div class="card my-md-5">
+                        <img class="card-img-top" th:src="@{*{imagePath}}" alt="Blog Image">
+                        <div class="card-body">
+                            <h2 class="card-title" th:text="*{title}">Post Title</h2>
+                            <p class="card-text" th:text="${article.getSummary()}"></p>
+                            <a th:href="@{/blog/articles/{id}(id=*{id})}" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                        <div class="card-footer text-muted" th:text="|Posted on *{{date}} by *{author.username}|"></div>
                     </div>
-                    <div class="card-footer text-muted" th:text="|Posted on *{{date}} by *{author.username}|"></div>
-                </div>
                 </th:block>
 
                 <!-- Pagination -->
@@ -106,8 +106,9 @@
         </div>
         <!-- /.row -->
     </div>
-    <th:block th:replace="~{fragments/footer}"></th:block>
+</div>
 </body>
+<th:block th:replace="~{fragments/footer}"></th:block>
 </html>
 
 

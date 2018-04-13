@@ -62,6 +62,7 @@ public class RequestSendBindingModel {
         this.senderUser = senderUser;
     }
 
+    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
     public Date getRequestSentOn() {
         return this.requestSentOn;
     }
