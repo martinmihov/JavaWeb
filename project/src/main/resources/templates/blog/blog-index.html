@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar-blog}"></th:block>
+    <div class="container mt-5">
+        <div class="row" th:action="@{/blog}" th:method="GET">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-10 offset-md-1">
+                <h1 class="my-4 text-primary">Blog
+                    <small class="text-secondary">T&amp;M Consult</small>
+                </h1>
+
+                <!-- Blog Post -->
+                <th:block th:each="post : ${posts}" th:object="${post}">
+                    <div class="card my-md-5">
+                        <img class="card-img-top" th:if="${post.imagePath} != null" th:src="@{${post.imagePath}}"
+                             alt="Blog Image">
+                        <div class="card-body">
+                            <h2 class="card-title text-primary" th:text="*{title}">Post Title</h2>
+                            <p class="card-text" th:text="${post.summary}"></p>
+                            <a th:href="@{/blog/articles/{id}(id=*{id})}"
+                               class="btn btn-outline-primary float-md-right">continue reading ..</a>
+                        </div>
+                        <div class="card-footer text-muted" th:text="|Posted on *{{date}} by *{author.username}|"></div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+    <nav class="col-md-12 mb-md-5">
+        <ul class="pagination d-flex justify-content-center">
+            <!--Previous Button-->
+            <li class="page-item"><a class="page-link" th:if="${posts.hasPrevious()}"
+                                     th:href="@{/blog/(page=${posts.previousPageable().getPageNumber()})}">Previous</a>
+            </li>
+
+            <!--Dot Button-->
+            <li class="page-item"><a class="page-link" th:if="${posts.getPageable().getPageNumber() + 1 > 3}"
+                                     th:disabled="true">...</a></li>
+
+            <!--Pagination Navigation-->
+            <th:block th:each="number : ${#numbers.sequence(
+            ((posts.getPageable().getPageNumber()/ 3) * 3) + 1, ((posts.getPageable().getPageNumber()/ 3) * 3) + 3)}">
+                <li class="page-item"
+                    th:classappend="${number - 1 == posts.getPageable().getPageNumber() ? ' active' : ''}"><a
+                        class="page-link" th:text="${number}" th:href="@{/blog/(page=${number - 1})}"></a></li>
+            </th:block>
+
+            <!--Dot Button-->
+            <li class="page-item"><a class="page-link"
+                                     th:if="${posts.getPageable().getPageNumber() + 1 < posts.getTotalPages() - 2}"
+                                     th:disabled="true">...</a></li>
+
+            <!--Next Button-->
+            <li class="page-item"><a class="page-link" th:if="${posts.hasNext()}"
+                                     th:href="@{/blog/(page=${posts.nextPageable().getPageNumber()})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>

@@ -1,0 +1,365 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/*input[readonly] {*/
+    /*background-color: white;*/
+/*}*/
+
+body {
+    min-height: 100%;
+    padding-top: 3rem;
+    padding-bottom: 12rem;
+    /*color: #5a5a5a;*/
+}
+
+
+/* RETURN TO TOP HREF
+-------------------------------------------------- */
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    width: 50px;
+    height: 50px;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    border-radius: 35px;
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top i {
+    color: #fff;
+    margin: 0;
+    position: relative;
+    left: 16px;
+    top: 13px;
+    font-size: 19px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+#return-to-top:hover i {
+    color: #fff;
+    top: 5px;
+}
+/* RIGHT SIDE WIDGET BLOG
+-------------------------------------------------- */
+
+#widget-right {
+    position: fixed;
+}
+
+/* FOOTER
+-------------------------------------------------- */
+.footer-basic-centered{
+    position: absolute;
+    bottom: 0;
+    background-color: #4E5D6C;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    font: normal 18px sans-serif;
+;
+    /*padding: 45px;*/
+    /*margin-top: 80px;*/
+}
+
+.footer-basic-centered .footer-company-motto{
+    color:  #8d9093;
+    font-size: 24px;
+    margin: 0;
+}
+
+.footer-basic-centered .footer-company-name{
+    color:  #8f9296;
+    font-size: 14px;
+    margin: 0;
+}
+
+.footer-basic-centered .footer-links{
+    list-style: none;
+    font-weight: bold;
+    color:  #ffffff;
+    padding: 35px 0 23px;
+    margin: 0;
+}
+
+.footer-basic-centered .footer-links a{
+    display:inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* If you don't want the footer to be responsive, remove these media queries */
+
+@media (max-width: 600px) {
+
+    .footer-basic-centered{
+        padding: 35px;
+    }
+
+    .footer-basic-centered .footer-company-motto{
+        font-size: 18px;
+    }
+
+    .footer-basic-centered .footer-company-name{
+        font-size: 12px;
+    }
+
+    .footer-basic-centered .footer-links{
+        font-size: 14px;
+        padding: 25px 0 20px;
+    }
+
+    .footer-basic-centered .footer-links a{
+        line-height: 1.8;
+    }
+}
+/*.footer {*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+    /*!* Set the fixed height of the footer here *!*/
+    /*height: 10px;*/
+    /*!*line-height: 60px; !* Vertically center the text there *!*!*/
+    /*!*background-color: #f5f5f5;*!*/
+/*}*/
+/* LOADER CSS
+-------------------------------------------------- */
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* CONTACT FORM CSS
+-------------------------------------------------- */
+.contact-form {
+    padding-top: 90px;
+    padding-bottom: 90px;
+    background-color: #2B3E50;
+}
+.contact-form .mbr-iconfont {
+    font-size: 48px;
+    padding-right: 1rem;
+}
+.contact-form .input {
+    margin-bottom: 15px;
+}
+.contact-form .map {
+    width: 100%;
+    height: 30rem;
+}
+.contact-form .map iframe {
+    width: inherit;
+    height: 100%;
+}
+.contact-form .icon-block {
+    margin-bottom: 10px;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+}
+.contact-form .icon-block .icon-block__icon {
+    display: inline-block;
+    flex-shrink: 0;
+    -webkit-flex-shrink: 0;
+}
+.contact-form .icon-block .icon-block__title {
+    display: inline-block;
+    align-self: center;
+    -webkit-align-self: center;
+    margin-bottom: 0;
+    line-height: 1;
+    font-style: italic;
+}
+.contact-form .mbr-text {
+    color: #767676;
+}
+.contact-form a:not([href]):not([tabindex]) {
+    color: #fff;
+    border-radius: 3px;
+}
+.contact-form .multi-horizontal {
+    flex-grow: 1;
+    -webkit-flex-grow: 1;
+    max-width: 100%;
+}
+.contact-form .input-group-btn {
+    display: block;
+    text-align: center;
+}
+.contact-form .google-map {
+    height: 25rem;
+    position: relative;
+}
+.contact-form .google-map iframe {
+    height: 100%;
+    width: 100%;
+}
+.contact-form .google-map [data-state-details] {
+    color: #6b6763;
+    font-family: Montserrat;
+    height: 1.5em;
+    margin-top: -0.75em;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+.contact-form .google-map[data-state] {
+    background: #e9e5dc;
+}
+.contact-form .google-map[data-state="loading"] [data-state-details] {
+    display: none;
+}
+@media (max-width: 767px) {
+    .contact-form h2 {
+        padding-top: 2rem;
+    }
+}
+@media (min-width: 768px) {
+    .contact-form .container > .row > .col-md-6:first-child {
+        padding-right: 30px;
+    }
+    .contact-form .container > .row > .col-md-6:last-child {
+        padding-left: 30px;
+    }
+}
+
+
+/* Dropdown menu.
+ ----------------------------------*/
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+    margin-bottom: 4rem;
+}
+
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+    z-index: 10;
+    bottom: 3rem;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+    height: 32rem;
+    background-color: #777;
+}
+
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 32rem;
+    /*Added later */
+    /*width: 100%;*/
+}
+
+.img-fluid {
+    margin: 0 auto;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.marketing h2 {
+    font-weight: normal;
+}
+
+.marketing .col-lg-4 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+}
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+    .featurette-heading {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 62em) {
+    .featurette-heading {
+        margin-top: 7rem;
+    }
+}

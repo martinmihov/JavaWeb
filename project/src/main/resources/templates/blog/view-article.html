@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar-blog}"></th:block>
+    <div class="container" th:object="${article}">
+
+        <div class="row">
+            <script>
+                window.onload = function () {
+                    var article_id = $("#article_id").val();
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/blog/articles/count/" + article_id,
+                        data: {},
+                        success: function (data) {
+                            $("#page_view").text(data);
+                        }
+                    });
+                }
+            </script>
+            <!--Post Content Column-->
+            <div class="col-md-12">
+                <div class="mx-auto">
+                    <!-- Title -->
+                    <h1 class="mt-4 offset-1" th:text="*{title}">Post Title</h1>
+
+                    <!-- Author -->
+                    <p class="lead author offset-1" th:text="|by *{author.username}|">
+                    </p>
+
+                    <hr>
+
+                    <!-- Date/Time -->
+                    <p class="offset-1"> Posted on [[*{{date}}]] | <span class="text-primary" id="page_view"
+                                                                         th:text="*{pageView}"></span> views</p>
+                    <hr>
+                    <input type="text" id="article_id" name="article_id" th:value="*{id}" style="display: none;"/>
+                    <!--Posted on [[*{{date}}]] | [[*{pageView}]] views-->
+                    <!--th:text="|Posted on *{{date}} | | *{pageView} views|"-->
+                    <!-- Preview Image -->
+                    <img class="mx-auto d-block" th:if="${article.imagePath} != null" th:src="@{*{imagePath}}"
+                         alt="Article Image"/>
+                    <!--img-fluid rounded-->
+                    <hr>
+                </div>
+                <!-- Post Content -->
+                <p th:text="*{content}"></p>
+
+                <hr>
+
+                <div class="text-right">
+                    <th:block sec:authorize="isAuthenticated()" th:if="${userIsAuthorOrAdmin}">
+                        <a class="btn btn-outline-success btn-xs"
+                           th:href="@{/blog/articles/edit/{id}(id = ${article.id})}">Edit</a>
+                        <a class="btn btn-outline-danger btn-xs"
+                           th:href="@{/blog/articles/delete/{id}(id = ${article.id})}">Delete</a>
+                    </th:block>
+                    <!-- Comments Form -->
+                    <div class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Single Comment -->
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras
+                            purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi
+                            vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+
+                    <!-- Comment with nested comments -->
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                            Cras
+                            purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+                            nisi
+                            vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                            <div class="media mt-4">
+                                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                                <div class="media-body">
+                                    <h5 class="mt-0">Commenter Name</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                    Fusce
+                                    condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in
+                                    faucibus.
+                                </div>
+                            </div>
+
+                            <div class="media mt-4">
+                                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                                <div class="media-body">
+                                    <h5 class="mt-0">Commenter Name</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                    Fusce
+                                    condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in
+                                    faucibus.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>
+
+
+<!--<div class="container body-content" th:object="${article}">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<script>-->
+<!--window.onload = function(){-->
+<!--var article_id =  $("#article_id").val();-->
+
+<!--$.ajax({-->
+<!--type: "GET",-->
+<!--url: "/blog/articles/count/" + article_id,-->
+<!--data: {},-->
+<!--success: function( data ) {-->
+<!--$("#page_view").text(data);-->
+<!--}-->
+<!--});-->
+<!--}-->
+<!--</script>-->
+<!--<article>-->
+<!--<img th:if="${article.imagePath} != null" th:src="@{*{imagePath}}" width="400px" height="250px" alt="Article Image" />-->
+<!--<header>-->
+<!--<h2 th:text="*{title}"></h2>-->
+<!--</header>-->
+<!--<small class="text-center"><span>Posted on </span><span th:text="*{{date}}"></span></small>-->
+<!--<br/>-->
+<!--<br/>-->
+<!--<p th:text="*{content}"></p>-->
+<!--<small class="author" th:text="*{author.username}"></small>-->
+<!--<small class="pull-left"><span id="page_view" th:text="*{pageView}"></span> views</small>-->
+<!--<input type="text" id="article_id" name="article_id" th:value="*{id}" style="display: none;"/>-->
+
+<!--&lt;!&ndash; Commenting system thanks to powr.io &ndash;&gt;-->
+<!--&lt;!&ndash;<script src="//www.powr.io/powr.js" external-type="html"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="powr-comments" id="d7564369_1493284134"></div>&ndash;&gt;-->
+<!--&lt;!&ndash; end &ndash;&gt;-->
+
+<!--<footer>-->
+<!--<div class="pull-right">-->
+<!--<th:block sec:authorize="isAuthenticated()" th:if="${userIsAuthorOrAdmin}">-->
+<!--<a class="btn btn-success btn-xs" th:href="@{/blog/articles/edit/{id}(id = ${article.id})}">Edit</a>-->
+<!--<a class="btn btn-danger btn-xs" th:href="@{/blog/articles/delete/{id}(id = ${article.id})}">Delete</a>-->
+<!--</th:block>-->
+<!--<a class="btn btn-default btn-xs" th:href="@{/}">Back &raquo;</a>-->
+<!--</div>-->
+<!--</footer>-->
+<!--</article>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

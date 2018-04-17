@@ -1,0 +1,147 @@
+<footer th:fragments="footer" class="footer-basic-centered">
+    <!--previous was class="footer"-->
+    <p class="footer-company-motto mt-3 text-primary">Together we thrive</p>
+
+    <p class="footer-links">
+        <a th:href="@{/}">Home</a>
+        ·
+        <a th:href="@{/blog/}">Blog</a>
+        ·
+        <a th:href="@{/services/all}">Services</a>
+        ·
+        <a th:href="@{/about-us}">About Us</a>
+        ·
+        <a th:href="@{/contact-us}">Contact Us</a>
+    </p>
+
+    <p class="footer-company-name mb-4">T&amp;M Consult &copy; 2018</p>
+
+    <div class="container text-center my-2">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+        <a href="#"><i class="fa fa-google-plus"></i></a>
+        <a href="#"><i class="fa fa-skype"></i></a>
+    </div>
+    <!--<div class="footer-lower">-->
+    <!--<div class="container-row">-->
+    <!--<div class="col-sm-12">-->
+    <!--<hr>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="container-row mbr-white text-center">-->
+    <!--<div class="col-sm-12 copyright">-->
+    <!--<p class="mbr-text mbr-fonts-style display-7">-->
+    <!--Всички права запазени-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--<p class="mbr-text mbr-fonts-style display-7">-->
+    <!--© 2018 T&amp;M Studio-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+</footer>
+
+<!--<div class="d-md-flex row mbr-white footer-dark bg-primary">-->
+<!--<div class="col-md-1 offset-md-3 col-sm-4 mt-5 mb-5 ">-->
+<!--&lt;!&ndash;<div class="mb-3 card-img-top">&ndash;&gt;-->
+<!--&lt;!&ndash;<a th:href="http://localhost:8000">&ndash;&gt;-->
+<!--&lt;!&ndash;<img th:src="@{images/acclogo.png}" width="110" height="80" alt="logo">&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<p class="mb-3 mbr-fonts-style foot-articleTitle display-7">-->
+<!--SUPPORT-->
+<!--</p>-->
+<!--<p class="mbr-text mbr-fonts-style mbr-links-column display-7">-->
+<!--<a th:href="@{/about-us}" class="text-white">About Us</a>-->
+<!--<br><a th:href="@{/services/all}" class="text-white">Services</a>-->
+<!--<br><a th:href="@{/contact-us}" class="text-white">Contact Us</a>-->
+<!--<br><a th:href="@{/blog/}" class="text-white">Blog</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--&lt;!&ndash;/*@thymesVar id="footerArticles" type="org.softuni.accounting.controllers.HomeController"*/&ndash;&gt;-->
+<!--<div class="col-md-2 offset-md-1 col-sm-8 mt-5 mb-5" th:object="${footerArticles}">-->
+<!--<p class="mb-4 foot-articleTitle mbr-fonts-style display-7">-->
+<!--RECENT POSTS-->
+<!--</p>-->
+<!--<div th:each="article : ${footerArticles}" th:object="${article}">-->
+<!--<p th:text="${article.title}"></p>-->
+<!--</div>-->
+<!--&lt;!&ndash;<p th:text="${article.title}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="mb-4 foot-articleTitle mbr-fonts-style display-7">&ndash;&gt;-->
+<!--&lt;!&ndash;RECENT POSTS&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="mbr-text mbr-fonts-style foot-text display-7">&ndash;&gt;-->
+<!--&lt;!&ndash;Footer with solid color background and a contact form, Easily add subscribe and contact forms&ndash;&gt;-->
+<!--&lt;!&ndash;without any server-side integration.&ndash;&gt;-->
+<!--&lt;!&ndash;<br/>&ndash;&gt;-->
+<!--&lt;!&ndash;<br/>Mobirise helps you cut down development time by providing you with a flexible website editor&ndash;&gt;-->
+<!--&lt;!&ndash;with a drag and drop interface.&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--</div>-->
+<!--<div class="col-md-3 offset-md-1 col-sm-12 mt-5 mb-5">-->
+<!--<p class="mb-4 foot-articleTitle mbr-fonts-style display-7">-->
+<!--SUBSCRIBE-->
+<!--</p>-->
+<!--<p class="mbr-text mbr-fonts-style form-text display-7">-->
+<!--Get monthly updates and free resources.-->
+<!--</p>-->
+<!--<div class="media-container-column" data-form-type="formoid">-->
+<!--<div data-form-alert="" hidden="" class="align-center">-->
+<!--Thanks for filling out the form!-->
+<!--</div>-->
+
+<!--<form class="form-inline" action="https://mobirise.com/" method="post"-->
+<!--data-form-articleTitle="Mobirise Form">-->
+<!--<input type="hidden"-->
+<!--value="vRET/u8MWXj5HqdICe0O/AFuT7jk5+CPZHPdks+8krul0VR5T/fUTi9vNpZ9D+BVgbsDZCi6hMSTiwPatzuxrHke1aYzINF2rNPEI9wgq7yf06YnT0cZAtGMMDz/OODi"-->
+<!--data-form-email="true">-->
+<!--<div class="form-group">-->
+<!--<input type="email" class="form-control input-sm input-inverse my-2" name="email"-->
+<!--required="" data-form-field="Email" placeholder="Email" id="email-footer4-3i">-->
+<!--</div>-->
+<!--<div class="input-group-btn m-2">-->
+<!--<button href="" class="btn btn-secondary display-4" type="submit" role="button">Subscribe-->
+<!--</button>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--<p class="mb-4 mbr-fonts-style foot-articleTitle display-7">-->
+<!--CONNECT WITH US-->
+<!--</p>-->
+<!--<div class="social-list pl-0 mb-0">-->
+<!--<div class="soc-item">-->
+<!--<a href="https://twitter.com/mobirise" target="_blank">-->
+<!--<span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="soc-item">-->
+<!--<a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">-->
+<!--<span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="soc-item">-->
+<!--<a href="https://www.youtube.com/c/mobirise" target="_blank">-->
+<!--<span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="soc-item">-->
+<!--<a href="https://instagram.com/mobirise" target="_blank">-->
+<!--<span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="soc-item">-->
+<!--<a href="https://plus.google.com/u/0/+Mobirise" target="_blank">-->
+<!--<span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="soc-item">-->
+<!--<a href="https://www.behance.net/Mobirise" target="_blank">-->
+<!--<span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social"></span>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+
+
+    <div class="container mt-5">
+        <div class="col-md-10 offset-md-1">
+            <h1 class="my-4 text-primary">Services
+                <small class="text-secondary">T&amp;M Consult</small>
+            </h1>
+            <!-- Services -->
+            <ul class="list-group">
+                <div th:if="${services} != null" th:each="service,iter : ${services}" th:object="${service}">
+                    <li class="list-group-item">
+                        <p><span class="text-primary">&rarr;</span>&emsp;<span th:text="|*{description}|"></span></p>
+                    </li>
+                </div>
+                <th:block th:if="${services} == null" th:text="|No results containing ( ${description} ) were found|"></th:block>
+                <a th:href="@{/services/all}"
+                   class="btn btn-outline-primary float-md-right mt-md-3">Haven't found the service you are looking for .. ?</a>
+            </ul>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+
+</body>
+</html>
+
+
+<!--<form class="form my-2 my-lg-0" th:action="@{/search/articles-by-name}" th:method="GET">-->
+<!--<div>-->
+<!--<input class="form-control col-md-2" type="text" placeholder="Search">-->
+<!--<button class="btn btn-secondary mt-5 my-md-2" type="submit">Search</button>-->
+<!--<fieldset class="form-group row">-->
+<!--<legend class="col-form-legend col-sm-2">Search blog by a criteria</legend>-->
+<!--<div class="col-sm-10">-->
+<!--<div class="form-check">-->
+<!--<label class="form-check-label">-->
+<!--<input class="form-check-input" type="radio" name="articles-by-name" id="articles-by-name" />-->
+<!--by Article's content-->
+<!--</label>-->
+<!--<script>-->
+<!--var title = document.getElementById('articles-by-name').value-->
+<!--</script>-->
+<!--</div>-->
+<!--<div class="form-check">-->
+<!--<label class="form-check-label">-->
+<!--<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"/>-->
+<!--by Title-->
+<!--</label>-->
+<!--</div>-->
+<!--<div class="form-check disabled">-->
+<!--<label class="form-check-label">-->
+<!--<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"/>-->
+<!--by Author's name-->
+<!--</label>-->
+<!--</div>-->
+<!--</div>-->
+<!--</fieldset>-->
+<!--</div>-->
+<!--</form>-->

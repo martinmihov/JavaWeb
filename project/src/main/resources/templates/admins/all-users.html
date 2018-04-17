@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="~{fragments/head}"></th:block>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="container mt-5">
+        <h1 class="mt-5">Welcome back Master.See all registered users.</h1>
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Deleted On</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr th:each="user,iterStat : ${users}">-->
+                <!--<td th:text="${iterStat.count}"></td>-->
+                <!--<td th:text="${user.username}"></td>-->
+                <!--<td th:text="${user.email}"></td>-->
+                <!--<td><span th:each="role : ${user.roles}" th:text="|  ${role.name}  |"></span> </td>-->
+                <!--<td>-->
+                    <!--<a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--/*@thymesVar id="users" type="org.softuni.accounting.areas.users.domain.models.view.UserViewModel"*/-->
+            <th:block th:each="u,iter : ${users}" th:object="${u}">
+                <tr>
+                    <!--<td th:text="${iterStat.count}"></td>-->
+                    <th scope="row" th:text="${iter.index + 1}"></th>
+                    <td th:text="*{username}"></td>
+                    <td th:text="*{email}"></td>
+                    <td><span th:each="role : *{roles}" th:text="|  ${role.name}  |"></span></td>
+                    <td th:text="*{{deletedOn}}"></td>
+                    <td><a class="btn btn-secondary" th:href="@{/admins/edit/user/{id}(id=*{id})}">Edit</a></td>
+                    <td><a class="btn btn-secondary" th:if="*{deletedOn} == null" th:href="@{/admins/delete/user/{id}(id=*{id})}">Delete</a></td>
+                    <td><a class="btn btn-secondary" th:if="*{deletedOn} != null" th:href="@{/admins/revive/user/{id}(id=*{id})}">Revive</a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

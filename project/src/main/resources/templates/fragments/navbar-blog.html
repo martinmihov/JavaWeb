@@ -1,0 +1,98 @@
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <a class="navbar-brand" th:href="@{/}">T&amp;M's<i><span class="text-secondary"> Blog</span></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <a class="nav-link" id="dropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" th:href="@{/services/all}">Services</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/services/all}">All</a>
+                            <a class="dropdown-item" th:href="@{/services/accounting-services}">Accounting</a>
+                            <a class="dropdown-item" th:href="@{/services/vat-services}">VAT</a>
+                            <a class="dropdown-item" th:href="@{/services/payroll-services}">Payroll</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!--<a class="nav-link" href="#" data-toggle="modal" data-target="#modal">Contact Us</a>-->
+                    <a class="nav-link" th:href="@{/contact-us}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about-us}">About Us</a>
+                </li>
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <a class="nav-link" id="dropdownMenuLinkBlog" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" th:href="@{/blog/}">Blog</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/blog/}">Home</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/blog/articles/create}">Create article</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link" id="admin-dp-menu" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" href="#">Admins</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/users}">Users</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/services/add}">Add Service</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/services}">Services</a>
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/requests}">Requests</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/reply-to-requests}">Reply to Requests</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item disabled" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/users/profile/} + ${#authentication.getPrincipal().getUsername()}">
+                        Profile
+                    </a>
+                </li>
+
+                <li class="nav-item disabled" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/logout}">
+                        Logout ( <span th:text="${#authentication.getPrincipal().getUsername()}"></span> )
+                    </a>
+                </li>
+
+                <li class="nav-item disabled" sec:authorize="isAnonymous()">
+                    <a class="nav-link" th:href="@{/users/register}">
+                        Register
+                    </a>
+                </li>
+                <li class="nav-item disabled" sec:authorize="isAnonymous()">
+                    <a class="nav-link" th:href="@{/users/login}">
+                        Login
+                    </a>
+                </li>
+                <!--<li class="nav-item disabled" sec:authorize="isAuthenticated()">-->
+                    <!--<a class="nav-link" th:href="@{/search/}">Select other criteria</a>-->
+                <!--</li>-->
+            </ul>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/search/articles-by-name}" th:method="GET">
+                <input class="form-control mr-sm-2" name="articles-by-name" type="text" placeholder="Search titles...">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</div>

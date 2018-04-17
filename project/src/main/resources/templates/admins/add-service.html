@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="container mt-5">
+        <h1 class="mt-2 text-md-center">Add a service</h1>
+        <form class="mt-2 mb-5" th:action="@{/admins/services/add}" th:method="post" th:object="${service}">
+
+            <div class="form-group">
+                <label for="description" class="text-primary">Description</label>
+                <textarea class="form-control" id="description" rows="3" th:field="*{description}" th:classappend="${#fields.hasErrors('description')}? 'is-invalid'"></textarea>
+                <small class="invalid-feedback" style="display: block" id="descriptionError" th:each="error : ${#fields.errors('description')}" th:text="${error}"></small>
+            </div>
+            <fieldset class="form-group">
+                <legend>Type</legend>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{serviceType}" id="payroll" value="PAYROLL" th:classappend="${#fields.hasErrors('serviceType')}? 'is-invalid'">
+                            <label class="form-check-label text-primary" for="payroll">
+                                Payroll
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{serviceType}" id="vat" value="VAT" th:classappend="${#fields.hasErrors('serviceType')}? 'is-invalid'">
+                            <label class="form-check-label text-primary" for="vat">
+                                VAT
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{serviceType}" id="accounting"
+                                   value="ACCOUNTING" th:classappend="${#fields.hasErrors('serviceType')}? 'is-invalid'">
+                            <label class="form-check-label text-primary" for="accounting">
+                                Accounting
+                            </label>
+                        </div>
+                        <small class="invalid-feedback" id="typeError" th:each="error : ${#fields.errors('serviceType')}" th:text="${error}"></small>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Add</button>
+            <a class="btn btn-outline-secondary" th:href="@{/admins/services}">Back</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

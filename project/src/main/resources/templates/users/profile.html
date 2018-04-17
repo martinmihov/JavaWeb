@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container mt-md-5">
+    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#articles" data-toggle="tab" class="nav-link">Your Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#requests" data-toggle="tab" class="nav-link">Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#opinion" data-toggle="tab" class="nav-link">Your Opinion</a>
+                </li>
+            </ul>
+            <div class="tab-content py-4">
+                <!--/*@thymesVar id="profile" type="org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel"*/-->
+                <div class="tab-pane active" id="profile" th:object="${profile}">
+                    <h5 class="mb-3">About</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:text="|Username: *{username}|"></p>
+                            <p th:text="|Email: *{email}|"></p>
+                            <a class="btn btn-outline-secondary" th:href="@{/users/profile/edit/{id} (id=${profile.getId()})}">Edit Profile</a>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/*@thymesVar id="profile" type="org.softuni.accounting.areas.blog.domain.models.view.ArticleHomeViewModel"*/-->
+                <div class="tab-pane" id="articles">
+                    <table class="table table-hover table-striped" th:each="article : ${authorArticles}"
+                           th:object="${article}">
+                        <tbody>
+                        <tr><span class="float-right font-weight-bold" th:text="| Posted on *{{date}}|"></span>
+                            <td><a class="text-primary" style="text-decoration:none"
+                                   th:href="@{/blog/articles/{id}(id=*{id})}" th:text="*{title}"></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane col-lg-12" id="requests" th:action="@{/users/profile/{email}(email=*{email})}"
+                     th:method="GET">
+                    <div class="col-lg-12" th:each="entry: ${conversation.entrySet()}" th:object="${entry.getKey()}">
+                        <hr/>
+                        <h3 class="mt-4 text-primary" th:text="*{senderSubject}"></h3><span
+                            th:text="*{{requestSentOn}}"></span>
+                        <hr/>
+                        <p class="mt-2" th:text="*{senderMessage}"></p>
+                        <hr/>
+                        <h4 class="text-success" th:if="!*{replies.isEmpty()}" th:text="|T&amp;M Response(s)|"></h4>
+                        <div class="media my-4" th:each="reply : *{replies}">
+                            <hr>
+                            <div class="media-body">
+                                <div class="text-md-right mb-3" th:text="|sent on ${{reply.getReplySentOn()}}|"></div>
+                                <div th:text="${reply.getReplyMessage()}"></div>
+                                <div class="mt-5 text-md-right" th:if="${reply.getPrice() != null}"
+                                     th:text="|Price : ${reply.getPrice()} $|"></div>
+                                <hr/>
+                            </div>
+                        </div>
+                        <div class="text-md-right mb-5 text-warning" th:if="*{replies.isEmpty()}"
+                             th:text="|your request will be answered in the initial 24 hours of your request|"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="opinion">
+                    <h5 class="mb-3">Opinion</h5>
+                    <div class="row col-md-8">
+                        <div class="col-md-6">
+                            <p th:text="${profile.opinion}"></p>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <h4 class="mb-md-3 text-md-center">Welcome , <span th:text="${profile.username}"></span>!</h4>
+            <img th:src="@{${profile.imagePath}}" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <!--/*@thymesVar id="avatar" type="org.softuni.accounting.areas.users.domain.models.binding.ProfileUploadAvatarBindingModel"*/-->
+            <form class="form-horizontal" th:action="@{/users/profile/{email}(email=${profile.email})}"
+                  enctype="multipart/form-data" th:method="POST">
+                <div class="form-group">
+                    <label class="custom-file" for="file">
+                        <input type="file" id="file" class="custom-file-input" name="image" onclick="showConfirm()">
+                        <span class="custom-file-control text-muted">Upload a different photo</span>
+                        <script>
+                            function showConfirm() {
+                                var x = document.getElementById("confirmation");
+                                if (x.style.display === "none") {
+                                    x.style.display = "block";
+                                } else {
+                                    x.style.display = "none";
+                                }
+                            }
+                        </script>
+                    </label>
+                    <div id="confirmation" style="display: none">
+                        <input type="submit" class="btn control-label btn btn-outline-secondary offset-1 text-primary"
+                               value="Confirm"/>
+                        <a class="btn btn-default"
+                           th:href="@{/users/profile/{email}(email=${profile.email})}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>
+
+<!--<div class="container-fluid">-->
+<!--<th:block th:replace="~{fragments/navbar}"></th:block>-->
+<!--<div class="container mt-5">-->
+<!--<h1 class="mt-2 text-md-center">Welcome , <span th:text="${username}"></span>!</h1>-->
+
+<!--<div class="row" th:action="@{/users/profile/{email}(email=*{email})}"-->
+<!--th:method="GET">-->
+<!--<div class="col-lg-8" th:each="entry: ${conversation.entrySet()}" th:object="${entry.getKey()}">-->
+<!--<hr/>-->
+<!--<h3 class="mt-4" th:text="*{senderSubject}"></h3><span th:text="*{{requestSentOn}}"></span>-->
+<!--<hr/>-->
+<!--<p class="mt-2" th:text="*{senderMessage}"></p>-->
+<!--<hr/>-->
+<!--<h4 th:if="!*{replies.isEmpty()}" th:text="|T&amp;M Response(s)|"></h4>-->
+<!--<div class="media my-4" th:each="reply : *{replies}">-->
+<!--<hr>-->
+<!--<div class="media-body">-->
+<!--<div class="text-md-right mb-3" th:text="|sent on ${{reply.getReplySentOn()}}|"></div>-->
+<!--<div th:text="${reply.getReplyMessage()}"></div>-->
+<!--<div class="mt-5 text-md-right" th:if="${reply.getPrice() != null}"-->
+<!--th:text="|Price : ${reply.getPrice()} $|"></div>-->
+<!--<hr/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="text-md-right mb-5" th:if="*{replies.isEmpty()}"-->
+<!--th:text="|your request will be answered in the initial 24 hours of your request|"></div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Sidebar Widgets Column &ndash;&gt;-->
+<!--<div class="col-md-4 position-sticky">-->
+
+<!--&lt;!&ndash; Search Widget &ndash;&gt;-->
+<!--<div class="card my-4">-->
+<!--<h5 class="card-header">Search</h5>-->
+<!--<div class="card-body">-->
+<!--<div class="input-group">-->
+<!--<input type="text" class="form-control" placeholder="Search for...">-->
+<!--<span class="input-group-btn">-->
+<!--<button class="btn btn-secondary" type="button">Go!</button>-->
+<!--</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Categories Widget &ndash;&gt;-->
+<!--<div class="card my-4">-->
+<!--<h5 class="card-header">Categories</h5>-->
+<!--<div class="card-body">-->
+<!--<div class="row">-->
+<!--<div class="col-lg-6">-->
+<!--<ul class="list-unstyled mb-0">-->
+<!--<li>-->
+<!--<a href="#">Web Design</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">HTML</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">Freebies</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="col-lg-6">-->
+<!--<ul class="list-unstyled mb-0">-->
+<!--<li>-->
+<!--<a href="#">JavaScript</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">CSS</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">Tutorials</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Side Widget &ndash;&gt;-->
+<!--<div class="card my-4">-->
+<!--<h5 class="card-header">Side Widget</h5>-->
+<!--<div class="card-body">-->
+<!--You can put anything you want inside of these side widgets. They are easy to use, and feature-->
+<!--the new Bootstrap 4 card containers!-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<table class="table table-hover table-striped" th:each="entry: ${conversation.entrySet()}" th:object="${entry.getKey()}">-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--<td>-->
+
+<!--</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+
+
+<!--<label class="col-sm-4 control-label btn btn-secondary offset-1" for="file_upload">Upload-->
+<!--image</label>-->
+<!--<div class="col-sm-6">-->
+<!--<input type="file" class="form-control" id="file_upload" name="image"/>-->
+<!--</div>-->
+
+
+<!--<div class="tab-pane" id="edit" th:object="${profile}">-->
+<!--<form role="form" th:action="@{/users/profile/{email}(email=*{email})}" th:method="POST" >-->
+<!--<div class="form-group row">-->
+<!--<label class="col-lg-3 col-form-label form-control-label" for="email">Email</label>-->
+<!--<div class="col-lg-9">-->
+<!--<input type="email" class="form-control" id="email" name="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"/>-->
+<!--<small class="invalid-feedback" style="display: block" id="descriptionError" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group row">-->
+<!--<label class="col-lg-3 col-form-label form-control-label" for="username">Username</label>-->
+<!--<div class="col-lg-9">-->
+<!--<input type="text" class="form-control" id="username" name="username" th:field="*{username}" th:classappend="${#fields.hasErrors('username')}? 'is-invalid'"/>-->
+<!--<small class="invalid-feedback" style="display: block" id="nameError" th:each="error : ${#fields.errors('username')}" th:text="${error}"></small>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group row">-->
+<!--<label class="col-lg-3 col-form-label form-control-label" for="password">Password</label>-->
+<!--<div class="col-lg-9">-->
+<!--<input type="password" class="form-control" id="password" name="password" th:field="*{password}">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group row">-->
+<!--<label class="col-lg-3 col-form-label form-control-label" for="confirmPassword">Confirm password</label>-->
+<!--<div class="col-lg-9">-->
+<!--<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}">-->
+<!--<small class="invalid-feedback" style="display: block" id="confirm-password-mismatch" th:each="error : ${#fields.errors('global')}" th:text="${error}"></small>-->
+<!--</div>-->
+<!--</div>-->
+<!---->
+<!--<div class="form-group row">-->
+<!--<label class="col-lg-3 col-form-label form-control-label"></label>-->
+<!--<div class="col-lg-9">-->
+<!--<input type="reset" class="btn btn-secondary" value="Cancel">-->
+<!--<input type="submit" class="btn btn-primary" value="Save Changes">-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+
+
