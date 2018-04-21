@@ -6,7 +6,12 @@ import org.softuni.accounting.areas.users.domain.models.service.RoleServiceModel
 import java.util.List;
 
 public interface RoleService {
-    List<RoleServiceModel> findAllRoles();
 
     void save(Role role);
+
+    Role getByName(String name);
+
+    Role getOneById(Long id);
+
+    List<RoleServiceModel> findAllRoles();
 }

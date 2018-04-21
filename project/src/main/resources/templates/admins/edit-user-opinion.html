@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head}"></div>
+<body>
+<div th:replace="~{fragments/navbar}"></div>
+<div class="container my-md-5">
+    <h1 class="mt-2 text-md-center text-secondary">Edit User's Opinion</h1>
+
+    <form class="mt-2 mb-5 col-md-8 offset-md-2" th:action="@{/admins/edit/user-opinion/{id}(id=${userId})}"
+          th:method="POST" th:object="${profileEditOpinion}">
+        <div class="form-group">
+            <label for="opinion" class="text-primary">User's Opinion</label>
+            <textarea class="form-control" rows="4" id="opinion" name="opinion" th:field="*{opinion}"
+                      th:classappend="${#fields.hasErrors('opinion')}? 'is-invalid'"></textarea>
+            <small class="text-warning"><span class="text-danger">*</span> Censore opinion only in case the user has
+                broken the ToS
+            </small>
+            <small class="invalid-feedback text-warning" style="display: block" id="opinionError"
+                   th:each="error : ${#fields.errors('opinion')}" th:text="${error}"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <a class="btn btn-default" th:href="@{/admins/users}">Cancel</a>
+    </form>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>

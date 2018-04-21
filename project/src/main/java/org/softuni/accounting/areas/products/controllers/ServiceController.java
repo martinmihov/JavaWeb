@@ -33,21 +33,27 @@ public class ServiceController extends BaseController {
     public ModelAndView vatServices(){
         List<ServiceProdViewModel> services = this.serviceProdService.getAllServicesByType(ServiceType.VAT);
         Object[] objects = new Object[]{services,ServiceConstants.VAT_SERVICE};
-        return this.view("services/service-type-list.html",objects,"services","serviceType");
+
+        return this.view("services/service-type-list.html",objects,
+                "services","serviceType");
     }
 
     @GetMapping("/accounting-services")
     public ModelAndView accountingServices(){
         List<ServiceProdViewModel> services = this.serviceProdService.getAllServicesByType(ServiceType.ACCOUNTING);
         Object[] objects = new Object[]{services,ServiceConstants.ACCOUNTING_SERVICE};
-        return this.view("services/service-type-list.html",objects,"services","serviceType");
+
+        return this.view("services/service-type-list.html",objects,
+                "services","serviceType");
     }
 
     @GetMapping("/payroll-services")
     public ModelAndView payrollServices(){
         List<ServiceProdViewModel> services = this.serviceProdService.getAllServicesByType(ServiceType.PAYROLL);
         Object[] objects = new Object[]{services,ServiceConstants.PAYROLL_SERVICE};
-        return this.view("services/service-type-list.html",objects,"services","serviceType");
+
+        return this.view("services/service-type-list.html",objects,
+                "services","serviceType");
     }
 
 }

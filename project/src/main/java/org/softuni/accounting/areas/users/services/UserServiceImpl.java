@@ -2,14 +2,10 @@ package org.softuni.accounting.areas.users.services;
 
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
-import org.softuni.accounting.areas.users.domain.models.binding.ProfileEditBindingModel;
-import org.softuni.accounting.areas.users.domain.models.binding.ProfileUploadAvatarBindingModel;
-import org.softuni.accounting.areas.users.domain.models.binding.UserEditBindingModel;
-import org.softuni.accounting.areas.users.domain.models.binding.UserRegisterBindingModel;
+import org.softuni.accounting.areas.users.domain.models.binding.*;
 import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
 import org.softuni.accounting.areas.users.domain.models.view.UserOpinionViewModel;
 import org.softuni.accounting.areas.users.domain.models.view.UserViewModel;
-import org.softuni.accounting.areas.users.repositories.RoleRepository;
 import org.softuni.accounting.areas.users.repositories.UserRepository;
 import org.softuni.accounting.utils.parser.interfaces.ModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +30,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    private final RoleRepository roleRepository;
-
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
     private final ModelParser modelParser;
 
     private boolean isTheSame(User user) {
+
         return Objects.equals(loggedInUser().getId(),
                 user.getId());
     }
@@ -49,20 +43,27 @@ public class UserServiceImpl implements UserService {
     private User loggedInUser(){
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
+
         return this.findByEmail(user.getUsername());
     }
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ModelParser modelParser) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleService roleService,
+                           PasswordEncoder passwordEncoder,
+                           ModelParser modelParser) {
+
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.modelParser = modelParser;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         User user = userRepository.findByEmailAndDeletedOnIsNull(email);
+
         if (user == null) {
             throw new UsernameNotFoundException("Invalid User");
         } else {
@@ -82,21 +83,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(@Valid UserRegisterBindingModel model) {
+
         User user = this.modelParser.convert(model, User.class);
         user.setPassword(this.passwordEncoder.encode(model.getPassword()));
 
-        Role role = this.roleRepository.findByName("USER");
+        Role role = this.roleService.getByName("USER");
+
         role.getUsers().add(user);
         user.getRoles().add(role);
 
-        this.roleRepository.save(role);
+        this.roleService.save(role);
         this.userRepository.save(user);
     }
 
     @Override
     public List<UserViewModel> getAll() {
+
         List<User> users = this.userRepository.findAll();
         List<UserViewModel> userViewModels = new ArrayList<>();
+
         for (User user : users) {
             UserViewModel model = this.modelParser.convert(user, UserViewModel.class);
             userViewModels.add(model);
@@ -106,16 +111,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEditBindingModel findUserById(String id) {
+
         Optional<User> user = this.userRepository.findById(id);
+
         if (user.isPresent()) {
             UserEditBindingModel userEditBindingModel = this.modelParser.convert(user.get(), UserEditBindingModel.class);
+
             Set<Long> roleIds = new HashSet<>();
+
             for (Role role : user.get().getRoles()) {
                 roleIds.add(role.getId());
             }
+
             userEditBindingModel.setPassword("");
             userEditBindingModel.setConfirmPassword("");
             userEditBindingModel.setRolesIds(roleIds);
+
             return userEditBindingModel;
         }
         return null;
@@ -123,7 +134,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ProfileEditBindingModel findProfileById(String id) {
+
         Optional<User> user = this.userRepository.findById(id);
+
         if (user.isPresent()) {
 
             if(!this.isTheSame(user.get())) return null;
@@ -133,7 +146,7 @@ public class UserServiceImpl implements UserService {
             editProfile.setEmail(user.get().getEmail());
             editProfile.setPassword("");
             editProfile.setConfirmPassword("");
-            editProfile.setOpinion(user.get().getOpinion());
+
             return editProfile;
         }
         return null;
@@ -141,8 +154,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUser(String id, UserEditBindingModel model) {
+
         Optional<User> optionalUser = this.userRepository.findById(id);
+
         if (optionalUser.isPresent()) {
+
             User user = optionalUser.get();
             user.setEmail(model.getEmail());
             user.setUsername(model.getUsername());
@@ -151,52 +167,107 @@ public class UserServiceImpl implements UserService {
             if (model.getPassword() != null && !model.getPassword().isEmpty()) {
                 user.setPassword(this.passwordEncoder.encode(model.getPassword()));
             }
+            Set<Long> rolesIds =
 
-            Set<Long> rolesIds = user.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
+                    user
+                    .getRoles()
+                    .stream()
+                    .map(Role::getId)
+                    .collect(Collectors.toSet());
+
             for (Long roleId : rolesIds) {
                 if (!model.getRolesIds().contains(roleId)) {
-                    user.getRoles().remove(this.roleRepository.getOne(roleId));
+                    user.getRoles().remove(this.roleService.getOneById(roleId));
                 }
             }
             for (Long roleId : model.getRolesIds()) {
                 if (!rolesIds.contains(roleId)) {
-                    Role role = this.roleRepository.getOne(roleId);
+                    Role role = this.roleService.getOneById(roleId);
                     user.getRoles().add(role);
                     role.getUsers().add(user);
-                    this.roleRepository.save(role);
+                    this.roleService.save(role);
                 }
             }
-
             this.userRepository.save(user);
         }
     }
 
     @Override
     public void editProfile(String id, ProfileEditBindingModel model) {
+
         Optional<User> optionalUser = this.userRepository.findById(id);
+
         if (optionalUser.isPresent()) {
+
             User user = optionalUser.get();
             user.setEmail(model.getEmail());
             user.setUsername(model.getUsername());
-            user.setOpinion(model.getOpinion());
+
             if (model.getPassword() != null && !model.getPassword().isEmpty()) {
                 user.setPassword(this.passwordEncoder.encode(model.getPassword()));
             }
             this.userRepository.save(user);
         }
     }
+    @Override
+    public ProfileEditOpinionBindingModel findProfileOpinionById(String id) {
 
-    //TODO - Map User to UserServiceModel
+        Optional<User> optionalUser = this.userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            if(!this.isTheSame(user)) return null;
+
+            ProfileEditOpinionBindingModel editProfile =
+                    this.modelParser.convert(user, ProfileEditOpinionBindingModel.class);
+
+            editProfile.setOpinion(user.getOpinion());
+
+            return editProfile;
+        }
+        return null;
+    }
+
+    @Override
+    public ProfileEditOpinionBindingModel findUserOpinionById(String id) {
+
+        Optional<User> optionalUser = this.userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+
+            User user = optionalUser.get();
+            ProfileEditOpinionBindingModel editProfile = this.modelParser.convert(user, ProfileEditOpinionBindingModel.class);
+            editProfile.setOpinion(user.getOpinion());
+
+            return editProfile;
+        }
+        return null;
+    }
+
+    @Override
+    public void editProfileOpinion(String id, ProfileEditOpinionBindingModel model) {
+
+        Optional<User> optionalUser = this.userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setOpinion(model.getOpinion());
+            this.userRepository.save(user);
+        }
+    }
+
     @Override
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
     }
 
     @Override
-    public boolean deleteUser(String id) {
+    public boolean banUser(String id) {
         User user = this.userRepository.getOne(id);
         user.setDeletedOn(new Date());
         this.userRepository.save(user);
+
         return true;
     }
 
@@ -219,7 +290,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void uploadProfileAvatar(ProfileUploadAvatarBindingModel model, MultipartFile image) {
+
         User userEntity = this.findByEmail(model.getEmail());
+
         String imagePath = null;
         String[] allowedContentTypes = {
                 "image/png",
@@ -229,6 +302,7 @@ public class UserServiceImpl implements UserService {
         };
         boolean isContentTypeAllowed = Arrays.asList(allowedContentTypes)
                 .contains(model.getImage().getContentType());
+
         if (isContentTypeAllowed) {
             String imagesPath = "\\src\\main\\resources\\static\\images\\";
             String imagePathRoot = System.getProperty("user.dir");
@@ -243,7 +317,6 @@ public class UserServiceImpl implements UserService {
                 e.printStackTrace();
             }
         }
-
         userEntity.setImagePath(imagePath);
         this.userRepository.saveAndFlush(userEntity);
     }
@@ -251,8 +324,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserOpinionViewModel> getUsersOpinions() {
-        List<User> usersWithOpinions = this.userRepository.findDistinctTop3ByImagePathNotNullAndOpinionNotNullAndArticlesNotNullOrderByArticlesAsc();
+
+        List<User> usersWithOpinions = this.userRepository.
+
+            findDistinctTop3ByImagePathNotNullAndOpinionNotNullAndArticlesNotNullAndDeletedOnIsNullOrderByArticlesAsc();
+
         List<UserOpinionViewModel> usersIndexPage = new ArrayList<>();
+
         for (User usersWithOpinion : usersWithOpinions) {
             UserOpinionViewModel user = this.modelParser.convert(usersWithOpinion, UserOpinionViewModel.class);
             usersIndexPage.add(user);
@@ -263,43 +341,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ProfileViewModel findProfile(String email) {
         User user = this.userRepository.findByEmail(email);
+
         return this.modelParser.convert(user, ProfileViewModel.class);
     }
 }
-
-
-//    @Override
-//    public UserViewModel findUserByEmail(String email) {
-//        return this.userRepository.findUserByEmail(email);
-//    }
-
-
-//    @Override
-//    public void editUser(@Valid UserEditBindingModel model) {
-//        Optional<User> optionalUser = this.userRepository.findById(model.getId());
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.setUsername(model.getUsername());
-//            if (model.getPassword() != null && !model.getPassword().isEmpty()) {
-//                user.setPassword(this.passwordEncoder.encode(model.getPassword()));
-//            }
-//            user.setEmail(model.getEmail());
-//
-//            Set<Long> rolesIds = user.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
-//            for (Long roleId : rolesIds) {
-//                if (!model.getRolesIds().contains(roleId)) {
-//                    user.getRoles().remove(this.roleRepository.getOne(roleId));
-//                }
-//            }
-//            for (Long roleId : model.getRolesIds()) {
-//                if (!rolesIds.contains(roleId)) {
-//                    Role role = this.roleRepository.getOne(roleId);
-//                    user.getRoles().add(role);
-//                    role.getUsers().add(user);
-//                    this.roleRepository.save(role);
-//                }
-//            }
-//
-//            this.userRepository.save(user);
-//        }
-//    }

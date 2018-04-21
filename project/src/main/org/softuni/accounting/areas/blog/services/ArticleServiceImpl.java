@@ -96,7 +96,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDeleteEditViewModel getArticleToDelete(Long id) {
+    public ArticleDeleteEditViewModel getArticleToEditOrDelete(Long id) {
         Optional<Article> article = this.articleRepository.findById(id);
         if(article.isPresent()){
             if(!this.isUserAuthorOrAdmin(article.get())){
@@ -106,7 +106,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return null;
     }
-
     @Override
     public ArticleBindingModel findById(Long id) {
         Optional<Article> article = this.articleRepository.findById(id);
@@ -151,20 +150,10 @@ public class ArticleServiceImpl implements ArticleService {
         return "";
     }
 
-    @Override
-    public List<ArticleViewModel> getArticlesMainPage() {
-        List<Article> articles = this.articleRepository.findAll();
-        List<ArticleViewModel> allArticles = new ArrayList<>();
-        for (Article article : articles) {
-            ArticleViewModel model = this.modelParser.convert(article,ArticleViewModel.class);
-            allArticles.add(model);
-        }
-        return allArticles;
-    }
 
-    @Override
-    public List<ArticleHomeViewModel> getArticlesByOrderByDateDesc() {
-        List<Article> articles = this.articleRepository.findTop3ArticlesByOrderByDateDesc();
+
+    public List<ArticleHomeViewModel> getArticlesIndexPage() {
+        List<Article> articles = this.articleRepository.findTop3ByImagePathNotNullOrderByDateDesc();
         List<ArticleHomeViewModel> homeArticles = new ArrayList<>();
         for (Article article : articles) {
             ArticleHomeViewModel homeArticle = this.modelParser.convert(article,ArticleHomeViewModel.class);
@@ -185,7 +174,24 @@ public class ArticleServiceImpl implements ArticleService {
         return articlesByAuthorView;
     }
 
+    @Override
+    public List<ArticleViewModel> getArticlesBlogMainPage() {
+        List<Article> articles = this.articleRepository.findAll();
+        List<ArticleViewModel> allArticles = new ArrayList<>();
+        for (Article article : articles) {
+            ArticleViewModel model = this.modelParser.convert(article,ArticleViewModel.class);
+            allArticles.add(model);
+        }
+        return allArticles;
+    }
+
+
     public boolean isUserAuthorOrAdmin(Article article) {
         return this.loggedInUser().getRoles().stream().anyMatch(roles-> roles.getName().equals("ROLE_ADMIN")) || this.isAuthor(article);
+    }
+
+    @Override
+    public long getTotalPages(int size) {
+        return this.articleRepository.count() / size;
     }
 }

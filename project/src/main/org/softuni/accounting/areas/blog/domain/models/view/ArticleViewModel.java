@@ -1,6 +1,7 @@
 package org.softuni.accounting.areas.blog.domain.models.view;
 
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.softuni.accounting.utils.constants.GlobalConstants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -64,7 +65,7 @@ public class ArticleViewModel {
         this.imagePath = imagePath;
     }
 
-    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
+    @DateTimeFormat(pattern = GlobalConstants.DATE_TIME_FORMAT_PATTERN)
     public Date getDate() {
         return this.date;
     }

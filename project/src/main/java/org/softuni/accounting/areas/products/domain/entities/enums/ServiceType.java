@@ -4,10 +4,5 @@ public enum ServiceType {
 
     PAYROLL,
     VAT,
-    ACCOUNTING;
-
-
-    public static ServiceType parseFromStrimg(String serviceType) {
-        return ServiceType.valueOf(serviceType.toUpperCase());
-    }
+    ACCOUNTING
 }

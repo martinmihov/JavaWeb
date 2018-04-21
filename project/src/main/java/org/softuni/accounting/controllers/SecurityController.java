@@ -24,6 +24,7 @@ public class SecurityController extends BaseController {
     @RequestMapping(value="/logout",method = RequestMethod.GET)
     @PreAuthorize("isAuthenticated()")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null){

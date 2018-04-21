@@ -19,14 +19,14 @@ public class EmailUniqueValidator implements ConstraintValidator<EmailUnique,Str
     }
 
     @Override
-    public void initialize(EmailUnique email) {
-
-    }
+    public void initialize(EmailUnique email) { }
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
         boolean isValid = true;
+
         User existingUser = this.userService.findByEmail(email);
+
         if(existingUser != null){
             isValid = false;
         }

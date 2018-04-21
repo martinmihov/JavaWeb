@@ -1,7 +1,8 @@
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <a class="navbar-brand" th:href="@{/}">T&amp;M's<i><span class="text-secondary"> Blog</span></i></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
@@ -23,7 +24,6 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <!--<a class="nav-link" href="#" data-toggle="modal" data-target="#modal">Contact Us</a>-->
                     <a class="nav-link" th:href="@{/contact-us}">Contact Us</a>
                 </li>
                 <li class="nav-item">
@@ -35,7 +35,8 @@
                            aria-haspopup="true" aria-expanded="false" th:href="@{/blog/}">Blog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" th:href="@{/blog/}">Home</a>
-                            <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/blog/articles/create}">Create article</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item"
+                               th:href="@{/blog/articles/create}">Create article</a>
                         </div>
                     </div>
                 </li>
@@ -45,7 +46,8 @@
 
                 <li class="nav-item active">
                     <div class="dropdown">
-                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link" id="admin-dp-menu" data-toggle="dropdown"
+                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link"
+                           id="admin-dp-menu" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" href="#">Admins</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -85,9 +87,6 @@
                         Login
                     </a>
                 </li>
-                <!--<li class="nav-item disabled" sec:authorize="isAuthenticated()">-->
-                    <!--<a class="nav-link" th:href="@{/search/}">Select other criteria</a>-->
-                <!--</li>-->
             </ul>
             <form class="form-inline my-2 my-lg-0" th:action="@{/search/articles-by-name}" th:method="GET">
                 <input class="form-control mr-sm-2" name="articles-by-name" type="text" placeholder="Search titles...">

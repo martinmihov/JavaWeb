@@ -6,9 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class ImageTypeValidator implements ConstraintValidator<ImageType,String> {
     @Override
-    public void initialize(ImageType imageType) {
-
-    }
+    public void initialize(ImageType imageType) { }
 
     @Override
     public boolean isValid(String imageType, ConstraintValidatorContext context) {

@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <th:block th:replace="~{fragments/navbar-blog}"></th:block>
     <div class="container" th:object="${article}">
 
         <div class="row">
@@ -59,7 +59,8 @@
                     <th:block sec:authorize="isAuthenticated()" th:if="${userIsAuthorOrAdmin}">
                         <a class="btn btn-outline-success btn-xs"
                            th:href="@{/blog/articles/edit/{id}(id = ${article.id})}">Edit</a>
-                        <a class="btn btn-outline-danger btn-xs" th:href="@{/blog/articles/delete/{id}(id = ${article.id})}">Delete</a>
+                        <a class="btn btn-outline-danger btn-xs"
+                           th:href="@{/blog/articles/delete/{id}(id = ${article.id})}">Delete</a>
                     </th:block>
                     <!-- Comments Form -->
                     <div class="card my-4">
@@ -128,7 +129,9 @@
                 </div>
             </div>
         </div>
-        <th:block th:replace="~{fragments/footer}"></th:block>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
 </body>
 </html>
 

@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.FIELD})
 public @interface EmailUnique {
+
     String message() default "* Email address already taken";
 
     Class<?>[] groups() default { };

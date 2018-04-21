@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -15,10 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userDetailsService;
+    private final SessionRegistry sessionRegistry;
 
     @Autowired
-    public AppSecurityConfiguration(UserServiceImpl userDetailsService) {
+    public AppSecurityConfiguration(UserServiceImpl userDetailsService, SessionRegistry sessionRegistry) {
         this.userDetailsService = userDetailsService;
+        this.sessionRegistry = sessionRegistry;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/users/login", "/users/register", "/blog/").permitAll()
                 .anyRequest().authenticated()
-                .and()
+                    .and()
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/users/login").permitAll()
@@ -42,19 +45,15 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
-//                    .failureUrl("/error")
-                .and()
+                    .and()
                 .logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/users/login")
-                .permitAll()
-                .and()
-//                .rememberMe()
-//                .rememberMeParameter("remember")
-//                .rememberMeCookieName("rememberMeCookie")
-//                .key("48433e39-e610-4a2c-926c-f86d46f5360a")
-//                .tokenValiditySeconds(100)
+                .logoutSuccessUrl("/users/login").permitAll()
+                    .and()
                 .userDetailsService(userDetailsService)
-                .csrf().disable();
+                .csrf().disable()
+                .sessionManagement()
+                .maximumSessions(1)
+                .sessionRegistry(sessionRegistry);
 
     }
 }

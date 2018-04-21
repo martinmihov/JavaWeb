@@ -91,7 +91,6 @@ public class Request implements Serializable {
         this.price = price;
     }
 
-
     @Column(name = "sent_on",nullable = false)
     public Date getRequestSentOn() {
         return this.requestSentOn;
@@ -100,7 +99,6 @@ public class Request implements Serializable {
     public void setRequestSentOn(Date requestSentOn) {
         this.requestSentOn = requestSentOn;
     }
-
 
     @Column(name = "is_replied")
     public boolean getIsReplied() {
@@ -120,12 +118,8 @@ public class Request implements Serializable {
         this.replies = replies;
     }
 
-
-    @Transient // THAT IS NEW
+    @Transient
     public void addReply(Reply reply){
         this.replies.add(reply);
     }
 }
-
-//@OneToMany(cascade = CascadeType.ALL,
-//        fetch = FetchType.LAZY,mappedBy = "request")

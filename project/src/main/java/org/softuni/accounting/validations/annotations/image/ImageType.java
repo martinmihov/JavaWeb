@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.FIELD})
 public @ interface ImageType {
+
     String message() default "The uploaded image's extension has to be of type jpg, jpeg, png or gif";
 
     Class<?>[] groups() default { };

@@ -35,7 +35,7 @@ public class Reply implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // THERE WAS NO CASCADE
     @JoinColumn(name = "request_id")
     public Request getRequest() {
         return this.request;

@@ -1,6 +1,7 @@
 package org.softuni.accounting.areas.requests.controllers;
 
 import org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel;
+import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 import org.softuni.accounting.areas.requests.services.RequestService;
 import org.softuni.accounting.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,15 @@ public class RequestController extends BaseController {
 
     @GetMapping("/contact-us")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView contactForm(){
-        return this.view("requests/request");
+    public ModelAndView contactForm(RequestViewModel model){
+        return this.view("requests/request","request",model);
     }
 
     @PostMapping("/contact-us")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView contactFormConfirm(@Valid @ModelAttribute RequestSendBindingModel requestModel, BindingResult bindingResult){
+    public ModelAndView contactFormConfirm(@Valid @ModelAttribute(name = "request") RequestSendBindingModel requestModel, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            this.view("request/request","requestForm",requestModel);
+           return this.view("requests/request","request",requestModel);
         }
         this.requestService.saveRequest(requestModel);
         return this.redirect("/");

@@ -1,7 +1,6 @@
 package org.softuni.accounting.areas.users.domain.entities.roles;
 
 import org.softuni.accounting.areas.users.domain.entities.users.User;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;

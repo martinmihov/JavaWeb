@@ -4,26 +4,25 @@ import org.softuni.accounting.areas.products.domain.entities.enums.ServiceType;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import javax.validation.constraints.Size;
 
 public class ServiceProdAddBindingModel {
 
-    private BigDecimal price;
+    private static final int DESCRIPTION_MIN_LENGTH = 3;
+    private static final int DESCRIPTION_MAX_LENGTH = 254;
+
+    private static final String DESCRIPTION_SIZE_MESSAGE = "Description must be between 3 and 254 symbols in length";
+    private static final String DESCRIPTION_EMPTY_MESSAGE = "Description cannot be empty";
+    private static final String SERVICE_TYPE_UNSPECIFIED_MESSAGE = "ServiceProd Type cannot be unspecified";
+
     private String description;
     private ServiceType serviceType;
 
     public ServiceProdAddBindingModel() {
     }
 
-    public BigDecimal getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @NotEmpty(message = "Description cannot be empty")
+    @NotEmpty(message = DESCRIPTION_EMPTY_MESSAGE)
+    @Size(min = DESCRIPTION_MIN_LENGTH, max = DESCRIPTION_MAX_LENGTH, message = DESCRIPTION_SIZE_MESSAGE)
     public String getDescription() {
         return this.description;
     }
@@ -32,7 +31,7 @@ public class ServiceProdAddBindingModel {
         this.description = description;
     }
 
-    @NotNull(message = "ServiceProd Type cannot be unspecified")
+    @NotNull(message = SERVICE_TYPE_UNSPECIFIED_MESSAGE)
     public ServiceType getServiceType() {
         return this.serviceType;
     }

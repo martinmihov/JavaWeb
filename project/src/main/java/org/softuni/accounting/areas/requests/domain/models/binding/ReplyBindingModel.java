@@ -13,19 +13,21 @@ import java.util.Date;
 
 public class ReplyBindingModel {
 
-    private static final int REPLY_MIN_LENGTH = 3;
-    private static final int REPLY_MAX_LENGTH = 254;
-    private static final long PRICE_MIN_VALUE = 0L;
+    private static final int REPLY_MIN_LENGTH            = 10;
+    private static final int REPLY_MAX_LENGTH            = 65535;
+    private static final long PRICE_MIN_VALUE            = 0L;
 
-    private static final String REPLY_TEXT_SIZE_MESSAGE = "* Reply must be between 3 and 254 symbols in length";
+    private static final String REPLY_TEXT_SIZE_MESSAGE  = "* Reply must be between 10 and 65535 symbols in length";
     private static final String REPLY_TEXT_EMPTY_MESSAGE = "* Reply cannot be empty";
-    private static final String PRICE_POSITIVE_VALUE = "* The value must be positive";
-    private static final String PRICE_RANGE_VALUE = "* Price range can be from 0.01 to 92,233,720,368,547,558.07 (what are you selling ;) )";
-
+    private static final String PRICE_POSITIVE_VALUE     = "* The value must be positive";
+    private static final String PRICE_RANGE_VALUE        = "* Price range can be from 0.01 to 92,233,720,368,547,558.07 (what are you selling ;) )";
 
     private String replyMessage;
+
     private BigDecimal price;
+
     private Date replySentOn;
+
     private Request request;
 
     public ReplyBindingModel() {
@@ -34,7 +36,9 @@ public class ReplyBindingModel {
 
 
     @NotEmpty(message = REPLY_TEXT_EMPTY_MESSAGE)
-    @Size(min = REPLY_MIN_LENGTH,max = REPLY_MAX_LENGTH, message = REPLY_TEXT_SIZE_MESSAGE)
+    @Size(min = REPLY_MIN_LENGTH,
+            max = REPLY_MAX_LENGTH,
+            message = REPLY_TEXT_SIZE_MESSAGE)
     public String getReplyMessage() {
         return this.replyMessage;
     }
@@ -44,7 +48,7 @@ public class ReplyBindingModel {
     }
 
     @Min(value = PRICE_MIN_VALUE, message = PRICE_POSITIVE_VALUE)
-    @Digits(message = PRICE_RANGE_VALUE,fraction = 2,integer = 19)
+    @Digits(message = PRICE_RANGE_VALUE, fraction = 2, integer = 19)
     public BigDecimal getPrice() {
         return this.price;
     }

@@ -19,23 +19,34 @@ public class RoleServiceImpl implements RoleService {
     private final ModelParser modelParser;
 
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository, ModelParser modelParser) {
+    public RoleServiceImpl(RoleRepository roleRepository,
+                           ModelParser modelParser) {
         this.roleRepository = roleRepository;
         this.modelParser = modelParser;
     }
 
     @Override
     public List<RoleServiceModel> findAllRoles() {
+
         List<RoleServiceModel> roleServiceModels = new ArrayList<>();
         List<Role> all = this.roleRepository.findAll();
+
         for (Role role : all) {
             roleServiceModels.add(this.modelParser.convert(role, RoleServiceModel.class));
         }
         return roleServiceModels;
     }
-    //TODO - Map Role to RoleServiceModel
+
     @Override
     public void save(Role role) {
         this.roleRepository.save(role);
+    }
+
+    public Role getByName(String name){
+        return this.roleRepository.findByName(name);
+    }
+
+    public Role getOneById(Long id){
+       return this.roleRepository.getOne(id);
     }
 }

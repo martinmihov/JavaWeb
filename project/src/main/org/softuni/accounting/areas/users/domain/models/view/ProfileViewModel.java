@@ -7,17 +7,29 @@ import java.util.Set;
 
 public class ProfileViewModel {
 
+    private String id;
+
     private String username;
 
     private String email;
 
     private String imagePath;
 
+    private String opinion;
+
     private Set<RequestViewModel> requests;
 
     private Set<ArticleViewModel> articleViewModels;
 
     public ProfileViewModel() {
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -42,6 +54,14 @@ public class ProfileViewModel {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getOpinion() {
+        return this.opinion;
+    }
+
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
     }
 
     public Set<RequestViewModel> getRequests() {

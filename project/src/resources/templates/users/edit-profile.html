@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head}"></div>
+<body>
+<div th:replace="~{fragments/navbar}"></div>
+<div class="container">
+    <h1 class="mt-2 text-md-center text-secondary">Edit Your Profile</h1>
+
+    <form class="mt-2 mb-5 col-md-8 offset-md-2" th:action="@{/users/profile/edit/{id}(id=${profileId})}" th:method="POST" th:object="${profileEdit}">
+
+        <div class="form-group" >
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" th:field="*{username}" th:classappend="${#fields.hasErrors('username')}? 'is-invalid'"/>
+            <small class="invalid-feedback text-warning" style="display: block" id="nameError" th:each="error : ${#fields.errors('username')}" th:text="${error}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
+            <small class="invalid-feedback text-warning" style="display: block" id="passwordError" th:each="error : ${#fields.errors('password')}" th:text="${error}"></small>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" th:field="*{confirmPassword}" th:classappend="${#fields.hasErrors('confirmPassword')}? 'is-invalid'">
+            <small class="invalid-feedback text-warning" style="display: block" id="confirm-password-mismatch" th:each="error : ${#fields.errors('global')}" th:text="${error}"></small>
+            <small class="invalid-feedback text-warning" style="display: block" id="confirmPasswordError" th:each="error : ${#fields.errors('confirmPassword')}" th:text="${error}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"/>
+            <small class="invalid-feedback text-warning" style="display: block" id="emailError" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="opinion">Your Opinion</label>
+            <textarea class="form-control" rows="4" id="opinion" name="opinion" th:field="*{opinion}" th:classappend="${#fields.hasErrors('opinion')}? 'is-invalid'"></textarea>
+            <small class="text-warning"><span class="text-danger">*</span> By filling this field you agree that we may share it with our website visitors along with your profile picture</small>
+            <small class="invalid-feedback text-warning" style="display: block" id="opinionError" th:each="error : ${#fields.errors('opinion')}" th:text="${error}"></small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <a class="btn btn-default" th:href="@{/users/profile/{email}(email=*{email})}">Cancel</a>
+    </form>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+
+</body>
+</html>

@@ -8,8 +8,7 @@ public class ProfileUploadAvatarBindingModel {
 
     private MultipartFile image;
 
-    public ProfileUploadAvatarBindingModel() {
-    }
+    public ProfileUploadAvatarBindingModel() { }
 
     public String getEmail() {
         return this.email;

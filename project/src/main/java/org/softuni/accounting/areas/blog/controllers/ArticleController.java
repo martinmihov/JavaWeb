@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
@@ -28,7 +29,9 @@ public class ArticleController extends BaseController {
     private final ModelParser modelParser;
 
     @Autowired
-    public ArticleController(ArticleService articleService, ModelParser modelParser) {
+    public ArticleController(ArticleService articleService,
+                             ModelParser modelParser) {
+
         this.articleService = articleService;
         this.modelParser = modelParser;
     }
@@ -36,60 +39,92 @@ public class ArticleController extends BaseController {
     @GetMapping("/")
     public ModelAndView blogMainPage(@PageableDefault(size = 6)Pageable pageable) {
         Page<ArticleViewModel> results = this.articleService.findAllByPage(pageable);
-        return this.view("blog/blog-index", "posts",results);
+
+        return this.view("blog/blog-index","posts",results);
+    }
+
+    @GetMapping("/most-popular")
+    public ModelAndView blogMostPopular() {
+        List<ArticleViewModel> popular = this.articleService.getSixMostPopularArticles();
+
+        return this.view("blog/articles-by","popularOrRecent",popular);
+    }
+
+    @GetMapping("/most-recent")
+    public ModelAndView blogMostRecent() {
+        List<ArticleViewModel> recent = this.articleService.getSixMostRecentArticles();
+
+        return this.view("blog/articles-by","popularOrRecent",recent);
     }
 
     @GetMapping("/articles/{id}")
     public ModelAndView articleDetails(@PathVariable Long id) {
         ArticleViewModel model = this.articleService.viewArticle(id);
         Article article = this.modelParser.convert(model,Article.class);
+
         Object[] models = new Object[]{model,this.articleService.isUserAuthorOrAdmin(article)};
-        return this.view("blog/view-article",models,"article","userIsAuthorOrAdmin");
+
+        return this.view("blog/view-article",models,
+                "article","userIsAuthorOrAdmin");
     }
 
     @GetMapping("/articles/create")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView createArticle(ArticleViewModel model) {
+
         return this.view("blog/create-article","article",model);
     }
 
     @PostMapping("/articles/create")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView createArticleConfirm(@Valid @ModelAttribute(name = "article") ArticleBindingModel articleBindingModel, BindingResult bindingResult, @RequestParam("image") MultipartFile image) {
+    public ModelAndView createArticleConfirm(@Valid @ModelAttribute(name = "article") ArticleBindingModel articleBindingModel,
+                                             BindingResult bindingResult,
+                                             @RequestParam("image") MultipartFile image) {
+
         if (bindingResult.hasErrors()) return this.view("blog/create-article", "article", articleBindingModel);
+
         this.articleService.savePost(articleBindingModel, image);
+
         return this.redirect("/blog/");
     }
 
     @GetMapping("/articles/delete/{id}")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView deleteArticle(@PathVariable Long id) {
+
         return this.view("blog/delete-article", "article", this.articleService.getArticleToEditOrDelete(id));
     }
 
     @PostMapping("/articles/delete/{id}")
     public ModelAndView deleteArticleConfirm(@PathVariable Long id) {
         this.articleService.deleteArticle(id);
+
         return this.redirect("/blog/");
     }
 
     @GetMapping("/articles/edit/{id}")
-    public ModelAndView editArticle(@PathVariable Long id, @ModelAttribute ArticleDeleteEditViewModel model) {
+    public ModelAndView editArticle(@PathVariable Long id,
+                                    @ModelAttribute ArticleDeleteEditViewModel model) {
         model = this.articleService.getArticleToEditOrDelete(id);
         Object[] models = new Object[]{model, id};
-        return this.view("blog/edit-article", models, "article", "articleId");
+
+        return this.view("blog/edit-article", models,
+                "article", "articleId");
     }
 
     @PostMapping("/articles/edit/{id}")
-    public ModelAndView editArticleConfirm(@PathVariable Long id, @Valid @ModelAttribute(name = "article") ArticleBindingModel model,
-                                 BindingResult bindingResult) { //, @RequestParam("image") MultipartFile image
+    public ModelAndView editArticleConfirm(@PathVariable Long id,
+                                           @Valid @ModelAttribute(name = "article") ArticleBindingModel model,
+                                           BindingResult bindingResult,
+                                           @RequestParam("image") MultipartFile image) {
         if (bindingResult.hasErrors()) {
             Object[] models = new Object[]{model, id};
-            return this.view("blog/edit-article", models, "article","articleId");
+            return this.view("blog/edit-article", models,
+                    "article","articleId");
         }
-        this.articleService.editArticle(id, model);
+        this.articleService.editArticle(id, model,image);
 
-        return this.redirect("/blog/");
+        return this.redirect("/blog/articles/{id}");
     }
 
     @GetMapping("/articles/count/{article_id}")

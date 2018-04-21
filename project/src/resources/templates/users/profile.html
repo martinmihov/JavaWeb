@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a href="" data-target="#requests" data-toggle="tab" class="nav-link">Requests</a>
                 </li>
+                <li class="nav-item">
+                    <a href="" data-target="#opinion" data-toggle="tab" class="nav-link">Your Opinion</a>
+                </li>
             </ul>
             <div class="tab-content py-4">
                 <!--/*@thymesVar id="profile" type="org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel"*/-->
@@ -29,6 +32,7 @@
                         <div class="col-md-6">
                             <p th:text="|Username: *{username}|"></p>
                             <p th:text="|Email: *{email}|"></p>
+                            <a class="btn btn-outline-secondary" th:href="@{/users/profile/edit/{id} (id=${profile.getId()})}">Edit Profile</a>
                         </div>
                     </div>
                     <!--/row-->
@@ -49,7 +53,8 @@
                      th:method="GET">
                     <div class="col-lg-12" th:each="entry: ${conversation.entrySet()}" th:object="${entry.getKey()}">
                         <hr/>
-                        <h3 class="mt-4 text-primary" th:text="*{senderSubject}"></h3><span th:text="*{{requestSentOn}}"></span>
+                        <h3 class="mt-4 text-primary" th:text="*{senderSubject}"></h3><span
+                            th:text="*{{requestSentOn}}"></span>
                         <hr/>
                         <p class="mt-2" th:text="*{senderMessage}"></p>
                         <hr/>
@@ -67,8 +72,15 @@
                         <div class="text-md-right mb-5 text-warning" th:if="*{replies.isEmpty()}"
                              th:text="|your request will be answered in the initial 24 hours of your request|"></div>
                     </div>
-
-
+                </div>
+                <div class="tab-pane" id="opinion">
+                    <h5 class="mb-3">Opinion</h5>
+                    <div class="row col-md-8">
+                        <div class="col-md-6">
+                            <p th:text="${profile.opinion}"></p>
+                        </div>
+                    </div>
+                    <!--/row-->
                 </div>
             </div>
         </div>
@@ -94,14 +106,14 @@
                         </script>
                     </label>
                     <div id="confirmation" style="display: none">
-                        <input type="submit" class="btn btn-primary control-label btn btn-primary offset-1"
+                        <input type="submit" class="btn control-label btn btn-outline-secondary offset-1 text-primary"
                                value="Confirm"/>
                         <a class="btn btn-default"
                            th:href="@{/users/profile/{email}(email=${profile.email})}">Cancel</a>
                     </div>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>
 </div>

@@ -8,15 +8,15 @@
 <body>
 <div class="container-fluid">
     <th:block th:replace="~{fragments/navbar}"></th:block>
-    <div class="container mt-5">
-        <h2>Login</h2>
-        <div th:if="${param.error}" class="mt-4 alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="container mt-5 col-lg-8">
+        <h2 class="text-center">Login</h2>
+        <div th:if="${param.error}" class="col-md-5 offset-md-3 mt-4 alert alert-warning alert-dismissible fade show" role="alert">
             Invalid username or password. Please try again.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form th:method="POST" th:action="@{/users/login}">
+        <form class="justify-content-md-center offset-md-3" th:method="POST" th:action="@{/users/login}">
             <div class="form-group row mt-4">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-4">
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-outline-secondary float-sm-right"><a th:href="@{/users/register}"><span class="color: text-white">you don't have an Account? Please ,</span> Register!</a></button>
+                    <button  type="button" class="btn btn-outline-secondary float-sm-right"><a style="text-decoration:none;" th:href="@{/users/register}"><span class="color: text-white">you don't have an Account? Please ,</span> Register!</a></button>
                 </div>
             </div>
         </form>

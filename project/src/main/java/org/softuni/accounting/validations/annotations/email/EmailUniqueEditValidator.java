@@ -19,17 +19,18 @@ public class EmailUniqueEditValidator implements ConstraintValidator<EmailUnique
     }
 
     @Override
-    public void initialize(EmailUniqueEdit email) {
-
-    }
-
+    public void initialize(EmailUniqueEdit email) { }
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
         boolean isValid = true;
+
         User existingUser = this.userService.findByEmail(email);
+
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
+
         User loggedUser = this.userService.findByEmail(user.getUsername());
+
         if (existingUser != null) {
             isValid = false;
         }

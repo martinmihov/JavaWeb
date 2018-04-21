@@ -14,35 +14,30 @@ import java.util.List;
 
 public interface ArticleService {
 
-    List<ArticleViewModel> searchArticlesByNameContaining(String title);
-
-    void savePost(ArticleBindingModel model,MultipartFile image);
-
-    ArticleDeleteEditViewModel getArticleToEditOrDelete(Long id);
-
-    ArticleViewModel viewArticle(Long id);
-
-    ArticleBindingModel findById(Long id);
-
-    void editArticle(Long id,ArticleBindingModel model);
+    void editArticle(Long id,ArticleBindingModel model,MultipartFile image);
 
     void deleteArticle(Long id);
+
+    void savePost(ArticleBindingModel model,MultipartFile image);
 
     boolean isUserAuthorOrAdmin(Article article);
 
     String incrementView(Long article_id);
 
-    List<ArticleViewModel> getArticlesBlogMainPage();
+    ArticleViewModel viewArticle(Long id);
+
+    ArticleDeleteEditViewModel getArticleToEditOrDelete(Long id);
+
+    List<ArticleViewModel> getSixMostPopularArticles();
+
+    List<ArticleViewModel> getSixMostRecentArticles();
+
+    Page<ArticleViewModel> findAllByPage(Pageable pageable);
+
+    List<ArticleViewModel> searchArticlesByNameContaining(String title);
 
     List<ArticleHomeViewModel> getArticlesIndexPage();
 
     List<ArticleHomeViewModel> getArticlesByAuthor(ProfileViewModel author);
 
-    Page<ArticleViewModel> findAllByPage(Pageable pageable);
-
-    long getTotalPages(int size);
-
-    default long getTotalPages(){
-        return getTotalPages(6);
-    }
 }

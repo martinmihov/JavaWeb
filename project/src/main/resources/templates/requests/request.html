@@ -8,8 +8,6 @@
 <body>
 <div class="container-fluid">
     <th:block th:replace="~{fragments/navbar}"></th:block>
-    <!--<section class="mbr-section form4 contact-form" id="form4-2y" data-rv-view="5142">-->
-
     <div class="container contact-form">
         <div class="row">
             <div class="col-md-6">
@@ -46,7 +44,7 @@
                     <div data-form-alert="" hidden="">
                         Thanks for filling out the form!
                     </div>
-                    <!--/*@thymesVar id="virusDto" type="org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel"*/-->
+                    <!--/*@thymesVar id="virusDto" type="org.softuni.accounting.areas.requests.domain.models.binding.RequestBindingModel"*/-->
                     <form class="form-group" th:action="@{/contact-us}" th:method="POST" th:object="${request}">
 
                         <div class="row">
@@ -54,7 +52,8 @@
                                 <input type="text" class="form-control input" name="senderSubject" placeholder="Subject"
                                        id="senderSubject" th:field="*{senderSubject}"
                                        th:classappend="${#fields.hasErrors('senderSubject')}? 'is-invalid'"/>
-                                <small class="invalid-feedback mb-md-2 text-warning" style="display: block" id="senderSubjectError"
+                                <small class="invalid-feedback mb-md-2 text-warning" style="display: block"
+                                       id="senderSubjectError"
                                        th:each="error : ${#fields.errors('senderSubject')}" th:text="${error}"></small>
                             </div>
 
@@ -68,7 +67,8 @@
                                 <textarea class="form-control input" name="senderMessage" rows="3" placeholder="Message"
                                           id="senderMessage" th:field="*{senderMessage}"
                                           th:classappend="${#fields.hasErrors('senderMessage')}? 'is-invalid'"></textarea>
-                                <small class="invalid-feedback text-warning" style="display: block" id="senderMessageError"
+                                <small class="invalid-feedback text-warning" style="display: block"
+                                       id="senderMessageError"
                                        th:each="error : ${#fields.errors('senderMessage')}" th:text="${error}"></small>
                             </div>
                             <div class="input-group-btn col-md-12" style="margin-top: 10px;">
@@ -84,110 +84,5 @@
     <!--</section>-->
 </div>
 <th:block th:replace="~{fragments/footer}"></th:block>
-<!--<script>-->
-<!--var myVar;-->
-
-<!--function myFunction() {-->
-<!--myVar = when.loadeve(showPage, 1000);-->
-<!--}-->
-
-<!--function showPage() {-->
-<!--document.getElementById("loader").style.display = "none";-->
-<!--document.getElementById("myDiv").style.display = "block";-->
-<!--}-->
-<!--</script>-->
 </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml"-->
-<!--xmlns:th="http://www.thymeleaf.org"-->
-<!--xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
-<!--<head>-->
-<!--<th:block th:replace="~{fragments/head}"></th:block>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container">-->
-<!--<h2>Centered Modal Example</h2>-->
-<!--<p>Center the modal vertically and horizontally within the page, with the .modal-dialog-centered class.</p>-->
-<!--&lt;!&ndash; Button to Open the Modal &ndash;&gt;-->
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
-<!--Open modal-->
-<!--</button>-->
-
-<!--&lt;!&ndash; The Modal &ndash;&gt;-->
-<!--<div class="modal fade" id="myModal">-->
-<!--<div class="modal-dialog modal-dialog-centered">-->
-<!--<div class="modal-content">-->
-
-<!--&lt;!&ndash; Modal Header &ndash;&gt;-->
-<!--<div class="modal-header">-->
-<!--<h4 class="modal-articleTitle">Modal Heading</h4>-->
-<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Modal body &ndash;&gt;-->
-<!--<div class="modal-body">-->
-<!--Modal body..-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Modal footer &ndash;&gt;-->
-<!--<div class="modal-footer">-->
-<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--<th:block th:replace="~{fragments/footer}"></th:block>-->
-<!--</body>-->
-<!--</html>-->
-
-
-<!--<div class="container">-->
-<!--&lt;!&ndash;SignUp Form&ndash;&gt;-->
-<!--<div class="modal fade" id="modal" role="dialog">-->
-<!--<div class="modal-dialog">-->
-<!--<div class="modal-content">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--<h4 class="text-primary">Contact Form</h4>-->
-<!--</div>-->
-<!--<div class="modal-body">-->
-<!--<div class="row"><div class="col-md-12">-->
-<!--<form  method="post" action="" role="form" class="form-horizontal">-->
-<!--<div class="form-group">-->
-<!--<label class="col-md-3 control-label" for="name">Name</label>-->
-<!--<div class="col-md-9">-->
-<!--<input id="name" name="name" type="text" placeholder="Your name" class="form-control">-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label class="col-md-3 control-label" for="email">Your E-mail</label>-->
-<!--<div class="col-md-9">-->
-<!--<input id="email" name="email" type="text" placeholder="Your email" class="form-control">-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label class="col-md-3 control-label" for="message">Your message</label>-->
-<!--<div class="col-md-9">-->
-<!--<textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<div class="col-md-12 text-right">-->
-<!--<button type="submit" class="btn btn-primary btn-lg">Submit</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div></div>-->
-<!--</div>-->
-<!--<div class="modal-footer">-->
-<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->

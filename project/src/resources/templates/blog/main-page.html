@@ -7,12 +7,12 @@
 </head>
 <body>
 <div class="container-fluid">
-    <th:block th:replace="~{fragments/navbar}"></th:block>
+    <th:block th:replace="~{fragments/navbar-blog}"></th:block>
     <div class="container mt-5">
         <div class="row" th:action="@{/blog}" th:method="GET">
 
             <!-- Blog Entries Column -->
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <h1 class="my-4 text-primary">Blog
                     <small class="text-secondary">T&amp;M Consult</small>
                 </h1>
@@ -20,11 +20,13 @@
                 <!-- Blog Post -->
                 <th:block th:each="article : ${articles}" th:object="${article}">
                     <div class="card my-md-5">
-                        <img class="card-img-top" th:src="@{*{imagePath}}" alt="Blog Image">
+                        <img class="card-img-top" th:if="${article.imagePath} != null" th:src="@{${article.imagePath}}"
+                             alt="Blog Image">
                         <div class="card-body">
-                            <h2 class="card-title" th:text="*{title}">Post Title</h2>
+                            <h2 class="card-title text-primary" th:text="*{title}">Post Title</h2>
                             <p class="card-text" th:text="${article.getSummary()}"></p>
-                            <a th:href="@{/blog/articles/{id}(id=*{id})}" class="btn btn-primary">Read More &rarr;</a>
+                            <a th:href="@{/blog/articles/{id}(id=*{id})}"
+                               class="btn btn-outline-primary float-md-right">continue reading ..</a>
                         </div>
                         <div class="card-footer text-muted" th:text="|Posted on *{{date}} by *{author.username}|"></div>
                     </div>
@@ -40,73 +42,12 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Search Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Search</h5>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Categories Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Categories</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">Web Design</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">HTML</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Freebies</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">JavaScript</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">CSS</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tutorials</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Side Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Side Widget</h5>
-                    <div class="card-body">
-                        You can put anything you want inside of these side widgets. They are easy to use, and feature
-                        the new Bootstrap 4 card containers!
-                    </div>
-                </div>
-
-            </div>
-
         </div>
-        <!-- /.row -->
     </div>
 </div>
+
+<!--&lt;!&ndash; Return to Top &ndash;&gt;-->
+<!--<a href="#">back to top</a>-->
 </body>
 <th:block th:replace="~{fragments/footer}"></th:block>
 </html>

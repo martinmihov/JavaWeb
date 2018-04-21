@@ -9,10 +9,7 @@ public class ArticleDeleteEditViewModel {
 
     private String content;
 
-
-
-    public ArticleDeleteEditViewModel() {
-    }
+    public ArticleDeleteEditViewModel() { }
 
     public Long getId() {
         return this.id;

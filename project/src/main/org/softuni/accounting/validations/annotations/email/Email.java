@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.FIELD})
 public @interface Email {
-    String message() default "Invalid Email";
+    String message() default "* Invalid Email";
 
     Class<?>[] groups() default { };
 

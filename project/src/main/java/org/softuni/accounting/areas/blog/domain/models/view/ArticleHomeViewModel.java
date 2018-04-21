@@ -17,8 +17,7 @@ public class ArticleHomeViewModel {
 
     private String imagePath;
 
-    public ArticleHomeViewModel() {
-    }
+    public ArticleHomeViewModel() { }
 
     public Long getId() {
         return this.id;

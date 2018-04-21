@@ -1,10 +1,12 @@
 <div th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <a class="navbar-brand" th:href="@{/}">T&amp;M<i> Consult</i></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" th:href="@{/}"><span class="text-primary">T</span>&amp;<span
+                class="text-primary">M</span><i>Consult</i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarColor01">
+        <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
@@ -19,17 +21,15 @@
                             <a class="dropdown-item" th:href="@{/services/accounting-services}">Accounting</a>
                             <a class="dropdown-item" th:href="@{/services/vat-services}">VAT</a>
                             <a class="dropdown-item" th:href="@{/services/payroll-services}">Payroll</a>
-                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item" th:href="@{/admins/services/add}">Add Service</a>
-                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item" th:href="@{/admins/services}">View/Delete Service</a>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
-                <!--<a class="nav-link" href="#" data-toggle="modal" data-target="#modal">Contact Us</a>-->
+                    <!--<a class="nav-link" href="#" data-toggle="modal" data-target="#modal">Contact Us</a>-->
                     <a class="nav-link" th:href="@{/contact-us}">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
+                    <a class="nav-link" th:href="@{/about-us}">About Us</a>
                 </li>
                 <li class="nav-item active">
                     <div class="dropdown">
@@ -37,28 +37,32 @@
                            aria-haspopup="true" aria-expanded="false" th:href="@{/blog/}">Blog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" th:href="@{/blog/}">Home</a>
-                            <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/blog/articles/create}">Create article</a>
+                            <a sec:authorize="isAuthenticated()" class="dropdown-item"
+                               th:href="@{/blog/articles/create}">Create article</a>
                         </div>
                     </div>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active">
+                    <div class="dropdown">
+                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link" id="admin-dp-menu" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" th:href="@{/services/all}">Admins</a>
 
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" class="nav-item active">
-                    <a class="nav-link" th:href="@{/admins/reply-to-requests}">Reply to Requests</a>
-                </li>
-
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item active">
-                    <a class="nav-link" th:href="@{/admins/requests}">Requests</a>
-                </li>
-
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" class="nav-item active">
-                    <a class="nav-link" th:href="@{/admins/services}">Services</a>
-                </li>
-
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item active">
-                    <a class="nav-link" th:href="@{/admins/users}">Users</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/users}">Users</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/services/add}">Add Service</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/services}">Services</a>
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/requests}">Requests</a>
+                            <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="dropdown-item"
+                               th:href="@{/admins/reply-to-requests}">Reply to Requests</a>
+                        </div>
+                    </div>
                 </li>
 
                 <li class="nav-item disabled" sec:authorize="isAuthenticated()">
@@ -91,3 +95,4 @@
         </div>
     </nav>
 </div>
+

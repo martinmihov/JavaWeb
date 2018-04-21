@@ -13,17 +13,22 @@ import java.util.Set;
 public class UserEditBindingModel {
 
     private String username;
+
     private String password;
+
     private String confirmPassword;
+
     private String email;
+
     private String opinion;
+
     private MultipartFile image;
+
     private Set<Long> rolesIds;
+
     private Date deletedOn;
 
-    public UserEditBindingModel() {
-    }
-
+    public UserEditBindingModel() { }
 
     @NotEmpty(message = UserConstants.EMAIL_EMPTY_MESSAGE)
     public String getEmail() {

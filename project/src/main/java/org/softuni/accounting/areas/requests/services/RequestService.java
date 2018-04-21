@@ -1,7 +1,7 @@
 package org.softuni.accounting.areas.requests.services;
 
 import org.softuni.accounting.areas.requests.domain.entities.Request;
-import org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel;
+import org.softuni.accounting.areas.requests.domain.models.binding.RequestBindingModel;
 import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 
 import javax.validation.Valid;
@@ -9,15 +9,14 @@ import java.util.List;
 
 public interface RequestService {
 
-    void saveRequest(@Valid RequestSendBindingModel saveRequestModel);
-
-    List<RequestViewModel> getAllRequests();
-
-    RequestViewModel findRequestById(Long id);
-
     void deleteRequest(Long id);
+
+    void saveRequest(@Valid RequestBindingModel saveRequestModel);
 
     Request findById(Long id);
 
-//    List<RequestViewModel> getRequestsBySenderEmailOrderByIsRepliedDesc(String authorEmail);
+    RequestViewModel findRequestById(Long id);
+
+    List<RequestViewModel> getAllRequests();
+
 }

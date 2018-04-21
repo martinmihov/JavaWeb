@@ -1,6 +1,6 @@
 package org.softuni.accounting.areas.requests.controllers;
 
-import org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel;
+import org.softuni.accounting.areas.requests.domain.models.binding.RequestBindingModel;
 import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 import org.softuni.accounting.areas.requests.services.RequestService;
 import org.softuni.accounting.controllers.BaseController;
@@ -33,11 +33,13 @@ public class RequestController extends BaseController {
 
     @PostMapping("/contact-us")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView contactFormConfirm(@Valid @ModelAttribute(name = "request") RequestSendBindingModel requestModel, BindingResult bindingResult){
+    public ModelAndView contactFormConfirm(@Valid @ModelAttribute(name = "request") RequestBindingModel requestModel,
+                                           BindingResult bindingResult){
         if(bindingResult.hasErrors()){
            return this.view("requests/request","request",requestModel);
         }
         this.requestService.saveRequest(requestModel);
+
         return this.redirect("/");
     }
 }

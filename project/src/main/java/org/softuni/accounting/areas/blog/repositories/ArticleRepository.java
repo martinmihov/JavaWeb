@@ -19,4 +19,8 @@ public interface ArticleRepository extends JpaRepository<Article,Long> {
 
     List<Article> findArticlesByTitleContainingOrderByTitle(String title);
 
+    List<Article> findTop6ByOrderByPageViewDesc();
+
+    List<Article> findTop6ByOrderByDateDesc();
+
 }

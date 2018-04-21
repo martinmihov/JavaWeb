@@ -12,7 +12,7 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Sent on</th>
+                <th scope="col" style="width:  11%">Sent on</th>
                 <th scope="col">Sent by</th>
                 <th scope="col">Subject</th>
                 <th scope="col">Description</th>
@@ -27,7 +27,7 @@
                     <td th:text="*{senderEmail}"></td>
                     <td th:text="*{senderSubject}"></td>
                     <td th:text="*{senderMessage}"></td>
-                    <!--<td><a class="btn btn-danger" th:href="@{/admins/requests/respond/{id}(id=${r.id})}">Respond</a></td>-->
+
                     <td>
                         <form th:method="POST" th:action="@{/admins/requests/delete/{id}(id=${r.id})}">
                             <button type="submit" class="btn btn-danger">Delete</button>

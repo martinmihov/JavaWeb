@@ -2,10 +2,12 @@ package org.softuni.accounting.areas.users.services;
 
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
+import org.softuni.accounting.areas.users.domain.models.binding.ProfileEditBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.ProfileUploadAvatarBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserEditBindingModel;
 import org.softuni.accounting.areas.users.domain.models.binding.UserRegisterBindingModel;
 import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
+import org.softuni.accounting.areas.users.domain.models.view.UserOpinionViewModel;
 import org.softuni.accounting.areas.users.domain.models.view.UserViewModel;
 import org.softuni.accounting.areas.users.repositories.RoleRepository;
 import org.softuni.accounting.areas.users.repositories.UserRepository;
@@ -38,6 +40,17 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final ModelParser modelParser;
+
+    private boolean isTheSame(User user) {
+        return Objects.equals(loggedInUser().getId(),
+                user.getId());
+    }
+
+    private User loggedInUser(){
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return this.findByEmail(user.getUsername());
+    }
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ModelParser modelParser) {
@@ -92,7 +105,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEditBindingModel findById(String id) {
+    public UserEditBindingModel findUserById(String id) {
 
         Optional<User> user = this.userRepository.findById(id);
         if (user.isPresent()) {
@@ -105,6 +118,24 @@ public class UserServiceImpl implements UserService {
             userEditBindingModel.setConfirmPassword("");
             userEditBindingModel.setRolesIds(roleIds);
             return userEditBindingModel;
+        }
+        return null;
+    }
+
+    @Override
+    public ProfileEditBindingModel findProfileById(String id) {
+        Optional<User> user = this.userRepository.findById(id);
+        if (user.isPresent()) {
+
+            if(!this.isTheSame(user.get())) return null;
+
+            ProfileEditBindingModel editProfile = this.modelParser.convert(user.get(), ProfileEditBindingModel.class);
+            editProfile.setUsername(user.get().getUsername());
+            editProfile.setEmail(user.get().getEmail());
+            editProfile.setPassword("");
+            editProfile.setConfirmPassword("");
+            editProfile.setOpinion(user.get().getOpinion());
+            return editProfile;
         }
         return null;
     }
@@ -139,6 +170,22 @@ public class UserServiceImpl implements UserService {
             this.userRepository.save(user);
         }
     }
+
+    @Override
+    public void editProfile(String id, ProfileEditBindingModel model) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setEmail(model.getEmail());
+            user.setUsername(model.getUsername());
+            user.setOpinion(model.getOpinion());
+            if (model.getPassword() != null && !model.getPassword().isEmpty()) {
+                user.setPassword(this.passwordEncoder.encode(model.getPassword()));
+            }
+            this.userRepository.save(user);
+        }
+    }
+
     //TODO - Map User to UserServiceModel
     @Override
     public List<User> findAll() {
@@ -185,21 +232,32 @@ public class UserServiceImpl implements UserService {
         userEntity.setImagePath(imagePath);
         this.userRepository.saveAndFlush(userEntity);
     }
-    //    @Override
-//    public UserViewModel findUserByEmail(String email) {
-//        return this.userRepository.findUserByEmail(email);
-//    }
+
+
+    @Override
+    public List<UserOpinionViewModel> getUsersOpinions() {
+        List<User> usersWithOpinions = this.userRepository.findDistinctTop3ByImagePathNotNullAndOpinionNotNullAndArticlesNotNullOrderByArticlesAsc();
+        List<UserOpinionViewModel> usersIndexPage = new ArrayList<>();
+        for (User usersWithOpinion : usersWithOpinions) {
+            UserOpinionViewModel user = this.modelParser.convert(usersWithOpinion, UserOpinionViewModel.class);
+            usersIndexPage.add(user);
+        }
+        return usersIndexPage;
+    }
 
     @Override
     public ProfileViewModel findProfile(String email) {
         User user = this.userRepository.findByEmail(email);
-        return this.modelParser.convert(user,ProfileViewModel.class);
+        return this.modelParser.convert(user, ProfileViewModel.class);
     }
-
-
-
-
 }
+
+
+//    @Override
+//    public UserViewModel findUserByEmail(String email) {
+//        return this.userRepository.findUserByEmail(email);
+//    }
+
 
 //    @Override
 //    public void editUser(@Valid UserEditBindingModel model) {

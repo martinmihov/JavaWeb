@@ -21,8 +21,7 @@ public class ProfileViewModel {
 
     private Set<ArticleViewModel> articleViewModels;
 
-    public ProfileViewModel() {
-    }
+    public ProfileViewModel() { }
 
     public String getId() {
         return this.id;

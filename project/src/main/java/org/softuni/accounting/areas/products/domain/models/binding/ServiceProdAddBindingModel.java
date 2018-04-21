@@ -8,11 +8,11 @@ import javax.validation.constraints.Size;
 
 public class ServiceProdAddBindingModel {
 
-    private static final int DESCRIPTION_MIN_LENGTH = 3;
-    private static final int DESCRIPTION_MAX_LENGTH = 254;
+    private static final int DESCRIPTION_MIN_LENGTH              = 3;
+    private static final int DESCRIPTION_MAX_LENGTH              = 254;
 
-    private static final String DESCRIPTION_SIZE_MESSAGE = "Description must be between 3 and 254 symbols in length";
-    private static final String DESCRIPTION_EMPTY_MESSAGE = "Description cannot be empty";
+    private static final String DESCRIPTION_SIZE_MESSAGE         = "Description must be between 3 and 254 symbols in length";
+    private static final String DESCRIPTION_EMPTY_MESSAGE        = "Description cannot be empty";
     private static final String SERVICE_TYPE_UNSPECIFIED_MESSAGE = "ServiceProd Type cannot be unspecified";
 
     private String description;
@@ -22,7 +22,9 @@ public class ServiceProdAddBindingModel {
     }
 
     @NotEmpty(message = DESCRIPTION_EMPTY_MESSAGE)
-    @Size(min = DESCRIPTION_MIN_LENGTH, max = DESCRIPTION_MAX_LENGTH, message = DESCRIPTION_SIZE_MESSAGE)
+    @Size(min = DESCRIPTION_MIN_LENGTH,
+            max = DESCRIPTION_MAX_LENGTH,
+            message = DESCRIPTION_SIZE_MESSAGE)
     public String getDescription() {
         return this.description;
     }

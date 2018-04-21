@@ -8,29 +8,35 @@
     <th:block th:replace="~{fragments/navbar}"></th:block>
     <div class="row my-md-5">
         <div class="list-group col-md-4">
-            <a th:href="@{/services/accounting-services}" class="list-group-item list-group-item-action flex-column align-items">
+            <a th:href="@{/services/accounting-services}"
+               class="list-group-item list-group-item-action flex-column align-items">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1 text-primary">Accounting Services</h5>
                 </div>
-                <p class="my-1">&emsp;Regardless of its size, each company needs stability and safety in its accounting and
+                <p class="my-1">&emsp;Regardless of its size, each company needs stability and safety in its accounting
+                    and
                     finance to calmly perform its inherent activity. We encompass all accounting processes
                     and provide our customers with an efficient and safe service based upon transparency in
                     the accounting processes and stability in the tax relationships with the state.</p>
             </a>
-            <a th:href="@{/services/vat-services}" class="list-group-item list-group-item-action flex-column align-items">
+            <a th:href="@{/services/vat-services}"
+               class="list-group-item list-group-item-action flex-column align-items">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1 text-primary">VAT Services</h5>
                 </div>
-                <p class="my-1">&emsp;The VAT tax is the main source of revenue for the national budget in Bulgaria and the
+                <p class="my-1">&emsp;The VAT tax is the main source of revenue for the national budget in Bulgaria and
+                    the
                     rest of the EU members. We can answer the questions you might have regarding its law as
                     well as the way your company should act in different situations both in Bulgaria or when
                     doing business inside or outside the EU.</p>
             </a>
-            <a th:href="@{/services/payroll-services}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <a th:href="@{/services/payroll-services}"
+               class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="my-1 text-primary">Payroll Services</h5>
                 </div>
-                <p class="my-1">&emsp;You can stay calm and safe facing inspections and audits by the National Revenue Agency
+                <p class="my-1">&emsp;You can stay calm and safe facing inspections and audits by the National Revenue
+                    Agency
                     and the National Social Security Institute, for issues concerning the Occupational
                     Medical Service or an inspection by the Labour Inspectorate.</p>
             </a>
@@ -39,7 +45,7 @@
             <h3 class="text-center my-md-3"><span th:text="${serviceType}"></span> Services</h3>
             <ul class="list-group">
                 <div th:each="s,iterStat : ${services}" th:object="${s}">
-                    <li  class="list-group-item">
+                    <li class="list-group-item">
                         <p><span class="text-primary">&rarr;</span>&emsp; <span th:text="*{description}"></span></p>
                     </li>
                 </div>
@@ -50,34 +56,3 @@
 <th:block th:replace="~{fragments/footer}"></th:block>
 </body>
 </html>
-<!--<ul class="mt-5">-->
-    <!--<div th:each="s,iterStat : ${services}" th:object="${s}">-->
-        <!--<li>-->
-            <!--<p th:text="*{description}"></p>-->
-        <!--</li>-->
-    <!--</div>-->
-<!--</ul>-->
-<!--<div class="container mt-md-5">-->
-    <!--<h1>-->
-        <!--&lt;!&ndash;/*@thymesVar id="serviceType" type="org.softuni.accounting.areas.products.controllers.ServiceController"*/&ndash;&gt;-->
-        <!--<span th:text="${serviceType}"></span> Services</h1>-->
-    <!--<div class="col-md-6">-->
-        <!--<ul class="mt-5">-->
-            <!--<div th:each="s,iterStat : ${services}" th:object="${s}">-->
-                <!--<li>-->
-                    <!--<p th:text="*{description}"></p>-->
-                <!--</li>-->
-            <!--</div>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <!--<div class="col-md-6">-->
-        <!--<ul class="mt-5">-->
-            <!--<div th:each="s,iterStat : ${services}" th:object="${s}">-->
-                <!--<li>-->
-                    <!--<p th:text="*{description}"></p>-->
-                <!--</li>-->
-            <!--</div>-->
-        <!--</ul>-->
-    <!--</div>-->
-
-<!--</div>-->

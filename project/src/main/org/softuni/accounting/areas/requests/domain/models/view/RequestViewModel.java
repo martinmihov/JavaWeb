@@ -1,5 +1,6 @@
 package org.softuni.accounting.areas.requests.domain.models.view;
 
+import org.softuni.accounting.utils.constants.GlobalConstants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -67,7 +68,7 @@ public class RequestViewModel {
         this.requestPrice = requestPrice;
     }
 
-    @DateTimeFormat(pattern = "EEE, MMM d, ''yy 'at' h:mm a")
+    @DateTimeFormat(pattern = GlobalConstants.DATE_TIME_FORMAT_PATTERN)
     public Date getRequestSentOn() {
         return this.requestSentOn;
     }

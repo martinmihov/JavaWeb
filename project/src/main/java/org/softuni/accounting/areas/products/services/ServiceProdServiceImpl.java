@@ -23,13 +23,16 @@ public class ServiceProdServiceImpl implements ServiceProdService {
     private final ModelParser modelParser;
 
     @Autowired
-    public ServiceProdServiceImpl(ServiceProdRepository serviceProdRepository, ModelParser modelParser) {
+    public ServiceProdServiceImpl(ServiceProdRepository serviceProdRepository,
+                                  ModelParser modelParser) {
+
         this.serviceProdRepository = serviceProdRepository;
         this.modelParser = modelParser;
     }
 
     @Override
     public List<ServiceProdViewModel> getAllServices() {
+
         List<ServiceProd> as = this.serviceProdRepository.findAll();
         List<ServiceProdViewModel> allServices = new ArrayList<>();
 
@@ -42,6 +45,7 @@ public class ServiceProdServiceImpl implements ServiceProdService {
 
     @Override
     public List<ServiceProdViewModel> getAllServicesByType(ServiceType type) {
+
         List<ServiceProd> sps = this.serviceProdRepository.findAllByServiceTypeEquals(type);
         List<ServiceProdViewModel> servicesByType = new ArrayList<>();
 
@@ -54,14 +58,17 @@ public class ServiceProdServiceImpl implements ServiceProdService {
 
     @Override
     public void addService(@Valid ServiceProdAddBindingModel addServiceModel) {
-        this.serviceProdRepository.save(this.modelParser.convert(addServiceModel, ServiceProd.class));
+        this.serviceProdRepository.
+                save(this.modelParser.convert(addServiceModel, ServiceProd.class));
     }
 
     @Override
     public ServiceProdViewModel getServiceToDelete(Long id) {
         Optional<ServiceProd> serv = this.serviceProdRepository.findById(id);
+
         if(serv.isPresent()){
-            return serv.map(serviceProd -> this.modelParser.convert(serviceProd, ServiceProdViewModel.class)).orElse(null);
+            return serv.map(serviceProd ->
+                    this.modelParser.convert(serviceProd, ServiceProdViewModel.class)).orElse(null);
         }
         return null;
     }
@@ -73,8 +80,13 @@ public class ServiceProdServiceImpl implements ServiceProdService {
 
     @Override
     public List<ServiceProdViewModel> searchServiceProd(String searchInDescription) {
-        List<ServiceProd> serviceProdEntities = this.serviceProdRepository.findServiceProdByDescriptionContainingOrderByServiceTypeAsc(searchInDescription);
+
+        List<ServiceProd> serviceProdEntities =
+                this.serviceProdRepository.
+                        findServiceProdByDescriptionContainingOrderByServiceTypeAsc(searchInDescription);
+
         List<ServiceProdViewModel> result = new ArrayList<>();
+
         for (ServiceProd serviceProdEntity : serviceProdEntities) {
             ServiceProdViewModel model = this.modelParser.convert(serviceProdEntity,ServiceProdViewModel.class);
             result.add(model);

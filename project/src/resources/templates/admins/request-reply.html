@@ -10,26 +10,28 @@
     <th:block th:replace="~{fragments/navbar}"></th:block>
     <!--/*@thymesVar id="virusDto" type="org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel"*/-->
     <div class="container contact-form" th:object="${replyToRequest}">
+        <h4 class="text-center">Reply to our Client</h4>
         <div class="row">
-            <div class="col-md-6">
-                <h6 class="pb-3 align-left mbr-fonts-style display-6"
+            <div class="col-md-8 offset-2">
+
+                <h6 class="pb-3 align-left display-6"
                     th:text="|Request by *{senderEmail}|"></h6>
                 <form class="block mbr-form" readonly="readonly">
                     <div class="row">
                         <div class="col-md-6 multi-horizontal" data-for="senderSubject">
                             <input type="text" class="form-control input text-white" name="senderSubject"
-                                   data-form-field="SenderSubject" placeholder="Subject" required=""
+                                   data-form-field="SenderSubject" placeholder="Subject"
                                    id="senderSubject" readonly="readonly" th:field="*{senderSubject}"
                                    th:classappend="${#fields.hasErrors('senderSubject')}? 'is-invalid'"/>
                         </div>
                         <div class="col-md-6 multi-horizontal" data-for="senderEmail">
                             <input type="text" class="form-control input text-white " name="senderEmail"
                                    data-form-field="SenderEmail" placeholder="Email"
-                                   th:value="*{senderEmail}" required=""
+                                   th:value="*{senderEmail}"
                                    id="senderEmail" readonly="readonly"/>
                         </div>
                         <div class="col-md-12" data-for="senderMessage">
-                            <textarea class="form-control input text-white" name="senderMessage" rows="3"
+                            <textarea class="form-control input text-white" name="senderMessage" rows="5"
                                       data-form-field="SenderMessage" placeholder="Message"
                                       id="senderMessage" readonly="readonly" th:field="*{senderMessage}"
                                       th:classappend="${#fields.hasErrors('senderMessage')}? 'is-invalid'"></textarea>
@@ -37,21 +39,29 @@
                     </div>
                 </form>
                 <form class="form-group" th:action="@{/admins/reply-to-requests/response}" th:method="POST">
-                    <label class="form-control-label mbr-fonts-style display-7" for="replyMessage">Reply</label>
+                <!--<form class="form-group" th:action="@{/admins/reply-to-requests/response}" th:method="POST">-->
+                    <label class="form-control-label display-7" for="replyMessage">Reply</label>
                     <input id="id" name="id" type="hidden" th:field="*{id}"/>
-                    <textarea type="text" class="form-control" name="replyMessage" rows="7"
+                    <textarea type="text" class="form-control" name="replyMessage" rows="6"
                               data-form-field="replyMessage" id="replyMessage"></textarea>
-                    <label class="form-control-label mbr-fonts-style display-7 mt-4" for="price">Approximate price</label>
-                    <input type="text" class="form-control input" id="price" name="price"/>
-                    <div class="card card-outline-secondary my-4">
-                        <button class="btn btn-outline-success text-primary">Reply</button>
-                    </div>
+                    <label class="form-control-label display-7 my-md-1 col-md-7" for="price">Approximate price</label>
+                    <input type="text" class="form-control input col-md-4" id="price" name="price"/>
+                    <button type="submit" class="btn btn-outline-success text-primary">Reply</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/admins/reply-to-requests}">Back</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <th:block th:replace="~{fragments/footer}"></th:block>
+
+
+
+<!--<button type="submit" class="btn btn-outline-success text-primary">Reply</button>-->
+<!--<a class="btn btn-outline-secondary" th:href="@{/admins/reply-to-requests}">Back</a>-->
+
+
+
 <!--<script>-->
 <!--var myVar;-->
 

@@ -1,7 +1,7 @@
 package org.softuni.accounting.areas.requests.services;
 
 import org.softuni.accounting.areas.requests.domain.entities.Request;
-import org.softuni.accounting.areas.requests.domain.models.binding.RequestSendBindingModel;
+import org.softuni.accounting.areas.requests.domain.models.binding.RequestBindingModel;
 import org.softuni.accounting.areas.requests.domain.models.view.RequestViewModel;
 import org.softuni.accounting.areas.requests.repositories.RequestRepository;
 import org.softuni.accounting.areas.users.domain.entities.users.User;
@@ -26,16 +26,21 @@ public class RequestServiceImpl implements RequestService {
 
 
     @Autowired
-    public RequestServiceImpl(RequestRepository requestRepository, UserService userService, ModelParser modelParser) {
+    public RequestServiceImpl(RequestRepository requestRepository,
+                              UserService userService,
+                              ModelParser modelParser) {
+
         this.requestRepository = requestRepository;
         this.userService = userService;
         this.modelParser = modelParser;
     }
 
     @Override
-    public void saveRequest(@Valid RequestSendBindingModel saveRequestModel) {
+    public void saveRequest(@Valid RequestBindingModel saveRequestModel) {
+
         Request request = this.modelParser.convert(saveRequestModel, Request.class);
         User user = this.userService.findByEmail(saveRequestModel.getSenderEmail());
+
         if (user != null) {
             request.setSenderUser(user);
             user.addRequest(request);
@@ -45,8 +50,10 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestViewModel> getAllRequests() {
+
         List<Request> requests = this.requestRepository.findAll();
         List<RequestViewModel> allRequests = new ArrayList<>();
+
         for (Request request : requests) {
             RequestViewModel model = this.modelParser.convert(request, RequestViewModel.class);
             allRequests.add(model);
@@ -56,8 +63,11 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestViewModel findRequestById(Long id) {
+
         Optional<Request> reqCandidate = this.requestRepository.findById(id);
-        return reqCandidate.map(request -> this.modelParser.convert(request, RequestViewModel.class)).orElse(null);
+
+        return reqCandidate.map(request ->
+                this.modelParser.convert(request, RequestViewModel.class)).orElse(null);
 
     }
 
@@ -68,21 +78,11 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request findById(Long id) {
+
         Optional<Request> reqCandidate = this.requestRepository.findById(id);
-        return reqCandidate.map(request -> this.modelParser.convert(request, Request.class)).orElse(null);
+
+        return reqCandidate.map(request ->
+                this.modelParser.convert(request, Request.class)).orElse(null);
 
     }
-
-//    @Override
-//    public List<RequestViewModel> getRequestsBySenderEmailOrderByIsRepliedDesc(String authorEmail) {
-//        List<Request> authorRequestsEntity = this.requestRepository.findRequestsBySenderEmailOrderByIsRepliedDesc(authorEmail);
-//        List<RequestViewModel> authorRequests = new ArrayList<>();
-//        for (Request request : authorRequestsEntity) {
-//            RequestViewModel authorRequest = this.modelParser.convert(request,RequestViewModel.class);
-//            authorRequests.add(authorRequest);
-//        }
-//        return authorRequests;
-//    }
-
-
 }

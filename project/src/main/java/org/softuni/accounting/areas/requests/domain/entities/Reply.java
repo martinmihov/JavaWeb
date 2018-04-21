@@ -35,7 +35,7 @@ public class Reply implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY) // THERE WAS NO CASCADE
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id")
     public Request getRequest() {
         return this.request;
@@ -44,7 +44,6 @@ public class Reply implements Serializable {
     public void setRequest(Request request) {
         this.request = request;
     }
-
 
     @Column(name = "reply_message",nullable = false,columnDefinition = "TEXT")
     public String getReplyMessage() {
@@ -73,6 +72,3 @@ public class Reply implements Serializable {
         this.replySentOn = replySentOn;
     }
 }
-
-//@ManyToOne(fetch = FetchType.LAZY)
-//@JoinColumn(name = "request_id",nullable = false)

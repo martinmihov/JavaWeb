@@ -72,7 +72,7 @@ public class Request implements Serializable {
         this.senderEmail = senderEmail;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL) // TODO Cascade.all or not
+    @ManyToOne(fetch = FetchType.LAZY) // TODO Cascade.all or not
     @JoinColumn(name = "user_requests")
     public User getSenderUser() {
         return this.senderUser;
@@ -111,7 +111,7 @@ public class Request implements Serializable {
         this.isReplied = isReplied;
     }
 
-    @OneToMany(mappedBy = "request")
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
     public List<Reply> getReplies() {
         return this.replies;
     }
@@ -121,6 +121,7 @@ public class Request implements Serializable {
     }
 
 
+    @Transient // THAT IS NEW
     public void addReply(Reply reply){
         this.replies.add(reply);
     }

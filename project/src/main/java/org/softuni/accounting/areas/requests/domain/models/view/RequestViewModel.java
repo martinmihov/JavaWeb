@@ -25,8 +25,7 @@ public class RequestViewModel {
 
     private LinkedList<ReplyViewModel> replies;
 
-    public RequestViewModel() {
-    }
+    public RequestViewModel() { }
 
     public Long getId() {
         return this.id;

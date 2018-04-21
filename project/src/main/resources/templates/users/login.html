@@ -10,7 +10,8 @@
     <th:block th:replace="~{fragments/navbar}"></th:block>
     <div class="container mt-5 col-lg-8">
         <h2 class="text-center">Login</h2>
-        <div th:if="${param.error}" class="col-md-5 offset-md-3 mt-4 alert alert-warning alert-dismissible fade show" role="alert">
+        <div th:if="${param.error}" class="col-md-5 offset-md-3 mt-4 alert alert-warning alert-dismissible fade show"
+             role="alert">
             Invalid username or password. Please try again.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -30,19 +31,21 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-outline-primary float-sm-right">Login</button>
+                <div class="col-md-11">
+                    <button type="submit" class="btn btn-outline-primary justify-content-md-center offset-md-4">Login</button>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-6">
-                    <h5 class="float-sm-right">or</h5>
+                <div class="col-md-8">
+                    <h5 class="justify-content-md-center offset-md-6">or</h5>
                 </div>
 
             </div>
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <button  type="button" class="btn btn-outline-secondary float-sm-right"><a style="text-decoration:none;" th:href="@{/users/register}"><span class="color: text-white">you don't have an Account? Please ,</span> Register!</a></button>
+                    <button type="button" class="btn btn-outline-secondary float-sm-right"><a
+                            style="text-decoration:none;" th:href="@{/users/register}"><span class="color: text-white">you don't have an Account? Please ,</span>
+                        Register!</a></button>
                 </div>
             </div>
         </form>

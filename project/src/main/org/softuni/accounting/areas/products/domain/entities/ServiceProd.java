@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 public class ServiceProd implements Serializable {
 
     private Long id;
-    private BigDecimal price;
     private String description;
     private ServiceType serviceType;
 
@@ -29,16 +28,7 @@ public class ServiceProd implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "price", nullable = true)
-    public BigDecimal getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT",nullable = false)
     public String getDescription() {
         return this.description;
     }

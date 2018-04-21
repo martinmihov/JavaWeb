@@ -16,8 +16,7 @@ public class ReplyViewModel {
 
     private Date replySentOn;
 
-    public ReplyViewModel() {
-    }
+    public ReplyViewModel() { }
 
     public Long getId() {
         return this.id;

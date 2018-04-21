@@ -11,19 +11,15 @@ import javax.validation.constraints.Size;
 @PasswordMatch
 public class ProfileEditBindingModel {
 
-    private static final int OPINION_MIN_LENGTH = 3;
-    private static final int OPINION_MAX_LENGTH = 254;
-
-    private static final String OPINION_SIZE_MESSAGE = "* Opinion must be between 3 and 254 symbols in length";
-
     private String username;
-    private String password;
-    private String confirmPassword;
-    private String email;
-    private String opinion;
 
-    public ProfileEditBindingModel() {
-    }
+    private String password;
+
+    private String confirmPassword;
+
+    private String email;
+
+    public ProfileEditBindingModel() { }
 
     @NotEmpty(message = UserConstants.USERNAME_EMPTY_MESSAGE)
     @Size(min = UserConstants.USERNAME_MIN_LENGTH,
@@ -59,6 +55,7 @@ public class ProfileEditBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @Email
     @EmailUniqueEdit
     @NotEmpty(message = UserConstants.EMAIL_EMPTY_MESSAGE)
     public String getEmail() {
@@ -67,16 +64,5 @@ public class ProfileEditBindingModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Size(min = OPINION_MIN_LENGTH,
-            max = OPINION_MAX_LENGTH,
-            message = OPINION_SIZE_MESSAGE)
-    public String getOpinion() {
-        return this.opinion;
-    }
-
-    public void setOpinion(String opinion) {
-        this.opinion = opinion;
     }
 }

@@ -35,30 +35,43 @@ public class ArticleServiceImpl implements ArticleService {
     private final ModelParser modelParser;
 
     private boolean isAuthor(Article article) {
-        return Objects.equals(loggedInUser().getId(),
+
+        return
+                Objects.equals(loggedInUser().getId(),
                 article.getAuthor().getId());
     }
 
     private User loggedInUser() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
+
         return this.userService.findByEmail(user.getUsername());
     }
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository, UserService userService, ModelParser modelParser) {
+    public ArticleServiceImpl(ArticleRepository articleRepository,
+                              UserService userService,
+                              ModelParser modelParser) {
+
         this.articleRepository = articleRepository;
         this.userService = userService;
         this.modelParser = modelParser;
     }
 
     public boolean isUserAuthorOrAdmin(Article article) {
-        return this.loggedInUser().getRoles().stream().anyMatch(roles -> roles.getName().equals("ROLE_ADMIN")) || this.isAuthor(article);
+
+        return
+                this.loggedInUser()
+                .getRoles()
+                .stream()
+                .anyMatch(roles -> roles.getName().equals("ADMIN")) || this.isAuthor(article);
     }
 
     @Override
     public ArticleViewModel viewArticle(Long id) {
+
         Optional<Article> optionalArticle = this.articleRepository.findById(id);
+
         if (optionalArticle.isPresent()) {
             Article article = optionalArticle.get();
             return this.modelParser.convert(article, ArticleViewModel.class);
@@ -68,8 +81,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleViewModel> searchArticlesByNameContaining(String title) {
+
         List<Article> articlesByTitle = this.articleRepository.findArticlesByTitleContainingOrderByTitle(title);
         List<ArticleViewModel> viewSearch = new ArrayList<>();
+
         for (Article article : articlesByTitle) {
             ArticleViewModel view = this.modelParser.convert(article,ArticleViewModel.class);
             viewSearch.add(view);
@@ -79,29 +94,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDeleteEditViewModel getArticleToEditOrDelete(Long id) {
+
         Optional<Article> article = this.articleRepository.findById(id);
+
         if (article.isPresent()) {
             if (!this.isUserAuthorOrAdmin(article.get())) {
                 return null;
             }
-            return article.map(serviceProd -> this.modelParser.convert(serviceProd, ArticleDeleteEditViewModel.class)).orElse(null);
+            return article.map(serviceProd ->
+                    this.modelParser.convert(serviceProd, ArticleDeleteEditViewModel.class)).orElse(null);
         }
         return null;
     }
 
     @Override
-    public ArticleBindingModel findById(Long id) {
-        Optional<Article> article = this.articleRepository.findById(id);
-        if (article.isPresent()) {
-            if (!this.isUserAuthorOrAdmin(article.get())) {
-                return null;
-            }
-        }
-        return article.map(article1 -> this.modelParser.convert(article1, ArticleBindingModel.class)).orElse(null);
-    }
-
-    @Override
-    public void editArticle(Long id, ArticleBindingModel model) {
+    public void editArticle(Long id, ArticleBindingModel model,MultipartFile image) {
         Optional<Article> optionalArticle = this.articleRepository.findById(id);
         if (optionalArticle.isPresent()) {
             if (!this.isUserAuthorOrAdmin(optionalArticle.get())) {
@@ -111,6 +118,30 @@ public class ArticleServiceImpl implements ArticleService {
             article.setTitle(model.getTitle());
             article.setDate(new Date());
             article.setContent(model.getContent());
+            String imagePath = null;
+            String[] allowedContentTypes = {
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg",
+                    "image/gif"
+            };
+            boolean isContentTypeAllowed = Arrays.asList(allowedContentTypes)
+                    .contains(model.getImage().getContentType());
+            if (isContentTypeAllowed) {
+                String imagesPath = "\\src\\main\\resources\\static\\images\\";
+                String imagePathRoot = System.getProperty("user.dir");
+                String imageSaveDirectory = imagePathRoot + imagesPath;
+                String filename = model.getImage().getOriginalFilename();
+                String savePath = imageSaveDirectory + filename;
+                File imageFile = new File(savePath);
+                try {
+                    model.getImage().transferTo(imageFile);
+                    imagePath = "/images/" + filename;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            article.setImagePath(imagePath);
 
             this.articleRepository.save(article);
         }
@@ -121,22 +152,11 @@ public class ArticleServiceImpl implements ArticleService {
         this.articleRepository.deleteById(id);
     }
 
-    @Override
-    public String incrementView(Long article_id) {
-        Optional<Article> optionalArticle = this.articleRepository.findById(article_id);
-        if (optionalArticle.isPresent()) {
-            Article article = optionalArticle.get();
-            article.setPageView(article.getPageView() + 1);
-            this.articleRepository.saveAndFlush(article);
-            return "" + article.getPageView();
-        }
-        return "";
-    }
-
-
     public List<ArticleHomeViewModel> getArticlesIndexPage() {
+
         List<Article> articles = this.articleRepository.findTop3ByImagePathNotNullOrderByDateDesc();
         List<ArticleHomeViewModel> homeArticles = new ArrayList<>();
+
         for (Article article : articles) {
             ArticleHomeViewModel homeArticle = this.modelParser.convert(article, ArticleHomeViewModel.class);
             homeArticles.add(homeArticle);
@@ -146,9 +166,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleHomeViewModel> getArticlesByAuthor(ProfileViewModel author) {
+
         User user = this.userService.findByEmail(author.getEmail());
+
         List<Article> articlesByAuthor = this.articleRepository.findArticlesByAuthor(user);
         List<ArticleHomeViewModel> articlesByAuthorView = new ArrayList<>();
+
         for (Article article : articlesByAuthor) {
             ArticleHomeViewModel articleHomeViewModel = this.modelParser.convert(article, ArticleHomeViewModel.class);
             articlesByAuthorView.add(articleHomeViewModel);
@@ -157,32 +180,46 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleViewModel> getArticlesBlogMainPage() {
-        List<Article> articles = this.articleRepository.findAll();
-        List<ArticleViewModel> allArticles = new ArrayList<>();
-        for (Article article : articles) {
-            ArticleViewModel model = this.modelParser.convert(article, ArticleViewModel.class);
-            allArticles.add(model);
+    public List<ArticleViewModel> getSixMostPopularArticles() {
+
+        List<Article> mostPopularArticles = this.articleRepository.findTop6ByOrderByPageViewDesc();
+        List<ArticleViewModel> mostPopular = new ArrayList<>();
+
+        for (Article mostPopularArticle : mostPopularArticles) {
+            ArticleViewModel viewModel = this.modelParser.convert(mostPopularArticle,ArticleViewModel.class);
+            mostPopular.add(viewModel);
         }
-        return allArticles;
+        return mostPopular;
+    }
+
+    @Override
+    public List<ArticleViewModel> getSixMostRecentArticles() {
+
+        List<Article> mostRecentArticles = this.articleRepository.findTop6ByOrderByDateDesc();
+        List<ArticleViewModel> mostRecent = new ArrayList<>();
+
+        for (Article mostRecentArticle : mostRecentArticles) {
+            ArticleViewModel viewModel = this.modelParser.convert(mostRecentArticle,ArticleViewModel.class);
+            mostRecent.add(viewModel);
+        }
+        return mostRecent;
     }
 
     @Override
     public Page<ArticleViewModel> findAllByPage(Pageable pageable) {
-        return this.articleRepository.findAll(pageable).map(x -> this.modelParser.convert(x, ArticleViewModel.class));
-    }
 
-    @Override
-    public long getTotalPages(int size) {
-        return this.articleRepository.count() / size;
+        return this.articleRepository
+                .findAll(pageable).map(x ->
+                        this.modelParser.convert(x, ArticleViewModel.class));
     }
-
 
     @Override
     public void savePost(ArticleBindingModel model, MultipartFile image) {
+
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         User userEntity = this.userService.findByEmail(user.getUsername());
+
         String imagePath = null;
         String[] allowedContentTypes = {
                 "image/png",
@@ -190,8 +227,10 @@ public class ArticleServiceImpl implements ArticleService {
                 "image/jpeg",
                 "image/gif"
         };
+
         boolean isContentTypeAllowed = Arrays.asList(allowedContentTypes)
                 .contains(model.getImage().getContentType());
+
         if (isContentTypeAllowed) {
             String imagesPath = "\\src\\main\\resources\\static\\images\\";
             String imagePathRoot = System.getProperty("user.dir");
@@ -206,6 +245,7 @@ public class ArticleServiceImpl implements ArticleService {
                 e.printStackTrace();
             }
         }
+
         Article article = new Article(
                 model.getTitle(),
                 model.getContent(),
@@ -213,6 +253,21 @@ public class ArticleServiceImpl implements ArticleService {
                 imagePath,
                 model.getDate()
         );
+
         this.articleRepository.saveAndFlush(article);
+    }
+
+    @Override
+    public String incrementView(Long article_id) {
+
+        Optional<Article> optionalArticle = this.articleRepository.findById(article_id);
+
+        if (optionalArticle.isPresent()) {
+            Article article = optionalArticle.get();
+            article.setPageView(article.getPageView() + 1);
+            this.articleRepository.saveAndFlush(article);
+            return "" + article.getPageView();
+        }
+        return "";
     }
 }

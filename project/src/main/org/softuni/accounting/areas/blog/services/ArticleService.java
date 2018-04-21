@@ -5,7 +5,6 @@ import org.softuni.accounting.areas.blog.domain.models.binding.ArticleBindingMod
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleDeleteEditViewModel;
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleHomeViewModel;
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleViewModel;
-import org.softuni.accounting.areas.users.domain.entities.users.User;
 import org.softuni.accounting.areas.users.domain.models.view.ProfileViewModel;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +14,7 @@ public interface ArticleService {
 
     void savePost(ArticleBindingModel model,MultipartFile image);
 
-    ArticleDeleteEditViewModel getArticleToDelete(Long id);
+    ArticleDeleteEditViewModel getArticleToEditOrDelete(Long id);
 
     ArticleViewModel viewArticle(Long id);
 
@@ -29,10 +28,16 @@ public interface ArticleService {
 
     String incrementView(Long article_id);
 
-    List<ArticleViewModel> getArticlesMainPage();
+    List<ArticleViewModel> getArticlesBlogMainPage();
 
-    List<ArticleHomeViewModel> getArticlesByOrderByDateDesc();
+    List<ArticleHomeViewModel> getArticlesIndexPage();
 
     List<ArticleHomeViewModel> getArticlesByAuthor(ProfileViewModel author);
 
+
+    default long getTotalPages(){
+        return getTotalPages(6);
+    }
+
+    long getTotalPages(int size);
 }

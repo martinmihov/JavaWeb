@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/head}"></th:block>
+
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="~{fragments/navbar-blog}"></th:block>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-12" th:action="@{/blog}" th:method="GET">
+                <h1 class="my-4 text-primary">Blog
+                    <small class="text-secondary">T&amp;M Consult</small>
+                </h1>
+
+                <!-- Blog Post -->
+                <th:block th:each="post : ${popularOrRecent}" th:object="${post}">
+                    <div class="card mt-md-5 mb-md-3">
+                        <img class="card-img-top" th:if="${post.imagePath} != null" th:src="@{${post.imagePath}}"
+                             alt="Blog Image">
+                        <div class="card-body">
+                            <h2 class="card-title text-primary" th:text="*{title}">Post Title</h2>
+                            <p class="card-text" th:text="${post.summary}"></p>
+                            <a th:href="@{/blog/articles/{id}(id=*{id})}"
+                               class="btn btn-outline-primary float-md-right">continue reading ..</a>
+                        </div>
+                        <div class="card-footer text-muted" th:text="|Posted on *{{date}} by *{author.username}|"></div>
+                    </div>
+                </th:block>
+
+            </div>
+            <div class="col-md-12 mb-md-3">
+                <h5 class="col-md-6 text-center offset-md-3">
+                    <a class="text-muted" th:href="@{/blog/}">Blog Home Page</a>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer}"></th:block>
+</body>
+</html>

@@ -2,12 +2,12 @@ package org.softuni.accounting.areas.products.domain.models.view;
 
 import org.softuni.accounting.areas.products.domain.entities.enums.ServiceType;
 
-import java.math.BigDecimal;
-
 public class ServiceProdViewModel {
 
     private Long id;
+
     private String description;
+
     private ServiceType serviceType;
 
     public ServiceProdViewModel() {

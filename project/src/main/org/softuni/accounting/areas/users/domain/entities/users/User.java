@@ -24,6 +24,8 @@ public class User implements Serializable {
 
     private String imagePath;
 
+    private String opinion;
+
     private Set<Role> roles;
 
     private Set<Request> requests;
@@ -72,7 +74,7 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    @Column(name = "password", length = 60, nullable = false)
+    @Column(name = "password", length = 64, nullable = false)
     public String getPassword() {
         return this.password;
     }
@@ -90,6 +92,15 @@ public class User implements Serializable {
         this.imagePath = imagePath;
     }
 
+    @Column(name = "opinion")
+    public String getOpinion() {
+        return this.opinion;
+    }
+
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles")
     public Set<Role> getRoles() {
@@ -100,6 +111,7 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    @Transient // THAT IS NEW
     public void addRole(Role role) {
         this.roles.add(role);
     }
@@ -113,6 +125,7 @@ public class User implements Serializable {
         this.requests = requests;
     }
 
+    @Transient
     public void addRequest(Request request) {
         this.requests.add(request);
     }

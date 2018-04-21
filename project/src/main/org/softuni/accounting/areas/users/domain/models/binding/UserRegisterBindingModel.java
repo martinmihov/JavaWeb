@@ -1,24 +1,28 @@
 package org.softuni.accounting.areas.users.domain.models.binding;
 
+import org.softuni.accounting.utils.constants.UserConstants;
 import org.softuni.accounting.validations.annotations.email.Email;
+import org.softuni.accounting.validations.annotations.email.EmailUnique;
+import org.softuni.accounting.validations.annotations.password.PasswordMatch;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+@PasswordMatch
 public class UserRegisterBindingModel {
 
-    @NotEmpty
-    @Email
     private String email;
-    @NotEmpty(message = "Username cannot be empty")
     private String username;
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
-    @NotEmpty(message = "Confirm password cannot be empty")
     private String confirmPassword;
 
     public UserRegisterBindingModel() {
     }
 
+    @NotEmpty(message = UserConstants.USERNAME_EMPTY_MESSAGE)
+    @Size(min = UserConstants.USERNAME_MIN_LENGTH,
+            max = UserConstants.USERNAME_MAX_LENGTH,
+            message = UserConstants.USERNAME_SIZE_MESSAGE)
     public String getUsername() {
         return this.username;
     }
@@ -27,6 +31,10 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotEmpty(message = UserConstants.PASSWORD_EMPTY_MESSAGE)
+    @Size(min = UserConstants.PASSWORD_AND_CONFIRM_PASSWORD_MIN_LENGTH,
+            max = UserConstants.PASSWORD_AND_CONFIRM_PASSWORD_MAX_LENGTH,
+            message = UserConstants.PASSWORD_SIZE_MESSAGE)
     public String getPassword() {
         return this.password;
     }
@@ -35,6 +43,10 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
+    @NotEmpty(message = UserConstants.PASSWORD_CONFIRM_EMPTY_MESSAGE)
+    @Size(min = UserConstants.PASSWORD_AND_CONFIRM_PASSWORD_MIN_LENGTH,
+            max = UserConstants.PASSWORD_AND_CONFIRM_PASSWORD_MAX_LENGTH,
+            message = UserConstants.PASSWORD_CONFIRM_SIZE_MESSAGE)
     public String getConfirmPassword() {
         return this.confirmPassword;
     }
@@ -43,6 +55,9 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @Email
+    @EmailUnique
+    @NotEmpty(message = UserConstants.EMAIL_EMPTY_MESSAGE)
     public String getEmail() {
         return this.email;
     }

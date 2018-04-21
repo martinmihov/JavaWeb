@@ -10,8 +10,7 @@ public class UserOpinionViewModel {
 
     private String opinion;
 
-    public UserOpinionViewModel() {
-    }
+    public UserOpinionViewModel() { }
 
     public String getUsername() {
         return this.username;

@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.softuni.accounting.areas.blog.domain.entities.Article;
 import org.softuni.accounting.areas.requests.domain.entities.Request;
 import org.softuni.accounting.areas.users.domain.entities.roles.Role;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.io.Serializable;

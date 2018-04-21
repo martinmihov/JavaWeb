@@ -24,46 +24,12 @@
                 </div>
                 <th:block th:if="${services} == null" th:text="|No results containing ( ${description} ) were found|"></th:block>
                 <a th:href="@{/services/all}"
-                   class="btn btn-outline-primary float-md-right mt-md-3">Haven't found the service you are looking for .. ?</a>
+                   class="btn btn-outline-primary float-md-right mt-md-3 mb-md-5">Haven't found the service you are
+                    looking for .. ?</a>
             </ul>
         </div>
     </div>
 </div>
 <th:block th:replace="~{fragments/footer}"></th:block>
-
 </body>
 </html>
-
-
-<!--<form class="form my-2 my-lg-0" th:action="@{/search/articles-by-name}" th:method="GET">-->
-<!--<div>-->
-<!--<input class="form-control col-md-2" type="text" placeholder="Search">-->
-<!--<button class="btn btn-secondary mt-5 my-md-2" type="submit">Search</button>-->
-<!--<fieldset class="form-group row">-->
-<!--<legend class="col-form-legend col-sm-2">Search blog by a criteria</legend>-->
-<!--<div class="col-sm-10">-->
-<!--<div class="form-check">-->
-<!--<label class="form-check-label">-->
-<!--<input class="form-check-input" type="radio" name="articles-by-name" id="articles-by-name" />-->
-<!--by Article's content-->
-<!--</label>-->
-<!--<script>-->
-<!--var title = document.getElementById('articles-by-name').value-->
-<!--</script>-->
-<!--</div>-->
-<!--<div class="form-check">-->
-<!--<label class="form-check-label">-->
-<!--<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"/>-->
-<!--by Title-->
-<!--</label>-->
-<!--</div>-->
-<!--<div class="form-check disabled">-->
-<!--<label class="form-check-label">-->
-<!--<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3"/>-->
-<!--by Author's name-->
-<!--</label>-->
-<!--</div>-->
-<!--</div>-->
-<!--</fieldset>-->
-<!--</div>-->
-<!--</form>-->

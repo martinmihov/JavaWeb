@@ -12,12 +12,14 @@ import javax.validation.constraints.Size;
 public class UserRegisterBindingModel {
 
     private String email;
+
     private String username;
+
     private String password;
+
     private String confirmPassword;
 
-    public UserRegisterBindingModel() {
-    }
+    public UserRegisterBindingModel() { }
 
     @NotEmpty(message = UserConstants.USERNAME_EMPTY_MESSAGE)
     @Size(min = UserConstants.USERNAME_MIN_LENGTH,

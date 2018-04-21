@@ -21,24 +21,35 @@ public class SearchController extends BaseController {
     private final ArticleService articleService;
 
     @Autowired
-    public SearchController(ServiceProdService serviceProdService, ArticleService articleService) {
+    public SearchController(ServiceProdService serviceProdService,
+                            ArticleService articleService) {
+
         this.serviceProdService = serviceProdService;
         this.articleService = articleService;
     }
 
     @GetMapping("/articles-by-name")
     public ModelAndView searchArticlesByName(@RequestParam(name = "articles-by-name") String title) {
+
         List<ArticleViewModel> articleSearchResults = this.articleService.searchArticlesByNameContaining(title);
+
         Object[] models = new Object[]{articleSearchResults, title};
+
         if (articleSearchResults.isEmpty()) return this.view("search/articles", "title", title);
-        return this.view("search/articles", models, "posts", "title");
+
+        return this.view("search/articles", models,
+                "posts", "title");
     }
 
     @GetMapping("/services-by-description")
     public ModelAndView searchServiceProdByDescription(@RequestParam(name = "services-by-description") String description) {
+
         List<ServiceProdViewModel> servicesSearchResult = this.serviceProdService.searchServiceProd(description);
         Object[] models = new Object[]{servicesSearchResult, description};
+
         if (servicesSearchResult.isEmpty()) return this.view("search/services", "description", description);
-        return this.view("search/services", models, "services", "description");
+
+        return this.view("search/services", models,
+                "services", "description");
     }
 }

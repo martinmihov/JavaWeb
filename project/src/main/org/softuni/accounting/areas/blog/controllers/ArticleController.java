@@ -2,6 +2,7 @@ package org.softuni.accounting.areas.blog.controllers;
 
 import org.softuni.accounting.areas.blog.domain.entities.Article;
 import org.softuni.accounting.areas.blog.domain.models.binding.ArticleBindingModel;
+import org.softuni.accounting.areas.blog.domain.models.view.ArticleDeleteEditViewModel;
 import org.softuni.accounting.areas.blog.domain.models.view.ArticleViewModel;
 import org.softuni.accounting.areas.blog.services.ArticleService;
 import org.softuni.accounting.controllers.BaseController;
@@ -31,7 +32,7 @@ public class ArticleController extends BaseController {
 
     @GetMapping("/")
     public ModelAndView blogMainPage() {
-        return this.view("blog/main-page.html","articles",this.articleService.getArticlesMainPage());
+        return this.view("blog/main-page.html","articles",this.articleService.getArticlesBlogMainPage());
     }
 
     @GetMapping("/articles/{id}")
@@ -44,22 +45,22 @@ public class ArticleController extends BaseController {
 
     @GetMapping("/articles/create")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView createArticle() {
-        return this.view("blog/create-article");
+    public ModelAndView createArticle(ArticleViewModel model) {
+        return this.view("blog/create-article","article",model);
     }
 
     @PostMapping("/articles/create")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView createArticleConfirm(@Valid @ModelAttribute ArticleBindingModel articleBindingModel, BindingResult bindingResult, @RequestParam("image") MultipartFile image) {
+    public ModelAndView createArticleConfirm(@Valid @ModelAttribute(name = "article") ArticleBindingModel articleBindingModel, BindingResult bindingResult, @RequestParam("image") MultipartFile image) {
         if (bindingResult.hasErrors()) return this.view("blog/create-article", "article", articleBindingModel);
         this.articleService.savePost(articleBindingModel, image);
-        return this.redirect("/");
+        return this.redirect("/blog/");
     }
 
     @GetMapping("/articles/delete/{id}")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView deleteArticle(@PathVariable Long id) {
-        return this.view("blog/delete-article", "article", this.articleService.getArticleToDelete(id));
+        return this.view("blog/delete-article", "article", this.articleService.getArticleToEditOrDelete(id));
     }
 
     @PostMapping("/articles/delete/{id}")
@@ -69,15 +70,15 @@ public class ArticleController extends BaseController {
     }
 
     @GetMapping("/articles/edit/{id}")
-    public ModelAndView editArticle(@PathVariable Long id, @ModelAttribute ArticleBindingModel model) {
-        model = this.articleService.findById(id);
+    public ModelAndView editArticle(@PathVariable Long id, @ModelAttribute ArticleDeleteEditViewModel model) {
+        model = this.articleService.getArticleToEditOrDelete(id);
         Object[] models = new Object[]{model, id};
         return this.view("blog/edit-article", models, "article", "articleId");
     }
 
     @PostMapping("/articles/edit/{id}")
-    public ModelAndView editArticleConfirm(@PathVariable Long id, @Valid @ModelAttribute ArticleBindingModel model,
-                                 BindingResult bindingResult) {
+    public ModelAndView editArticleConfirm(@PathVariable Long id, @Valid @ModelAttribute(name = "article") ArticleBindingModel model,
+                                 BindingResult bindingResult) { //, @RequestParam("image") MultipartFile image
         if (bindingResult.hasErrors()) {
             Object[] models = new Object[]{model, id};
             return this.view("blog/edit-article", models, "article","articleId");

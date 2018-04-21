@@ -19,9 +19,7 @@ public class UserViewModel {
 
     private Date deletedOn;
 
-
-    public UserViewModel() {
-    }
+    public UserViewModel() { }
 
     public String getId() {
         return this.id;

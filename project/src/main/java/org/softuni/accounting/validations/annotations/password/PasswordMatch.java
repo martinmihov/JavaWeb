@@ -11,9 +11,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordMatch {
+
     String message() default "* Password and Confirm Password must match.";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
 

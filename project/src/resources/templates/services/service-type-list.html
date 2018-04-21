@@ -40,7 +40,7 @@
             <ul class="list-group">
                 <div th:each="s,iterStat : ${services}" th:object="${s}">
                     <li  class="list-group-item">
-                         <p>&rarr;&emsp; <span th:text="*{description}"></span></p>
+                        <p><span class="text-primary">&rarr;</span>&emsp; <span th:text="*{description}"></span></p>
                     </li>
                 </div>
             </ul>

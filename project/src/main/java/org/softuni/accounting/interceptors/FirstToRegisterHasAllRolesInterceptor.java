@@ -25,7 +25,9 @@ public class FirstToRegisterHasAllRolesInterceptor extends HandlerInterceptorAda
     private final ModelParser modelParser;
 
     @Autowired
-    public FirstToRegisterHasAllRolesInterceptor(UserService userService, RoleService roleService, ModelParser modelParser) {
+    public FirstToRegisterHasAllRolesInterceptor(UserService userService,
+                                                 RoleService roleService,
+                                                 ModelParser modelParser) {
         this.userService = userService;
         this.roleService = roleService;
         this.modelParser = modelParser;
@@ -33,11 +35,18 @@ public class FirstToRegisterHasAllRolesInterceptor extends HandlerInterceptorAda
 
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView) throws Exception {
+
         if (this.userService.findAllUsers().size() == 1) {
+
             User user = this.userService.findAllUsers().get(0);
+
             List<RoleServiceModel> serviceModels = this.roleService.findAllRoles();
             Set<Role> roles = new HashSet<>();
+
             for (RoleServiceModel serviceModel : serviceModels) {
                 roles.add(this.modelParser.convert(serviceModel,Role.class));
             }

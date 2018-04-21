@@ -24,7 +24,6 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <!--<a class="nav-link" href="#" data-toggle="modal" data-target="#modal">Contact Us</a>-->
                     <a class="nav-link" th:href="@{/contact-us}">Contact Us</a>
                 </li>
                 <li class="nav-item">
@@ -46,7 +45,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item active">
                     <div class="dropdown">
-                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link" id="admin-dp-menu" data-toggle="dropdown"
+                        <a sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')" class="nav-link"
+                           id="admin-dp-menu" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" th:href="@{/services/all}">Admins</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -88,7 +88,8 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" th:action="@{/search/services-by-description}" th:method="GET">
-                <input class="form-control mr-sm-2" name="services-by-description" type="text" placeholder="Search services...">
+                <input class="form-control mr-sm-2" name="services-by-description" type="text"
+                       placeholder="Search services...">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>

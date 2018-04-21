@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 public final class GlobalConstants {
 
     public static final String DATE_TIME_FORMAT_PATTERN = "EEE, MMM d, ''yy 'at' h:mm a";
+
 }
